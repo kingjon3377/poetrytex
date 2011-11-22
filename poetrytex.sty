@@ -1,0 +1,114 @@
+% !TEX TS-program = xelatex
+% !TEX encoding = UTF-8
+% Copyright 2011 Sam Whited <sam@samwhited.com>
+% Licensed under the Creative Commons Attribution 3.0 Unported License
+% (CC BY 3.0)
+% https://creativecommons.org/licenses/by/3.0/
+
+% https://github.com/SamWhited/poetrytex
+
+% This package is designed to work with TeX engines that directly
+% process UTF8 input and use Unicode and OpenType fonts.
+
+\ProvidesPackage{poetrytex}
+
+\RequirePackage{parskip}
+\RequirePackage{fontspec}
+\RequirePackage{multicol}
+\RequirePackage[pdfborder=0, bookmarks, colorlinks=false]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3mm}
+
+% Default to Calluna by exljbris
+% This should probably be changed, but I like Calluna...
+\newcommand{\fontface}[0]{Calluna}
+
+\setromanfont{\fontface}
+\newfontfamily\useligatures[Mapping=tex-text, Ligatures={Common, Rare}]{\fontface}
+\newfontfamily\usediscretionary[Mapping=tex-text, Ligatures={Discretionary, Common, Rare}]{\fontface}
+\newfontfamily\useordinals[Mapping=tex-text,VerticalPosition=Ordinal]{\fontface}
+\newcommand{\altern}[1]{{\fontspec{\fontface:+salt}#1}}
+\font\capital="\fontface:+salt" at 18pt
+\font\alternsmall="\fontface:+salt" at 8pt
+
+\renewcommand{\listtablename}{List of Poems}
+
+% TODO: Fix this hack...
+\newcommand{\Subsubsection}[1]{
+	\vspace{0.3cm}
+	\textbf{#1}\\
+	\vspace{0.2cm}
+}
+
+\newcommand{\footer}[3]{
+	\begin{center}
+		{\usediscretionary
+			\copyright\ #1 #2\\
+			#3
+		}
+	\end{center}
+}
+
+\newcommand{\theyear}[0]{0000}
+
+\newcommand{\poemyear}[1]{
+	\cleardoublepage
+	\renewcommand{\theyear}[0]{#1}
+	\vspace*{\fill}
+	\pagestyle{empty}
+	\begin{center}
+		{\usediscretionary
+			\section*{\textbf{{\LARGE #1}}}
+			\addcontentsline{toc}{section}{#1}
+			\addcontentsline{lot}{section}{#1}
+		}
+	\end{center}
+	\vspace*{\fill}
+	\clearpage
+}
+
+\newenvironment{annotation}[1]{
+	\cleardoublepage
+	\poetryheadings
+	\begin{flushleft}
+	\subsection*{#1}
+	\addcontentsline{toc}{subsection}{#1}
+}
+{
+
+	\end{flushleft}
+	\clearpage
+}
+
+\newenvironment{poem}[2]{
+	\poetryheadings
+	\begin{center}
+		% This has smaller margins than \subsection*
+		% This might be worth fixing later
+		{\large \textbf{#1}}\\
+		\addcontentsline{lot}{subsection}{#1}
+		{\usediscretionary #2}
+	\end{center}
+	\begin{center}
+}
+{
+	\end{center}
+	\clearpage
+}
+
+\newcommand{\poetryheadings}[0]{
+	\pagestyle{myheadings}
+	\markboth{ | \MakeUppercase{\thetitle}\hfill }{\hfill\MakeUppercase{\theyear}\ | }
+}
+
+\setcounter{tocdepth}{2}
+
+\def\thetitle{Title}
+\def\thesubtitle{Subtitle}
+\def\theauthor{Author}
+\def\thedate{Date}
+
+\title{{\usediscretionary \thetitle}\\\thesubtitle}
+\author{{\usediscretionary \theauthor}}
+\date{\thedate}
