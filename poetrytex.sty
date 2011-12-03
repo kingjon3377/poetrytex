@@ -85,10 +85,11 @@
 \newenvironment{poem}[2]{
 	\poetryheadings
 	\begin{center}
+		\phantomsection
+		\addcontentsline{lot}{subsection}{#1}
 		% This has smaller margins than \subsection*
 		% This might be worth fixing later
 		{\large \textbf{#1}}\\
-		\addcontentsline{lot}{subsection}{#1}
 		{\usediscretionary #2}
 	\end{center}
 	\begin{center}
