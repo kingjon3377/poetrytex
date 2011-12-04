@@ -35,10 +35,9 @@
 
 \renewcommand{\listtablename}{List of Poems}
 
-% TODO: Fix this hack...
-\newcommand{\Subsubsection}[1]{
+\renewcommand{\subsubsection}[1]{
 	\vspace{0.3cm}
-	\textbf{#1}\\
+	\textbf{#1}\\*
 	\vspace{0.2cm}
 }
 
@@ -51,11 +50,20 @@
 	\end{center}
 }
 
-\newcommand{\theyear}[0]{0000}
+\newcommand{\thegroup}[0]{0000}
+\newcounter{poemnum}
 
-\newcommand{\poemyear}[1]{
+\newcommand{\numberpoems}[1][1]{\def\@numberpoems{#1}}
+\newcommand{\resetnumongroup}[1][1]{\def\@resetnumongroup{#1}}
+
+\newcommand{\poemgroup}[1]{
+	\ifx \@resetnumongroup \undefined
+		\relax
+	\else
+		\setcounter{poemnum}{0}
+	\fi
 	\cleardoublepage
-	\renewcommand{\theyear}[0]{#1}
+	\renewcommand{\thegroup}[0]{#1}
 	\vspace*{\fill}
 	\pagestyle{empty}
 	\begin{center}
@@ -84,12 +92,13 @@
 
 \newenvironment{poem}[2]{
 	\poetryheadings
+	\addtocounter{poemnum}{1}
 	\begin{center}
 		\phantomsection
 		\addcontentsline{lot}{subsection}{#1}
 		% This has smaller margins than \subsection*
 		% This might be worth fixing later
-		{\large \textbf{#1}}\\
+		{\large \textbf{\ifx\@numberpoems\undefined\relax\else\arabic{poemnum}\fi\\#1}}\\
 		{\usediscretionary #2}
 	\end{center}
 	\begin{center}
@@ -101,7 +110,7 @@
 
 \newcommand{\poetryheadings}[0]{
 	\pagestyle{myheadings}
-	\markboth{ | \MakeUppercase{\thetitle}\hfill }{\hfill\MakeUppercase{\theyear}\ | }
+	\markboth{ | \MakeUppercase{\thetitle}\hfill }{\hfill\MakeUppercase{\thegroup}\ | }
 }
 
 \setcounter{tocdepth}{2}
