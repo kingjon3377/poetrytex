@@ -54,16 +54,16 @@ This will insert a number over the title of each poem starting with one. If you 
 You can also reset, or set the value of the poem number by modifying the `poemnum` counter.
 
 ## Fonts
-`\fontface` — PoetryTeX defaults the fontface to [Calluna](http://www.exljbris.com/calluna.html) a nice font face by the [exljbris Font Foundry](http://www.exljbris.com/) which is easy to read on screen, or in print.
+`\fontface` - PoetryTeX defaults the fontface to [Calluna](http://www.exljbris.com/calluna.html) a nice font face by the [exljbris Font Foundry](http://www.exljbris.com/) which is easy to read on screen, or in print.
 However, by redefining the fontface command you can change it to use any standard OpenType font installed on your system.
 To do this, simply write:
 
 	\renewcommand{\fontface}{MyFontFamily}
 
-`\altern{char}` — The altern command outputs the stylistic alternative for any character passed in using `\fontface:+salt`
+`\altern{char}` - The altern command outputs the stylistic alternative for any character passed in using `\fontface:+salt`
 
 There are also several special font families defined based on the current `\fontface`. These include:
 
-`\useligatures` — Includes current Common and Rare ligatures.  
-`\usediscretionary` — Includes Common, Rare, and Discretionary ligatures.  
-`\useordinals` — Sets the vertical position of some characters to Ordinal.  
+`\useligatures` - Includes current Common and Rare ligatures.  
+`\usediscretionary` - Includes Common, Rare, and Discretionary ligatures.  
+`\useordinals` - Sets the vertical position of some characters to Ordinal.  
