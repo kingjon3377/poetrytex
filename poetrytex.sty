@@ -55,9 +55,10 @@
 
 \newcommand{\numberpoems}[1][1]{\def\@numberpoems{#1}}
 \newcommand{\resetnumongroup}[1][1]{\def\@resetnumongroup{#1}}
+\newcommand{\hidetopintoc}[1][1]{\def\@hidetopintoc{#1}}
 
 \newcommand{\poemgroup}[1]{
-	\ifx \@resetnumongroup \undefined
+	\ifx \@resetnumongroup \@undefined
 		\relax
 	\else
 		\setcounter{poemnum}{0}
@@ -118,7 +119,36 @@
 \def\thetitle{Title}
 \def\thesubtitle{Subtitle}
 \def\theauthor{Author}
-\def\thedate{Date}
+\def\thedate{}
+\def\thededication{}
+
+\newcommand{\makededication}[0]{
+	\thispagestyle{empty}
+	\vspace*{\fill}
+	\begin{flushright}
+		\emph{\thededication}
+	\end{flushright}
+	\vspace*{\fill}
+}
+
+\newcommand{\maketoc}[0]{
+	\tableofcontents
+	\pagestyle{plain}
+	\clearpage
+	\thispagestyle{empty}
+}
+
+\newcommand{\maketop}[0]{
+	\ifx \@hidetopintoc \@undefined
+		\cleardoublepage
+		\phantomsection
+		\addcontentsline{toc}{section}{\listtablename}
+	\fi
+	\listoftables
+	\pagestyle{plain}
+	\clearpage
+%	\addtocontents{toc}{\protect\thispagestyle{myheadings}}
+}
 
 \title{{\usediscretionary \thetitle}\\\thesubtitle}
 \author{{\usediscretionary \theauthor}}
