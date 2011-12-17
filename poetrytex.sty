@@ -17,21 +17,27 @@
 \RequirePackage{multicol}
 \RequirePackage[pdfborder=0, bookmarks, colorlinks=false]{hyperref}
 
+% Disable Chapter, Section, and Subsection numbering
+\setcounter{secnumdepth}{-1} 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{3mm}
 
 % Default to Calluna by exljbris
 % This should probably be changed, but I like Calluna...
-\newcommand{\fontface}[0]{Calluna}
+\newcommand{\defaultfontfamily}[0]{Calluna}
 
-\defaultfontfeatures{Mapping=tex-text}
-\setromanfont{\fontface}
-\newfontfamily\useligatures[Mapping=tex-text, Ligatures={Common, Rare}]{\fontface}
-\newfontfamily\usediscretionary[Mapping=tex-text, Ligatures={Discretionary, Common, Rare}]{\fontface}
-\newfontfamily\useordinals[Mapping=tex-text,VerticalPosition=Ordinal]{\fontface}
-\newcommand{\altern}[1]{{\fontspec{\fontface:+salt}#1}}
-\font\capital="\fontface:+salt" at 18pt
-\font\alternsmall="\fontface:+salt" at 8pt
+% Allow the use of standard LaTeX mappings such as "---" for em-dashes.
+\defaultfontfeatures{Mapping=tex-text, Ligatures=Common}
+
+\setromanfont{\defaultfontfamily}
+\newfontfamily\useligatures[Mapping=tex-text, Ligatures={Common, Rare}]{\defaultfontfamily}
+\newfontfamily\usediscretionary[Mapping=tex-text, Ligatures={Discretionary, Common, Rare}]{\defaultfontfamily}
+\newfontfamily\useordinals[Mapping=tex-text,VerticalPosition=Ordinal]{\defaultfontfamily}
+\newcommand{\altern}[1]{{\fontspec{\defaultfontfamily:+salt}#1}}
+\font\capital="\defaultfontfamily:+salt" at 18pt
+\font\alternsmall="\defaultfontfamily:+salt" at 8pt
+
+\newcommand{\poemtitlefont}{\normalfont\bfseries\large\centering}
 
 \renewcommand{\listtablename}{List of Poems}
 
@@ -53,9 +59,10 @@
 \newcommand{\thegroup}[0]{0000}
 \newcounter{poemnum}
 
-\newcommand{\numberpoems}[1][1]{\def\@numberpoems{#1}}
-\newcommand{\resetnumongroup}[1][1]{\def\@resetnumongroup{#1}}
-\newcommand{\hidetopintoc}[1][1]{\def\@hidetopintoc{#1}}
+\newcommand{\numberpoems}{\def\@numberpoems{}}
+\newcommand{\numbertop}{\def\@numbertop{}}
+\newcommand{\resetnumongroup}{\def\@resetnumongroup{}}
+\newcommand{\hidetopintoc}{\def\@hidetopintoc{}}
 
 \newcommand{\poemgroup}[1]{
 	\ifx \@resetnumongroup \@undefined
@@ -69,8 +76,7 @@
 	\pagestyle{empty}
 	\begin{center}
 		{\usediscretionary
-			\section*{\textbf{{\LARGE #1}}}
-			\addcontentsline{toc}{section}{#1}
+			\section{#1}
 			\addcontentsline{lot}{section}{#1}
 		}
 	\end{center}
@@ -82,8 +88,7 @@
 	\cleardoublepage
 	\poetryheadings
 	\begin{flushleft}
-	\subsection*{#1}
-	\addcontentsline{toc}{subsection}{#1}
+	\subsection{#1}
 }
 {
 
@@ -96,11 +101,10 @@
 	\addtocounter{poemnum}{1}
 	\begin{center}
 		\phantomsection
-		\addcontentsline{lot}{subsection}{#1}
-		% This has smaller margins than \subsection*
-		% This might be worth fixing later
-		{\large \textbf{\ifx\@numberpoems\undefined\relax\else\arabic{poemnum}\fi\\#1}}\\
-		{\usediscretionary #2}
+		\addcontentsline{lot}{subsection}{\ifx\@numbertop\@undefined\relax\else\arabic{poemnum}.\ \fi#1}
+		% Has smaller margins than \subsection
+		{\poemtitlefont \ifx\@numberpoems\@undefined\relax\else\arabic{poemnum}\\\fi#1}\\
+		#2
 	\end{center}
 	\begin{center}
 }
@@ -147,7 +151,6 @@
 	\listoftables
 	\pagestyle{plain}
 	\clearpage
-%	\addtocontents{toc}{\protect\thispagestyle{myheadings}}
 }
 
 \title{\thetitle\\\thesubtitle}

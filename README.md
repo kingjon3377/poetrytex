@@ -43,12 +43,13 @@ simply renew the command `\thegroup` like so:
 PoetryTeX can also number your poems for you. To have your poems automatically numbered, use the following command:
 
 	\numberpoems
+	\numbertop
 
-This will insert a number over the title of each poem starting with one. If you would like to reset the number counter automatically when the group is changed, simply call:
+The `numberpoems` command will insert a number over the title of each poem, and the `numbertop` command will number each entry in the Table of Poems. If you would like to reset the number counter automatically when the group is changed, simply call:
 
 	\resetnumongroup
 
-You can also reset, or set the value of the poem number by modifying the `poemnum` counter.
+You can also reset, or manually set the value of the poem number by modifying the `poemnum` counter.
 
 ## Tables
 
@@ -69,11 +70,10 @@ You can renew these commands to change them on your title page.
 You can also create a separate dedication page using the command `\makededication` and set the dedication text by renewing the command `\thededication`.
 
 ## Fonts
-`\fontface` - PoetryTeX defaults the fontface to [Calluna](http://www.exljbris.com/calluna.html) a nice font face by the [exljbris Font Foundry](http://www.exljbris.com/) which is easy to read on screen, or in print.
-However, by redefining the fontface command you can change it to use any standard OpenType font installed on your system.
-To do this, simply write:
+`\defaultfontfamily` - PoetryTeX defaults the fontface to [Calluna](http://www.exljbris.com/calluna.html) a nice font face by the [exljbris Font Foundry](http://www.exljbris.com/) which is easy to read on screen, or in print.
+However, by redefining the `defaultfontfamily` command you can change it to use any standard OpenType font installed on your system. To do this, simply write:
 
-	\renewcommand{\fontface}{MyFontFamily}
+	\renewcommand{\defaultfontfamily}{MyFontFamily}
 
 `\altern{char}` - The altern command outputs the stylistic alternative for any character passed in using `\fontface:+salt`
 
