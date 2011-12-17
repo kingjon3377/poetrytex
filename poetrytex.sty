@@ -43,17 +43,8 @@
 
 \renewcommand{\subsubsection}[1]{
 	\vspace{0.3cm}
-	\textbf{#1}\\*
+	\centerline{\textbf{#1}}
 	\vspace{0.2cm}
-}
-
-\newcommand{\footer}[3]{
-	\begin{center}
-		{\usediscretionary
-			\copyright\ #1 #2\\
-			#3
-		}
-	\end{center}
 }
 
 \newcommand{\thegroup}[0]{0000}
@@ -96,20 +87,21 @@
 	\clearpage
 }
 
-\newenvironment{poem}[2]{
+\newenvironment{poem}[3][verse]{
+	\def\@wrapenvironment{#1}
 	\poetryheadings
 	\addtocounter{poemnum}{1}
 	\begin{center}
 		\phantomsection
-		\addcontentsline{lot}{subsection}{\ifx\@numbertop\@undefined\relax\else\arabic{poemnum}.\ \fi#1}
+		\addcontentsline{lot}{subsection}{\ifx\@numbertop\@undefined\relax\else\arabic{poemnum}.\ \fi#2}
 		% Has smaller margins than \subsection
-		{\poemtitlefont \ifx\@numberpoems\@undefined\relax\else\arabic{poemnum}\\\fi#1}\\
-		#2
+		{\poemtitlefont \ifx\@numberpoems\@undefined\relax\else\arabic{poemnum}\\\fi#2}\\
+		#3
 	\end{center}
-	\begin{center}
+	\begin{\@wrapenvironment}
 }
 {
-	\end{center}
+	\end{\@wrapenvironment}
 	\clearpage
 }
 

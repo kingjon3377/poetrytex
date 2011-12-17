@@ -15,7 +15,15 @@ after it's loaded, several new commands and environments will be available to yo
 ## Poetry
 There are two main environments defined in PoetryTex; `poem`, and `annotation`.
 
-The `poem` environment takes in a title and a subtitle (or authors name, or date), and will automatically list the poem in the Table of Contents, and the List of Poems.
+The `poem` environment takes in a title and a subtitle (or authors name, or date),
+and will automatically list the poem in the Table of Contents, and the List of Poems.
+By default, the `poem` environment wraps everything inside of it in the `verse` environment.
+To change this, you can optionally supply it with the name of another environment.
+For example:
+
+	\begin{poem}[center]{Your Poem}{}
+		This creates a poem titled ``Your Poem" wrapped in the ``center" environment.
+	\end{poem}
 
 The `annotation` environment takes in a title, and is for providing extra (prose) text.
 Anything defined as an annotation will show up in the Table of Contents, but not in the List of Poems.
@@ -45,7 +53,8 @@ PoetryTeX can also number your poems for you. To have your poems automatically n
 	\numberpoems
 	\numbertop
 
-The `numberpoems` command will insert a number over the title of each poem, and the `numbertop` command will number each entry in the Table of Poems. If you would like to reset the number counter automatically when the group is changed, simply call:
+The `numberpoems` command will insert a number over the title of each poem, and the `numbertop` command will number each entry in the Table of Poems.
+If you would like to reset the number counter automatically when the group is changed, simply call:
 
 	\resetnumongroup
 
@@ -58,7 +67,8 @@ By default, the table of poems is listed in the table of contents. If you do not
 
 ## Titles
 
-Just like a book or article, you can make a title page in PoetryTex using `\maketitle`, however, maketitle clears the normal `\title` command so that it can't be used elsewhere in the document. To fix this, PoetryTex provides a few names of its own:
+Just like a book or article, you can make a title page in PoetryTex using `\maketitle`, however, maketitle clears the normal `\title` command so that it can't be used elsewhere in the document.
+To fix this, PoetryTex provides a few names of its own:
 
 	\thetitle{Title}
 	\thesubtitle{Subtitle}
@@ -75,10 +85,10 @@ However, by redefining the `defaultfontfamily` command you can change it to use 
 
 	\renewcommand{\defaultfontfamily}{MyFontFamily}
 
-`\altern{char}` - The altern command outputs the stylistic alternative for any character passed in using `\fontface:+salt`
+`\altern{char}` - The altern command outputs the stylistic alternative for any character passed in using `\defaultfontfamily:+salt`
 
-There are also several special font families defined based on the current `\fontface`. These include:
+There are also several special font families defined based on the current default font family. These include:
 
 `\useligatures` - Includes current Common and Rare ligatures.  
 `\usediscretionary` - Includes Common, Rare, and Discretionary ligatures.  
-`\useordinals` - Sets the vertical position of some characters to Ordinal.  
+`\useordinals` - Sets the vertical position of some characters to Ordinal.
