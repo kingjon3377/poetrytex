@@ -40,7 +40,7 @@ simply renew the command `\thegroup` like so:
 
 ## Numbering
 
-PoetryTeX can also number your poems for you. To have your poems automatically numbered, use the following command:
+PoetryTeX can also number your poems for you. To have your poems automatically numbered, use one of the following commands:
 
 	\numberpoems
 	\numbertop
@@ -70,7 +70,7 @@ You can renew these commands to change them on your title page.
 You can also create a separate dedication page using the command `\makededication` and set the dedication text by renewing the command `\thededication`.
 
 ## Fonts
-`\defaultfontfamily` - PoetryTeX defaults the fontface to [Calluna](http://www.exljbris.com/calluna.html) a nice font face by the [exljbris Font Foundry](http://www.exljbris.com/) which is easy to read on screen, or in print.
+PoetryTeX defaults the fontface to [Calluna](http://www.exljbris.com/calluna.html) a nice font face by the [exljbris Font Foundry](http://www.exljbris.com/) which is easy to read on screen, or in print.
 However, by redefining the `defaultfontfamily` command you can change it to use any standard OpenType font installed on your system. To do this, simply write:
 
 	\renewcommand{\defaultfontfamily}{MyFontFamily}
