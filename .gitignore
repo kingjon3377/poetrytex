@@ -9,7 +9,7 @@ Desktop.ini
 .*.sw[a-z]
 *.un~
 Session.vim
-doc
+docs
 node_modules
 temp
 *.aux
