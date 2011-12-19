@@ -65,6 +65,10 @@ You can also reset, or manually set the value of the poem number by modifying th
 The `\maketoc` and `\maketop` commands are defined to provide you with a nice table of contents and table of poems respectively.
 By default, the table of poems is listed in the table of contents. If you do not want the table of poems listed, you can use the command `\hidetopintoc`.
 
+If you want to link to a poem outside of the tables, you can call the `\linktopoem` command.
+The optional first argument specifies the number of the poem to link to, and the second specifies the link text.
+If no first argument is given, the second is used as both the link destination and text.
+
 ## Titles
 
 Just like a book or article, you can make a title page in PoetryTex using `\maketitle`, however, maketitle clears the normal `\title` command so that it can't be used elsewhere in the document.

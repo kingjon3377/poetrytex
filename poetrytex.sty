@@ -1,123 +1,79 @@
-% !TEX TS-program = xelatex
-% !TEX encoding = UTF-8
-% Copyright 2011 Sam Whited <sam@samwhited.com>
-% Licensed under the Creative Commons Attribution 3.0 Unported License
-% (CC BY 3.0)
-% https://creativecommons.org/licenses/by/3.0/
+% **PoetryTeX** is a TeX package designed to aid in the formatting and typesetting
+% of anthologies of poetry and other writings. It was designed to work with any TeX
+% engine that supports direct Unicode input and OpenType fonts, specifically XeLaTeX.
 
-% https://github.com/SamWhited/poetrytex
+%### License
 
-% This package is designed to work with TeX engines that directly
-% process UTF8 input and use Unicode and OpenType fonts.
+% PoetryTeX is maintained by [Sam Whited](https://samwhited.com).
+%
+% The [source for PoetryTeX](https://github.com/SamWhited/poetrytex) is available on [GitHub](https://github.com)
+% and released under the Creative Commons Attribution 3.0 License ([CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)).
 
+%### Documentation
+
+% This documentation was generated from [Markdown](http://daringfireball.net/projects/markdown/)
+% embedded in **poetrytex.sty** using [Docco](http://jashkenas.github.com/docco/), a
+% literate-programming-style documentation generator.
+
+%### Using PoetryTeX
+
+% To install PoetryTeX from the command line, first make sure that you have [Git](http://git-scm.com/) installed,
+% then navigate to your TeX package directory and run:
+%
+%     git clone git://github.com/SamWhited/poetrytex.git
+%
+
+%### Package Setup
+
+% Provide the `poetrytex` package to our TeX engine.
+% Because PoetryTeX is provided as a package, using it is as easy as calling
+% one of the following commands in the preamble of our document:
+%
+%     \usepackage{poetrytex}
+%     \RequirePackage{poetrytex}
+%
 \ProvidesPackage{poetrytex}
 
-\RequirePackage{parskip}
+% Require the `fontspec` and `hyperref` packages.
 \RequirePackage{fontspec}
-\RequirePackage{multicol}
 \RequirePackage[pdfborder=0, bookmarks, colorlinks=false]{hyperref}
 
-% Disable Chapter, Section, and Subsection numbering
-\setcounter{secnumdepth}{-1} 
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{3mm}
+% Disable Chapter, Section, and Subsection numbering.
+\setcounter{secnumdepth}{-1}
 
-% Default to Calluna by exljbris
-% This should probably be changed, but I like Calluna...
-\newcommand{\defaultfontfamily}[0]{Calluna}
-
-% Allow the use of standard LaTeX mappings such as "---" for em-dashes.
-\defaultfontfeatures{Mapping=tex-text, Ligatures=Common}
-
-\setromanfont{\defaultfontfamily}
-\newfontfamily\useligatures[Mapping=tex-text, Ligatures={Common, Rare}]{\defaultfontfamily}
-\newfontfamily\usediscretionary[Mapping=tex-text, Ligatures={Discretionary, Common, Rare}]{\defaultfontfamily}
-\newfontfamily\useordinals[Mapping=tex-text,VerticalPosition=Ordinal]{\defaultfontfamily}
-\newcommand{\altern}[1]{{\fontspec{\defaultfontfamily:+salt}#1}}
-\font\capital="\defaultfontfamily:+salt" at 18pt
-\font\alternsmall="\defaultfontfamily:+salt" at 8pt
-
-\newcommand{\poemtitlefont}{\normalfont\bfseries\large\centering}
-
-\renewcommand{\listtablename}{List of Poems}
-
-\renewcommand{\subsubsection}[1]{
-	\vspace{0.3cm}
-	\centerline{\textbf{#1}}
-	\vspace{0.2cm}
-}
-
-\newcommand{\thegroup}[0]{0000}
-\newcounter{poemnum}
-
-\newcommand{\numberpoems}{\def\@numberpoems{}}
-\newcommand{\numbertop}{\def\@numbertop{}}
-\newcommand{\resetnumongroup}{\def\@resetnumongroup{}}
-\newcommand{\hidetopintoc}{\def\@hidetopintoc{}}
-
-\newcommand{\poemgroup}[1]{
-	\ifx \@resetnumongroup \@undefined
-		\relax
-	\else
-		\setcounter{poemnum}{0}
-	\fi
-	\cleardoublepage
-	\renewcommand{\thegroup}[0]{#1}
-	\vspace*{\fill}
-	\pagestyle{empty}
-	\begin{center}
-		{\usediscretionary
-			\section{#1}
-			\addcontentsline{lot}{section}{#1}
-		}
-	\end{center}
-	\vspace*{\fill}
-	\clearpage
-}
-
-\newenvironment{annotation}[1]{
-	\cleardoublepage
-	\poetryheadings
-	\begin{flushleft}
-	\subsection{#1}
-}
-{
-
-	\end{flushleft}
-	\clearpage
-}
-
-\newenvironment{poem}[3][verse]{
-	\def\@wrapenvironment{#1}
-	\poetryheadings
-	\addtocounter{poemnum}{1}
-	\begin{center}
-		\phantomsection
-		\addcontentsline{lot}{subsection}{\ifx\@numbertop\@undefined\relax\else\arabic{poemnum}.\ \fi#2}
-		% Has smaller margins than \subsection
-		{\poemtitlefont \ifx\@numberpoems\@undefined\relax\else\arabic{poemnum}\\\fi#2}\\
-		#3
-	\end{center}
-	\begin{\@wrapenvironment}
-}
-{
-	\end{\@wrapenvironment}
-	\clearpage
-}
-
-\newcommand{\poetryheadings}[0]{
-	\pagestyle{myheadings}
-	\markboth{ | \MakeUppercase{\thetitle}\hfill }{\hfill\MakeUppercase{\thegroup}\ | }
-}
-
-\setcounter{tocdepth}{2}
-
+% Set some defaults for a few basic commands.
 \def\thetitle{Title}
 \def\thesubtitle{Subtitle}
 \def\theauthor{Author}
 \def\thedate{}
 \def\thededication{}
 
+% Set the title, author, and date to the defaults we defined above.
+% The other commands are required because `\maketitle` clears `\title`
+% and we might want to use it elsewhere (in the page headings, for instance).
+\title{\thetitle\ifx\thesubtitle\@undefined\relax\else\\\thesubtitle\fi}
+\author{\theauthor}
+\date{\thedate}
+
+% Renew the `subsubsection` command to use smaller margins.
+\renewcommand{\subsubsection}[1]{
+	\vspace{0.3cm}
+	\centerline{\textbf{#1}}
+	\vspace{0.2cm}
+}
+
+% Setup the default document headings and provide a command for inserting them
+% on a page. To create your own headings, redefine `\poetryheadings` like so:
+%
+%	\pagestyle{myheadings}
+%	\markboth{ | First heading\hfill }{\hfill Other heading\ | }
+%
+\newcommand{\poetryheadings}[0]{
+	\pagestyle{myheadings}
+	\markboth{ | \MakeUppercase{\thetitle}\hfill }{\hfill\MakeUppercase{\thegroup}\ | }
+}
+
+% Make a nice dedication page for the document.
 \newcommand{\makededication}[0]{
 	\thispagestyle{empty}
 	\vspace*{\fill}
@@ -127,6 +83,39 @@
 	\vspace*{\fill}
 }
 
+%### Tables and Links
+
+% Each poem automatically has a label applied to it so that we can link
+% directly to them in footnotes, annotations, etc.
+% This label should not conflict with any user defined labels, so provide
+% a prefix for the label to make it a bit less likely to collide.
+% There is really no reason to ever change this.
+\def\@poemlabeltext{poetexpoem:}
+
+% Links directly to a poem by number.
+% The optional first argument specifies the number of the poem, and the second
+% specifies the link text. If no first argument is given, the second is used as both the link
+% destination and text.
+\newcommand{\linktopoem}[2][false]{
+	\def\@firstarg{#1}
+	\def\@false{false}
+	\ifx \@firstarg \@false
+		\hyperref[\@poemlabeltext#2]{#2}\relax
+	\else
+		\hyperref[\@poemlabeltext#1]{#2}\relax
+	\fi
+}
+
+% Make the Table of Contents only display Sections and Subsections.
+\setcounter{tocdepth}{2}
+
+% Hides the Table of Poems from the Table of Contents when called.
+\newcommand{\hidetopintoc}{\def\@hidetopintoc{}}
+
+% Give the Table of Poems an appropriate title.
+\renewcommand{\listtablename}{List of Poems}
+
+% Make the **Table of Contents** and set the page styles.
 \newcommand{\maketoc}[0]{
 	\tableofcontents
 	\pagestyle{plain}
@@ -134,6 +123,7 @@
 	\thispagestyle{empty}
 }
 
+% Make the **Table of Poems** and add an entry to the ToC if required.
 \newcommand{\maketop}[0]{
 	\ifx \@hidetopintoc \@undefined
 		\cleardoublepage
@@ -145,6 +135,129 @@
 	\clearpage
 }
 
-\title{\thetitle\\\thesubtitle}
-\author{\theauthor}
-\date{\thedate}
+%### Numbering
+
+% Create counters that will be used to number each poem.
+% By default, `poemnum` and `absolutepoemnum` are the same, however
+% if `\resetnumongroup` has been called, the `poemnum` counter will be reset
+% each time the group changes, while the `absolutepoemnum` counter will continue
+% to increment.
+\newcounter{poemnum}
+\newcounter{absolutepoemnum}
+
+% Reset the numbering counter when the group changes.
+\newcommand{\resetnumongroup}{\def\@resetnumongroup{}}
+
+% Numbers the poems in the Table of Poems.
+\newcommand{\numbertop}{\def\@numbertop{}}
+
+% Create a number above each poem's title.
+\newcommand{\numberpoems}{\def\@numberpoems{}}
+
+%### Groups
+%
+% Collections made with PoetryTeX have the option of grouping poems into sections, or chapters.
+% Each of these groups has a title page, and entries in the Table of Contents and Table of Poems.
+
+% Holds the name of the current group. If you want to start a new group, but don't want to
+% create a title page, you can renew this command like so: `\renewcommand{\thegroup}{Group Name}`
+\def\thegroup{}
+
+% Create a group starting from the current location in the document.
+% This creates a title page for the group, and adds lines to the Table of Poems
+% and the Table of Contents.
+\newcommand{\poemgroup}[1]{
+	\ifx \@resetnumongroup \@undefined
+		\relax
+	\else
+		\setcounter{poemnum}{0}
+	\fi
+	\cleardoublepage
+	\renewcommand{\thegroup}{#1}
+	\vspace*{\fill}
+	\pagestyle{empty}
+	\begin{center}
+		\section{#1}
+		\addcontentsline{lot}{section}{#1}
+	\end{center}
+	\vspace*{\fill}
+	\clearpage
+}
+
+
+%### Fonts
+
+% Sets the default font to [Calluna](http://www.exljbris.com/calluna.html), a nice
+% typeface by the [exljbris Font Foundry](http://www.exljbris.com/).
+% Calluna is easy to read on screen, and looks great in print.
+\newcommand{\defaultfontfamily}[0]{Calluna}
+
+% Allow the use of standard LaTeX mappings such as "---" for em-dashes.
+\defaultfontfeatures{Mapping=tex-text, Ligatures=Common}
+
+% Set the default font to `\defaultfontfamily`.
+\setromanfont{\defaultfontfamily}
+
+% Create several new font families to make using ligatures easier.
+% Each of these is based on `\defaultfontfamily`.
+
+% `\useligatures` includes Common, and Rare ligatures,
+% `\usediscretionary` includes Common, Rare, and Discretionary ligatures,
+% `\useordinals` sets the vertical position of characters to Ordinal where available.
+\newfontfamily\useligatures[Mapping=tex-text, Ligatures={Common, Rare}]{\defaultfontfamily}
+\newfontfamily\usediscretionary[Mapping=tex-text, Ligatures={Discretionary, Common, Rare}]{\defaultfontfamily}
+\newfontfamily\useordinals[Mapping=tex-text,VerticalPosition=Ordinal]{\defaultfontfamily}
+
+% Prints the stylistic alternatives for any characters passed in using `\defaultfontfamily:+salt`
+\newcommand{\altern}[1]{{\fontspec{\defaultfontfamily:+salt}#1}}
+
+% Define the font options that should be used for poem titles.
+% By default, titles use the `\normalfont`, are bold, large, and centered.
+\newcommand{\poemtitlefont}{\normalfont\bfseries\large\centering}
+
+%### Poetry
+%
+% The two main environments defined by PoetryTeX are the `poem` environment, and the `annotation` environment.
+% Both environments clear the page afterwards, and use the `\poetryheadings` command to set the page headings.
+
+% The poem environment takes in a title and a subtitle (or authors name, or date, etc.) and will automatically list the
+% poem in the Table of Contents and the List of Poems. By default, it wraps everything in the `verse` environment.
+% To change this, you can optionally supply it with the name of another environment.
+% For example:
+%
+%     \begin{poem}[center]{Sonnet CL}
+%          % This poem will be centered!
+%     \end{poem}
+%
+\newenvironment{poem}[3][verse]{
+	\def\@wrapenvironment{#1}
+	\poetryheadings
+	\addtocounter{poemnum}{1}
+	\addtocounter{absolutepoemnum}{1}
+	\begin{center}
+		\phantomsection
+		\addcontentsline{lot}{subsection}{\ifx\@numbertop\@undefined\relax\else\arabic{poemnum}.\ \fi#2}
+		\label{\@poemlabeltext\arabic{absolutepoemnum}}
+		{\poemtitlefont \ifx\@numberpoems\@undefined\relax\else\arabic{poemnum}\\\fi#2}\\
+		#3
+	\end{center}
+	\begin{\@wrapenvironment}
+}
+{
+	\end{\@wrapenvironment}
+	\clearpage
+}
+
+% The `annotation` environment takes in a title, and is used for providing extra (prose) text.
+% Annotations will show up in the Table of Contents, but not in the List of Poems.
+\newenvironment{annotation}[1]{
+	\cleardoublepage
+	\poetryheadings
+	\begin{flushleft}
+	\subsection{#1}
+}
+{
+
+	\end{flushleft}
+	\clearpage
+}
