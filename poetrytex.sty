@@ -42,10 +42,14 @@
 \setcounter{secnumdepth}{-1}
 
 % Set some defaults for a few basic commands.
+% These can be changed by redefining the commands like so:
+%
+%     \renewcommand{\thetitle}{My Title}
+%
 \def\thetitle{Title}
 \def\thesubtitle{Subtitle}
 \def\theauthor{Author}
-\def\thedate{}
+\def\thedate{\today}
 \def\thededication{}
 
 % Set the title, author, and date to the defaults we defined above.
@@ -55,9 +59,22 @@
 \author{\theauthor}
 \date{\thedate}
 
-% Renew the `subsubsection` command to use smaller margins.
-\renewcommand{\subsubsection}[1]{
+% Renew the `\subsubsection` command to be centered, and use smaller margins.
+\renewcommand*{\subsubsection}{\@ifstar{\@subsubsectionStar}{\@subsubsectionNoStar}}
+
+% Used when `\subsubsection*` is called.
+% This version does not create an entry in the ToC.
+\newcommand*{\@subsubsectionStar}[1]{
 	\vspace{0.3cm}
+	\centerline{\textbf{#1}}
+	\vspace{0.2cm}
+}
+% Used when `\subsubsection` is called.
+% This version creates an entry in the ToC.
+\newcommand{\@subsubsectionNoStar}[1]{
+	\vspace{0.3cm}
+	\phantomsection
+	\addcontentsline{toc}{subsubsection}{#1}
 	\centerline{\textbf{#1}}
 	\vspace{0.2cm}
 }
@@ -109,14 +126,11 @@
 % Make the Table of Contents only display Sections and Subsections.
 \setcounter{tocdepth}{2}
 
-% Hides the Table of Poems from the Table of Contents when called.
-\newcommand{\hidetopintoc}{\def\@hidetopintoc{}}
-
 % Give the Table of Poems an appropriate title.
 \renewcommand{\listtablename}{List of Poems}
 
 % Make the **Table of Contents** and set the page styles.
-\newcommand{\maketoc}[0]{
+\newcommand{\maketoc}{
 	\tableofcontents
 	\pagestyle{plain}
 	\clearpage
@@ -124,12 +138,17 @@
 }
 
 % Make the **Table of Poems** and add an entry to the ToC if required.
-\newcommand{\maketop}[0]{
-	\ifx \@hidetopintoc \@undefined
-		\cleardoublepage
-		\phantomsection
-		\addcontentsline{toc}{section}{\listtablename}
-	\fi
+% To hide the ToC entry, simply call `\maketop*`.
+\newcommand*{\maketop}{\@ifstar{\@maketopStar}{\@maketopNoStar}}
+\newcommand*{\@maketopStar}{
+	\listoftables
+	\pagestyle{plain}
+	\clearpage
+}
+\newcommand{\@maketopNoStar}{
+	\cleardoublepage
+	\phantomsection
+	\addcontentsline{toc}{section}{\listtablename}
 	\listoftables
 	\pagestyle{plain}
 	\clearpage
@@ -165,16 +184,41 @@
 
 % Create a group starting from the current location in the document.
 % This creates a title page for the group, and adds lines to the Table of Poems
-% and the Table of Contents.
-\newcommand{\poemgroup}[1]{
+% and the Table of Contents unless the starred version of the command is called.
+\newcommand*{\poemgroup}{
+	\@ifstar{
+		\@poemgroupStar
+	}{
+		\@poemgroupNoStar
+	}
+}
+% Internal helper command that is called whenever `\poemgroup*` is called.
+\newcommand*{\@poemgroupStar}[1]{
 	\ifx \@resetnumongroup \@undefined
 		\relax
 	\else
 		\setcounter{poemnum}{0}
 	\fi
 	\cleardoublepage
-	\renewcommand{\thegroup}{#1}
 	\vspace*{\fill}
+	\renewcommand{\thegroup}{#1}
+	\pagestyle{empty}
+	\begin{center}
+		\section*{#1}
+	\end{center}
+	\vspace*{\fill}
+	\clearpage
+}
+% Internal helper command that is called whenever `\poemgroup` is called.
+\newcommand{\@poemgroupNoStar}[1]{
+	\ifx \@resetnumongroup \@undefined
+		\relax
+	\else
+		\setcounter{poemnum}{0}
+	\fi
+	\cleardoublepage
+	\vspace*{\fill}
+	\renewcommand{\thegroup}{#1}
 	\pagestyle{empty}
 	\begin{center}
 		\section{#1}
