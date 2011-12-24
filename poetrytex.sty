@@ -2,20 +2,26 @@
 % of anthologies of poetry and other writings. It was designed to work with any TeX
 % engine that supports direct Unicode input and OpenType fonts, specifically XeLaTeX.
 
+%
 %### License
+%
 
 % PoetryTeX is maintained by [Sam Whited](https://samwhited.com).
 %
 % The [source for PoetryTeX](https://github.com/SamWhited/poetrytex) is available on [GitHub](https://github.com)
 % and released under the Creative Commons Attribution 3.0 License ([CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)).
 
+%
 %### Documentation
+%
 
 % This documentation was generated from [Markdown](http://daringfireball.net/projects/markdown/)
 % embedded in **poetrytex.sty** using [Docco](http://jashkenas.github.com/docco/), a
 % literate-programming-style documentation generator.
 
+%
 %### Using PoetryTeX
+%
 
 % To install PoetryTeX from the command line, first make sure that you have [Git](http://git-scm.com/) installed,
 % then navigate to your TeX package directory and run:
@@ -130,8 +136,23 @@
 % Make the Table of Contents only display Sections and Subsections.
 \setcounter{tocdepth}{2}
 
-% Give the Table of Poems an appropriate title.
-\renewcommand{\listtablename}{List of Poems}
+% The `\toptitle` command is used to set the table of poems title.
+% To change the title everywhere it is used, renew `\toptitle` like so:
+%
+%	\renewcommand{\toptitle}{New Title}
+%
+% If you want to change the actual title on the table of poems, but keep it the same
+% elsewhere (in the ToC for instance), you can renew `\listtablename` directly:
+%
+%	\renewcommand{\listtablename}{\S\ \toptitle}
+%
+\newcommand{\toptitle}{List of Poems}
+
+% Set the title of the table of poems to the default.
+\renewcommand{\listtablename}{\toptitle}
+
+% The type of entry that will be created in the Table of Poems for each `poem` environment.
+\newcommand{\topentrytype}{subsection}
 
 % Make the **Table of Contents** and set the page styles.
 \newcommand{\maketoc}{
@@ -152,7 +173,7 @@
 \newcommand{\@ptmaketopNoStar}{
 	\cleardoublepage
 	\phantomsection
-	\addcontentsline{toc}{section}{\listtablename}
+	\addcontentsline{toc}{section}{\toptitle}
 	\listoftables
 	\pagestyle{plain}
 	\clearpage
@@ -179,8 +200,10 @@
 % Create a number above each poem's title.
 \newcommand{\numberpoems}{\def\@ptnumberpoems{}}
 
+%
 %### Groups
 %
+
 % Collections made with PoetryTeX have the option of grouping poems into sections, or chapters.
 % Each of these groups has a title page, and entries in the Table of Contents and Table of Poems.
 
@@ -324,11 +347,11 @@
 \newlength{\stanzaskip}
 \setlength{\stanzaskip}{0.7em}
 
-% The length, `\ptgap' is the length to indent lines by. It is set at 2em by default.
+% The length, `\ptgap` is the length to indent lines by. It is set at 2em by default.
 \newlength{\ptgap}
 \setlength{\ptgap}{2em}
 
-% The `\ptind' command is short for `\hspace{\ptgap}'.
+% The `\ptind` command is short for `\hspace{\ptgap}`.
 \newcommand*{\ptind}{
 	\@ifstar{
 		\@ptindStar
@@ -339,6 +362,3 @@
 % Helper functions for `\ptind` and `\ptind*`.
 \newcommand*{\@ptindStar}{\hspace*{\ptgap}}
 \newcommand{\@ptindNoStar}{\hspace{\ptgap}}
-
-% The type of entry that will be created in the Table of Poems for each `poem' environment.
-\newcommand{\topentrytype}{subsection}
