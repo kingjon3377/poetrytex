@@ -23,7 +23,9 @@
 %     git clone git://github.com/SamWhited/poetrytex.git
 %
 
+%
 %### Package Setup
+%
 
 % Provide the `poetrytex` package to our TeX engine.
 % Because PoetryTeX is provided as a package, using it is as easy as calling
@@ -55,23 +57,23 @@
 % Set the title, author, and date to the defaults we defined above.
 % The other commands are required because `\maketitle` clears `\title`
 % and we might want to use it elsewhere (in the page headings, for instance).
-\title{\thetitle\ifx\thesubtitle\@undefined\relax\else\\\thesubtitle\fi}
+\title{\thetitle\ifx\thesubtitle\@ptundefined\relax\else\\\thesubtitle\fi}
 \author{\theauthor}
 \date{\thedate}
 
 % Renew the `\subsubsection` command to be centered, and use smaller margins.
-\renewcommand*{\subsubsection}{\@ifstar{\@subsubsectionStar}{\@subsubsectionNoStar}}
+\renewcommand*{\subsubsection}{\@ifstar{\@ptsubsubsectionStar}{\@ptsubsubsectionNoStar}}
 
 % Used when `\subsubsection*` is called.
 % This version does not create an entry in the ToC.
-\newcommand*{\@subsubsectionStar}[1]{
+\newcommand*{\@ptsubsubsectionStar}[1]{
 	\vspace{0.3cm}
 	\centerline{\textbf{#1}}
 	\vspace{0.2cm}
 }
 % Used when `\subsubsection` is called.
 % This version creates an entry in the ToC.
-\newcommand{\@subsubsectionNoStar}[1]{
+\newcommand{\@ptsubsubsectionNoStar}[1]{
 	\vspace{0.3cm}
 	\phantomsection
 	\addcontentsline{toc}{subsubsection}{#1}
@@ -100,26 +102,28 @@
 	\vspace*{\fill}
 }
 
+%
 %### Tables and Links
+%
 
 % Each poem automatically has a label applied to it so that we can link
 % directly to them in footnotes, annotations, etc.
 % This label should not conflict with any user defined labels, so provide
 % a prefix for the label to make it a bit less likely to collide.
 % There is really no reason to ever change this.
-\def\@poemlabeltext{poetexpoem:}
+\def\@ptpoemlabeltext{poetexpoem:}
 
 % Links directly to a poem by number.
 % The optional first argument specifies the number of the poem, and the second
 % specifies the link text. If no first argument is given, the second is used as both the link
 % destination and text.
 \newcommand{\linktopoem}[2][false]{
-	\def\@firstarg{#1}
-	\def\@false{false}
-	\ifx \@firstarg \@false
-		\hyperref[\@poemlabeltext#2]{#2}\relax
+	\def\@ptfirstarg{#1}
+	\def\@ptfalse{false}
+	\ifx \@ptfirstarg \@ptfalse
+		\hyperref[\@ptpoemlabeltext#2]{#2}\relax
 	\else
-		\hyperref[\@poemlabeltext#1]{#2}\relax
+		\hyperref[\@ptpoemlabeltext#1]{#2}\relax
 	\fi
 }
 
@@ -139,13 +143,13 @@
 
 % Make the **Table of Poems** and add an entry to the ToC if required.
 % To hide the ToC entry, simply call `\maketop*`.
-\newcommand*{\maketop}{\@ifstar{\@maketopStar}{\@maketopNoStar}}
-\newcommand*{\@maketopStar}{
+\newcommand*{\maketop}{\@ifstar{\@ptmaketopStar}{\@ptmaketopNoStar}}
+\newcommand*{\@ptmaketopStar}{
 	\listoftables
 	\pagestyle{plain}
 	\clearpage
 }
-\newcommand{\@maketopNoStar}{
+\newcommand{\@ptmaketopNoStar}{
 	\cleardoublepage
 	\phantomsection
 	\addcontentsline{toc}{section}{\listtablename}
@@ -154,7 +158,9 @@
 	\clearpage
 }
 
+%
 %### Numbering
+%
 
 % Create counters that will be used to number each poem.
 % By default, `poemnum` and `absolutepoemnum` are the same, however
@@ -165,13 +171,13 @@
 \newcounter{absolutepoemnum}
 
 % Reset the numbering counter when the group changes.
-\newcommand{\resetnumongroup}{\def\@resetnumongroup{}}
+\newcommand{\resetnumongroup}{\def\@ptresetnumongroup{}}
 
 % Numbers the poems in the Table of Poems.
-\newcommand{\numbertop}{\def\@numbertop{}}
+\newcommand{\numbertop}{\def\@ptnumbertop{}}
 
 % Create a number above each poem's title.
-\newcommand{\numberpoems}{\def\@numberpoems{}}
+\newcommand{\numberpoems}{\def\@ptnumberpoems{}}
 
 %### Groups
 %
@@ -187,14 +193,14 @@
 % and the Table of Contents unless the starred version of the command is called.
 \newcommand*{\poemgroup}{
 	\@ifstar{
-		\@poemgroupStar
+		\@ptpoemgroupStar
 	}{
-		\@poemgroupNoStar
+		\@ptpoemgroupNoStar
 	}
 }
 % Internal helper command that is called whenever `\poemgroup*` is called.
-\newcommand*{\@poemgroupStar}[1]{
-	\ifx \@resetnumongroup \@undefined
+\newcommand*{\@ptpoemgroupStar}[1]{
+	\ifx \@ptresetnumongroup \@ptundefined
 		\relax
 	\else
 		\setcounter{poemnum}{0}
@@ -210,8 +216,8 @@
 	\clearpage
 }
 % Internal helper command that is called whenever `\poemgroup` is called.
-\newcommand{\@poemgroupNoStar}[1]{
-	\ifx \@resetnumongroup \@undefined
+\newcommand{\@ptpoemgroupNoStar}[1]{
+	\ifx \@ptresetnumongroup \@ptundefined
 		\relax
 	\else
 		\setcounter{poemnum}{0}
@@ -228,8 +234,9 @@
 	\clearpage
 }
 
-
+%
 %### Fonts
+%
 
 % Sets the default font to [Calluna](http://www.exljbris.com/calluna.html), a nice
 % typeface by the [exljbris Font Foundry](http://www.exljbris.com/).
@@ -259,8 +266,10 @@
 % By default, titles use the `\normalfont`, are bold, large, and centered.
 \newcommand{\poemtitlefont}{\normalfont\bfseries\large\centering}
 
+%
 %### Poetry
 %
+
 % The two main environments defined by PoetryTeX are the `poem` environment, and the `annotation` environment.
 % Both environments clear the page afterwards, and use the `\poetryheadings` command to set the page headings.
 
@@ -274,21 +283,22 @@
 %     \end{poem}
 %
 \newenvironment{poem}[3][verse]{
-	\def\@wrapenvironment{#1}
+	\def\@ptwrapenvironment{#1}
 	\poetryheadings
 	\addtocounter{poemnum}{1}
 	\addtocounter{absolutepoemnum}{1}
 	\begin{center}
 		\phantomsection
-		\addcontentsline{lot}{subsection}{\ifx\@numbertop\@undefined\relax\else\arabic{poemnum}.\ \fi#2}
-		\label{\@poemlabeltext\arabic{absolutepoemnum}}
-		{\poemtitlefont \ifx\@numberpoems\@undefined\relax\else\arabic{poemnum}\\\fi#2}\\
+		\addcontentsline{lot}{\topentrytype}{\ifx\@ptnumbertop\@ptundefined\relax\else\arabic{poemnum}.\ \fi#2}
+		\label{\@ptpoemlabeltext\arabic{absolutepoemnum}}
+		{\poemtitlefont \ifx\@ptnumberpoems\@ptundefined\relax\else\arabic{poemnum}\\\fi#2}\\
 		#3
 	\end{center}
-	\begin{\@wrapenvironment}
+	\begin{\@ptwrapenvironment}
+	\setlength{\parskip}{\stanzaskip}
 }
 {
-	\end{\@wrapenvironment}
+	\end{\@ptwrapenvironment}
 	\clearpage
 }
 
@@ -305,3 +315,30 @@
 	\end{flushleft}
 	\clearpage
 }
+
+%
+%### Formatting
+%
+
+% Set the length of `\stanzaskip` to change the spacing between stanzas. It is set at 0.7em by default.
+\newlength{\stanzaskip}
+\setlength{\stanzaskip}{0.7em}
+
+% The length, `\ptgap' is the length to indent lines by. It is set at 2em by default.
+\newlength{\ptgap}
+\setlength{\ptgap}{2em}
+
+% The `\ptind' command is short for `\hspace{\ptgap}'.
+\newcommand*{\ptind}{
+	\@ifstar{
+		\@ptindStar
+	}{
+		\@ptindNoStar
+	}
+}
+% Helper functions for `\ptind` and `\ptind*`.
+\newcommand*{\@ptindStar}{\hspace*{\ptgap}}
+\newcommand{\@ptindNoStar}{\hspace{\ptgap}}
+
+% The type of entry that will be created in the Table of Poems for each `poem' environment.
+\newcommand{\topentrytype}{subsection}
