@@ -287,7 +287,7 @@
 
 % Define the font options that should be used for poem titles.
 % By default, titles use the `\normalfont`, are bold, large, and centered.
-\newcommand{\poemtitlefont}{\normalfont\bfseries\large\centering}
+\newcommand*{\poemtitleformat}{\normalfont\bfseries\large\centering}
 
 %
 %### Poetry
@@ -314,11 +314,11 @@
 		\phantomsection
 		\addcontentsline{lot}{\topentrytype}{\ifx\@ptnumbertop\@ptundefined\relax\else\arabic{poemnum}.\ \fi#2}
 		\label{\@ptpoemlabeltext\arabic{absolutepoemnum}}
-		{\poemtitlefont \ifx\@ptnumberpoems\@ptundefined\relax\else\arabic{poemnum}\\\fi#2}\\
+		{\poemtitleformat \ifx\@ptnumberpoems\@ptundefined\relax\else\arabic{poemnum}\\\fi#2}\\
 		#3
 	\end{center}
 	\begin{\@ptwrapenvironment}
-	\setlength{\parskip}{\stanzaskip}
+	\setlength{\parskip}{\stanzaparskip}
 }
 {
 	\end{\@ptwrapenvironment}
@@ -343,9 +343,16 @@
 %### Formatting
 %
 
-% Set the length of `\stanzaskip` to change the spacing between stanzas. It is set at 0.7em by default.
-\newlength{\stanzaskip}
-\setlength{\stanzaskip}{0.7em}
+% Below are some basic formatting options. PoetryTeX was mostly designed for formatting an anthology of
+% writings, and leaves the formatting of individual poems or stories up to the author, and other packages.
+% Most of these options can be found in the `verse` package. However, they are included below in case
+% you do not want to override the default `verse` environment or want to use a different package
+% for formatting your work.
+
+% Set the length of `\stanzaparskip` outside of the poem environment to change the spacing
+% between stanzas. It is set at 0.7em by default.
+\newlength{\stanzaparskip}
+\setlength{\stanzaparskip}{0.7em}
 
 % The length, `\ptgap` is the length to indent lines by. It is set at 2em by default.
 \newlength{\ptgap}
