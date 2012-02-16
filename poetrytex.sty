@@ -77,6 +77,7 @@
 	\centerline{\textbf{#1}}
 	\vspace{0.2cm}
 }
+
 % Used when `\subsubsection` is called.
 % This version creates an entry in the ToC.
 \newcommand{\@ptsubsubsectionNoStar}[1]{
@@ -221,6 +222,7 @@
 		\@ptpoemgroupNoStar
 	}
 }
+
 % Internal helper command that is called whenever `\poemgroup*` is called.
 \newcommand*{\@ptpoemgroupStar}[1]{
 	\ifx \@ptresetnumongroup \@ptundefined
@@ -238,6 +240,7 @@
 	\vspace*{\fill}
 	\clearpage
 }
+
 % Internal helper command that is called whenever `\poemgroup` is called.
 \newcommand{\@ptpoemgroupNoStar}[1]{
 	\ifx \@ptresetnumongroup \@ptundefined
@@ -322,7 +325,11 @@
 }
 {
 	\end{\@ptwrapenvironment}
-	\clearpage
+	\ifx \@ptclearpageafterpoem \@ptundefined
+		\relax
+	\else
+		\clearpage
+	\fi
 }
 
 % The `annotation` environment takes in a title, and is used for providing extra (prose) text.
@@ -354,6 +361,9 @@
 \newlength{\stanzaparskip}
 \setlength{\stanzaparskip}{0.7em}
 
+% Clear the page after each poem.
+\newcommand{\clearpageafterpoem}{\def\@ptclearpageafterpoem{}}
+
 % The length, `\ptgap` is the length to indent lines by. It is set at 2em by default.
 \newlength{\ptgap}
 \setlength{\ptgap}{2em}
@@ -366,6 +376,7 @@
 		\@ptindNoStar
 	}
 }
+
 % Helper functions for `\ptind` and `\ptind*`.
 \newcommand*{\@ptindStar}{\hspace*{\ptgap}}
 \newcommand{\@ptindNoStar}{\hspace{\ptgap}}
