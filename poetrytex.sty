@@ -72,7 +72,7 @@
 
 % Used when `\subsubsection*` is called.
 % This version does not create an entry in the ToC.
-\newcommand*{\@ptsubsubsectionStar}[1]{
+\newcommand*{\@ptsubsubsectionStar}[1]{%
 	\vspace{0.3cm}
 	\centerline{\textbf{#1}}
 	\vspace{0.2cm}
@@ -80,7 +80,7 @@
 
 % Used when `\subsubsection` is called.
 % This version creates an entry in the ToC.
-\newcommand{\@ptsubsubsectionNoStar}[1]{
+\newcommand{\@ptsubsubsectionNoStar}[1]{%
 	\vspace{0.3cm}
 	\phantomsection
 	\addcontentsline{toc}{subsubsection}{#1}
@@ -94,13 +94,13 @@
 %	\pagestyle{myheadings}
 %	\markboth{ | First heading\hfill }{\hfill Other heading\ | }
 %
-\newcommand{\poetryheadings}[0]{
+\newcommand{\poetryheadings}[0]{%
 	\pagestyle{myheadings}
 	\markboth{ | \MakeUppercase{\thetitle}\hfill }{\hfill\MakeUppercase{\thegroup}\ | }
 }
 
 % Make a nice dedication page for the document.
-\newcommand{\makededication}[0]{
+\newcommand{\makededication}[0]{%
 	\thispagestyle{empty}
 	\vspace*{\fill}
 	\begin{flushright}
@@ -124,7 +124,7 @@
 % The optional first argument specifies the number of the poem, and the second
 % specifies the link text. If no first argument is given, the second is used as both the link
 % destination and text.
-\newcommand{\linktopoem}[2][false]{
+\newcommand{\linktopoem}[2][false]{%
 	\def\@ptfirstarg{#1}
 	\def\@ptfalse{false}
 	\ifx \@ptfirstarg \@ptfalse
@@ -156,7 +156,7 @@
 \newcommand{\topentrytype}{subsection}
 
 % Make the **Table of Contents** and set the page styles.
-\newcommand{\maketoc}{
+\newcommand{\maketoc}{%
 	\tableofcontents
 	\pagestyle{plain}
 	\clearpage
@@ -166,12 +166,12 @@
 % Make the **Table of Poems** and add an entry to the ToC if required.
 % To hide the ToC entry, simply call `\maketop*`.
 \newcommand*{\maketop}{\@ifstar{\@ptmaketopStar}{\@ptmaketopNoStar}}
-\newcommand*{\@ptmaketopStar}{
+\newcommand*{\@ptmaketopStar}{%
 	\listoftables
 	\pagestyle{plain}
 	\clearpage
 }
-\newcommand{\@ptmaketopNoStar}{
+\newcommand{\@ptmaketopNoStar}{%
 	\cleardoublepage
 	\phantomsection
 	\addcontentsline{toc}{section}{\toptitle}
@@ -215,16 +215,16 @@
 % Create a group starting from the current location in the document.
 % This creates a title page for the group, and adds lines to the Table of Poems
 % and the Table of Contents unless the starred version of the command is called.
-\newcommand*{\poemgroup}{
-	\@ifstar{
+\newcommand*{\poemgroup}{%
+	\@ifstar{%
 		\@ptpoemgroupStar
-	}{
+	}{%
 		\@ptpoemgroupNoStar
 	}
 }
 
 % Internal helper command that is called whenever `\poemgroup*` is called.
-\newcommand*{\@ptpoemgroupStar}[1]{
+\newcommand*{\@ptpoemgroupStar}[1]{%
 	\ifx \@ptresetnumongroup \@ptundefined
 		\relax
 	\else
@@ -242,7 +242,7 @@
 }
 
 % Internal helper command that is called whenever `\poemgroup` is called.
-\newcommand{\@ptpoemgroupNoStar}[1]{
+\newcommand{\@ptpoemgroupNoStar}[1]{%
 	\ifx \@ptresetnumongroup \@ptundefined
 		\relax
 	\else
@@ -308,7 +308,7 @@
 %          % This poem will be centered!
 %     \end{poem}
 %
-\newenvironment{poem}[3][verse]{
+\newenvironment{poem}[3][verse]{%
 	\def\@ptwrapenvironment{#1}
 	\poetryheadings
 	\addtocounter{poemnum}{1}
@@ -322,8 +322,7 @@
 	\end{center}
 	\begin{\@ptwrapenvironment}
 	\setlength{\parskip}{\stanzaparskip}
-}
-{
+}{%
 	\end{\@ptwrapenvironment}
 	\ifx \@ptclearpageafterpoem \@ptundefined
 		\relax
@@ -334,13 +333,12 @@
 
 % The `annotation` environment takes in a title, and is used for providing extra (prose) text.
 % Annotations will show up in the Table of Contents, but not in the List of Poems.
-\newenvironment{annotation}[1]{
+\newenvironment{annotation}[1]{%
 	\cleardoublepage
 	\poetryheadings
 	\begin{flushleft}
 	\subsection{#1}
-}
-{
+}{%
 
 	\end{flushleft}
 	\clearpage
@@ -369,10 +367,10 @@
 \setlength{\ptgap}{2em}
 
 % The `\ptind` command is short for `\hspace{\ptgap}`.
-\newcommand*{\ptind}{
-	\@ifstar{
+\newcommand*{\ptind}{%
+	\@ifstar{%
 		\@ptindStar
-	}{
+	}{%
 		\@ptindNoStar
 	}
 }
@@ -380,3 +378,23 @@
 % Helper functions for `\ptind` and `\ptind*`.
 \newcommand*{\@ptindStar}{\hspace*{\ptgap}}
 \newcommand{\@ptindNoStar}{\hspace{\ptgap}}
+
+% The length, `\ptspacergap` is the length to indent stanza spacers by.
+\newlength{\ptspacergap}
+\setlength{\ptspacergap}{4em}
+
+% Define the character to use for a spacer (defaults to a section mark).
+\def\ptspacerchar{\S}
+
+% The `\ptspacer` command prints `\ptspacerchar` 3 times indented by `\ptspacergap`.
+\newcommand*{\ptspacer}{%
+  \@ifstar{%
+    \@ptspacerStar
+  }{%
+    \@ptspacerNoStar
+  }
+}
+
+% Helper functions for `\ptspacer` and `\ptspacer*`.
+\newcommand*{\@ptspacerStar}{\hspace*{\ptspacergap}\ptspacerchar\ptspacerchar\ptspacerchar}
+\newcommand{\@ptspacerNoStar}{\hspace{\ptspacergap}\ptspacerchar\ptspacerchar\ptspacerchar}
