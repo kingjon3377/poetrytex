@@ -52,7 +52,7 @@
 % Set some defaults for a few basic commands.
 % These can be changed by redefining the commands like so:
 %
-%     \renewcommand{\pttitle}{My Title}
+%     \renewcommand*{\pttitle}{My Title}
 %
 \newcommand*{\pttitle}{Title}
 \newcommand*{\ptsubtitle}{Subtitle}
@@ -80,7 +80,7 @@
 
 % Used when `\subsubsection` is called.
 % This version creates an entry in the ToC.
-\newcommand{\@ptsubsubsectionNoStar}[1]{%
+\newcommand*{\@ptsubsubsectionNoStar}[1]{%
 	\vspace{0.3cm}
 	\phantomsection
 	\addcontentsline{toc}{subsubsection}{#1}
@@ -94,13 +94,13 @@
 %	\pagestyle{myheadings}
 %	\markboth{ | First heading\hfill }{\hfill Other heading\ | }
 %
-\newcommand{\poetryheadings}[0]{%
+\newcommand*{\poetryheadings}[0]{%
 	\pagestyle{myheadings}
 	\markboth{ | \MakeUppercase{\pttitle}\hfill }{\hfill\MakeUppercase{\ptgroup}\ | }
 }
 
 % Make a nice dedication page for the document.
-\newcommand{\makededication}[0]{%
+\newcommand*{\makededication}[0]{%
 	\thispagestyle{empty}
 	\vspace*{\fill}
 	\begin{flushright}
@@ -118,15 +118,15 @@
 % This label should not conflict with any user defined labels, so provide
 % a prefix for the label to make it a bit less likely to collide.
 % There is really no reason to ever change this.
-\def\@ptpoemlabeltext{poetexpoem:}
+\newcommand*{\@ptpoemlabeltext}{poetexpoem:}
 
 % Links directly to a poem by number.
 % The optional first argument specifies the number of the poem, and the second
 % specifies the link text. If no first argument is given, the second is used as both the link
 % destination and text.
-\newcommand{\linktopoem}[2][false]{%
-	\def\@ptfirstarg{#1}
-	\def\@ptfalse{false}
+\newcommand*{\linktopoem}[2][false]{%
+	\newcommand*{\@ptfirstarg}{#1}
+	\newcommand*{\@ptfalse}{false}
 	\ifx \@ptfirstarg \@ptfalse
 		\hyperref[\@ptpoemlabeltext#2]{#2}\relax
 	\else
@@ -140,23 +140,23 @@
 % The `\toptitle` command is used to set the table of poems title.
 % To change the title everywhere it is used, renew `\toptitle` like so:
 %
-%	\renewcommand{\toptitle}{New Title}
+%	\renewcommand*{\toptitle}{New Title}
 %
 % If you want to change the actual title on the table of poems, but keep it the same
 % elsewhere (in the ToC for instance), you can renew `\listtablename` directly:
 %
-%	\renewcommand{\listtablename}{\S\ \toptitle}
+%	\renewcommand*{\listtablename}{\S\ \toptitle}
 %
-\newcommand{\toptitle}{List of Poems}
+\newcommand*{\toptitle}{List of Poems}
 
 % Set the title of the table of poems to the default.
-\renewcommand{\listtablename}{\toptitle}
+\renewcommand*{\listtablename}{\toptitle}
 
 % The type of entry that will be created in the Table of Poems for each `poem` environment.
-\newcommand{\topentrytype}{subsection}
+\newcommand*{\topentrytype}{subsection}
 
 % Make the **Table of Contents** and set the page styles.
-\newcommand{\maketoc}{%
+\newcommand*{\maketoc}{%
 	\tableofcontents
 	\pagestyle{plain}
 	\clearpage
@@ -171,7 +171,7 @@
 	\pagestyle{plain}
 	\clearpage
 }
-\newcommand{\@ptmaketopNoStar}{%
+\newcommand*{\@ptmaketopNoStar}{%
 	\cleardoublepage
 	\phantomsection
 	\addcontentsline{toc}{section}{\toptitle}
@@ -193,13 +193,13 @@
 \newcounter{absolutepoemnum}
 
 % Reset the numbering counter when the group changes.
-\newcommand{\resetnumongroup}{\def\@ptresetnumongroup{}}
+\newcommand*{\resetnumongroup}{\newcommand*{\@ptresetnumongroup}{}}
 
 % Numbers the poems in the Table of Poems.
-\newcommand{\numbertop}{\def\@ptnumbertop{}}
+\newcommand*{\numbertop}{\newcommand*{\@ptnumbertop}{}}
 
 % Create a number above each poem's title.
-\newcommand{\numberpoems}{\def\@ptnumberpoems{}}
+\newcommand*{\numberpoems}{\newcommand*{\@ptnumberpoems}{}}
 
 %
 %### Groups
@@ -209,8 +209,8 @@
 % Each of these groups has a title page, and entries in the Table of Contents and Table of Poems.
 
 % Holds the name of the current group. If you want to start a new group, but don't want to
-% create a title page, you can renew this command like so: `\renewcommand{\ptgroup}{Group Name}`
-\def\ptgroup{}
+% create a title page, you can renew this command like so: `\renewcommand*{\ptgroup}{Group Name}`
+\newcommand*{\ptgroup}{}
 
 % Create a group starting from the current location in the document.
 % This creates a title page for the group, and adds lines to the Table of Poems
@@ -232,7 +232,7 @@
 	\fi
 	\cleardoublepage
 	\vspace*{\fill}
-	\renewcommand{\ptgroup}{#1}
+	\renewcommand*{\ptgroup}{#1}
 	\pagestyle{empty}
 	\begin{center}
 		\section*{#1}
@@ -242,7 +242,7 @@
 }
 
 % Internal helper command that is called whenever `\poemgroup` is called.
-\newcommand{\@ptpoemgroupNoStar}[1]{%
+\newcommand*{\@ptpoemgroupNoStar}[1]{%
 	\ifx \@ptresetnumongroup \@ptundefined
 		\relax
 	\else
@@ -250,7 +250,7 @@
 	\fi
 	\cleardoublepage
 	\vspace*{\fill}
-	\renewcommand{\ptgroup}{#1}
+	\renewcommand*{\ptgroup}{#1}
 	\pagestyle{empty}
 	\begin{center}
 		\section{#1}
@@ -267,7 +267,7 @@
 % Sets the default font to [Calluna](http://www.exljbris.com/calluna.html), a nice
 % typeface by the [exljbris Font Foundry](http://www.exljbris.com/).
 % Calluna is easy to read on screen, and looks great in print.
-\newcommand{\defaultfontfamily}[0]{Calluna}
+\newcommand*{\defaultfontfamily}[0]{Calluna}
 
 % Allow the use of standard LaTeX mappings such as "---" for em-dashes.
 \defaultfontfeatures{Mapping=tex-text, Ligatures=Common}
@@ -286,7 +286,7 @@
 \newfontfamily\useordinals[Mapping=tex-text,VerticalPosition=Ordinal]{\defaultfontfamily}
 
 % Prints the stylistic alternatives for any characters passed in using `\defaultfontfamily:+salt`
-\newcommand{\altern}[1]{{\fontspec{\defaultfontfamily:+salt}#1}}
+\newcommand*{\altern}[1]{{\fontspec{\defaultfontfamily:+salt}#1}}
 
 % Define the font options that should be used for poem titles.
 % By default, titles use the `\normalfont`, are bold, large, and centered.
@@ -309,7 +309,7 @@
 %     \end{poem}
 %
 \newenvironment{poem}[3][verse]{%
-	\def\@ptwrapenvironment{#1}
+	\newcommand*{\@ptwrapenvironment}{#1}
 	\poetryheadings
 	\addtocounter{poemnum}{1}
 	\addtocounter{absolutepoemnum}{1}
@@ -360,7 +360,7 @@
 \setlength{\stanzaparskip}{0.7em}
 
 % Clear the page after each poem.
-\newcommand{\clearpageafterpoem}{\def\@ptclearpageafterpoem{}}
+\newcommand*{\clearpageafterpoem}{\newcommand*{\@ptclearpageafterpoem}{}}
 
 % The length, `\ptgap` is the length to indent lines by. It is set at 2em by default.
 \newlength{\ptgap}
@@ -377,14 +377,14 @@
 
 % Helper functions for `\ptind` and `\ptind*`.
 \newcommand*{\@ptindStar}{\hspace*{\ptgap}}
-\newcommand{\@ptindNoStar}{\hspace{\ptgap}}
+\newcommand*{\@ptindNoStar}{\hspace{\ptgap}}
 
 % The length, `\ptspacergap` is the length to indent stanza spacers by.
 \newlength{\ptspacergap}
 \setlength{\ptspacergap}{4em}
 
 % Define the character to use for a spacer (defaults to a section mark).
-\def\ptspacerchar{\S}
+\newcommand*{\ptspacerchar}{\S}
 
 % The `\ptspacer` command prints `\ptspacerchar` 3 times indented by `\ptspacergap`.
 \newcommand*{\ptspacer}{%
@@ -397,4 +397,4 @@
 
 % Helper functions for `\ptspacer` and `\ptspacer*`.
 \newcommand*{\@ptspacerStar}{\hspace*{\ptspacergap}\ptspacerchar\ptspacerchar\ptspacerchar}
-\newcommand{\@ptspacerNoStar}{\hspace{\ptspacergap}\ptspacerchar\ptspacerchar\ptspacerchar}
+\newcommand*{\@ptspacerNoStar}{\hspace{\ptspacergap}\ptspacerchar\ptspacerchar\ptspacerchar}
