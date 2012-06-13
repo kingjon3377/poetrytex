@@ -52,20 +52,20 @@
 % Set some defaults for a few basic commands.
 % These can be changed by redefining the commands like so:
 %
-%     \renewcommand{\thetitle}{My Title}
+%     \renewcommand{\pttitle}{My Title}
 %
-\def\thetitle{Title}
-\def\thesubtitle{Subtitle}
-\def\theauthor{Author}
-\def\thedate{\today}
-\def\thededication{}
+\newcommand*{\pttitle}{Title}
+\newcommand*{\ptsubtitle}{Subtitle}
+\newcommand*{\ptauthor}{Author}
+\newcommand*{\ptdate}{\today}
+\newcommand*{\ptdedication}{}
 
 % Set the title, author, and date to the defaults we defined above.
 % The other commands are required because `\maketitle` clears `\title`
 % and we might want to use it elsewhere (in the page headings, for instance).
-\title{\thetitle\ifx\thesubtitle\@ptundefined\relax\else\\\thesubtitle\fi}
-\author{\theauthor}
-\date{\thedate}
+\title{\pttitle\ifx\ptsubtitle\@ptundefined\relax\else\\\ptsubtitle\fi}
+\author{\ptauthor}
+\date{\ptdate}
 
 % Renew the `\subsubsection` command to be centered, and use smaller margins.
 \renewcommand*{\subsubsection}{\@ifstar{\@ptsubsubsectionStar}{\@ptsubsubsectionNoStar}}
@@ -96,7 +96,7 @@
 %
 \newcommand{\poetryheadings}[0]{%
 	\pagestyle{myheadings}
-	\markboth{ | \MakeUppercase{\thetitle}\hfill }{\hfill\MakeUppercase{\thegroup}\ | }
+	\markboth{ | \MakeUppercase{\pttitle}\hfill }{\hfill\MakeUppercase{\ptgroup}\ | }
 }
 
 % Make a nice dedication page for the document.
@@ -104,7 +104,7 @@
 	\thispagestyle{empty}
 	\vspace*{\fill}
 	\begin{flushright}
-		\emph{\thededication}
+		\emph{\ptdedication}
 	\end{flushright}
 	\vspace*{\fill}
 }
@@ -209,8 +209,8 @@
 % Each of these groups has a title page, and entries in the Table of Contents and Table of Poems.
 
 % Holds the name of the current group. If you want to start a new group, but don't want to
-% create a title page, you can renew this command like so: `\renewcommand{\thegroup}{Group Name}`
-\def\thegroup{}
+% create a title page, you can renew this command like so: `\renewcommand{\ptgroup}{Group Name}`
+\def\ptgroup{}
 
 % Create a group starting from the current location in the document.
 % This creates a title page for the group, and adds lines to the Table of Poems
@@ -232,7 +232,7 @@
 	\fi
 	\cleardoublepage
 	\vspace*{\fill}
-	\renewcommand{\thegroup}{#1}
+	\renewcommand{\ptgroup}{#1}
 	\pagestyle{empty}
 	\begin{center}
 		\section*{#1}
@@ -250,7 +250,7 @@
 	\fi
 	\cleardoublepage
 	\vspace*{\fill}
-	\renewcommand{\thegroup}{#1}
+	\renewcommand{\ptgroup}{#1}
 	\pagestyle{empty}
 	\begin{center}
 		\section{#1}
