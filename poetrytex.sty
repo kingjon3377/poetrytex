@@ -265,15 +265,32 @@
 %
 
 % Sets the default font to [Calluna](http://www.exljbris.com/calluna.html), a nice
-% typeface by the [exljbris Font Foundry](http://www.exljbris.com/).
-% Calluna is easy to read on screen, and looks great in print.
-\newcommand*{\defaultfontfamily}[0]{Calluna}
+% typeface by the [exljbris Font Foundry](http://www.exljbris.com/). Calluna is
+% easy to read on screen, and looks great in print. Also set the fallback font
+% to DejaVu Serif which is common among Linux distros.
+\newcommand*{\defaultfontfamily}{Calluna}
+\newcommand*{\fallbackfontfamily}{DejaVu Serif}
+
+% If Calluna isn't available, fallback to `\fallbackfontfamily`.
+\count255=\interactionmode
+  \batchmode
+  \font\bodyfont="\defaultfontfamily"\space at 10pt
+  \ifx\bodyfont\nullfont
+    \font\bodyfont = "\fallbackfontfamily"\space at 10pt
+    \ifx\bodyfont\nullfont
+      \errorstopmode
+      \errmessage{Default fonts not found.}
+    \else
+      \let\defaultfontfamily=\fallbackfontfamily
+    \fi
+  \fi
+\interactionmode=\count255
 
 % Allow the use of standard LaTeX mappings such as "---" for em-dashes.
 \defaultfontfeatures{Mapping=tex-text, Ligatures=Common}
 
 % Set the default font to `\defaultfontfamily`.
-\setromanfont{\defaultfontfamily}
+\setmainfont{\defaultfontfamily}
 
 % Create several new font families to make using ligatures easier.
 % Each of these is based on `\defaultfontfamily`.
