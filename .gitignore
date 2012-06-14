@@ -1,3 +1,11 @@
+build/
+doc-files/
+poetrytex-*
+source/*
+test.*
+poetrytex.pdf
+poetrytex.lua
+poetrytex.cfg
 .DS_Store
 .sass-cache
 Thumbs.db
@@ -40,4 +48,3 @@ temp
 *.maf
 *.mtc
 *.mtc0
-*.pdf
