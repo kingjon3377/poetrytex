@@ -338,8 +338,9 @@
 		#3
 	\end{center}
 	\begin{\@ptwrapenvironment}
-	\setlength{\parskip}{\stanzaparskip}
+	\begingroup\setlength{\parskip}{\stanzaparskip}
 }{%
+	\endgroup
 	\end{\@ptwrapenvironment}
 	\ifx \@ptclearpageafterpoem \@ptundefined
 		\relax
