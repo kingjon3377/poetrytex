@@ -44,7 +44,10 @@
 
 % Require the `fontspec` and `hyperref` packages.
 \RequirePackage{fontspec}
-\RequirePackage[pdfborder=0, hidelinks, bookmarks, colorlinks=false]{hyperref}
+\RequirePackage[pdfborder=0, bookmarks, colorlinks=false]{hyperref}
+
+% Require parskip as a temporary hack until a better solution can be found.
+\RequirePackage[parfill]{parskip}
 
 % Disable Chapter, Section, and Subsection numbering.
 \setcounter{secnumdepth}{-1}
