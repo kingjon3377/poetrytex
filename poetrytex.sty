@@ -334,10 +334,10 @@
 	\addtocounter{poemnum}{1}
 	\addtocounter{absolutepoemnum}{1}
 	\begin{center}
-		\phantomsection
-		\addcontentsline{lot}{\topentrytype}{\ifx\@ptnumbertop\@ptundefined\relax\else\arabic{poemnum}.\ \fi#2}
+		\phantomsection%
+		\addcontentsline{lot}{\topentrytype}{\ifx\@ptnumbertop\@ptundefined\relax\else\arabic{poemnum}.\ \fi#2}%
 		\label{\@ptpoemlabeltext\arabic{absolutepoemnum}}
-		{\poemtitleformat \ifx\@ptnumberpoems\@ptundefined\relax\else\arabic{poemnum}\\\fi#2}\\
+		{\poemtitleformat \ifx\@ptnumberpoems\@ptundefined\relax\else\arabic{poemnum}\\\fi#2}\\%
 		#3
 	\end{center}
 	\begin{\@ptwrapenvironment}
