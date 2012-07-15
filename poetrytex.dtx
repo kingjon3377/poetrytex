@@ -1,0 +1,253 @@
+\ProvidesPackage{poetrytex}
+
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+
+\RequirePackage{fontspec}
+\RequirePackage[pdfborder=0, bookmarks, colorlinks=false]{hyperref}
+
+\RequirePackage[parfill]{parskip}
+
+\setcounter{secnumdepth}{-1}
+
+\newcommand*{\pttitle}{Title}
+\newcommand*{\ptsubtitle}{Subtitle}
+\newcommand*{\ptauthor}{Author}
+\newcommand*{\ptdate}{\today}
+\newcommand*{\ptdedication}{}
+
+\title{\pttitle\ifx\ptsubtitle\@ptundefined\relax\else\\\ptsubtitle\fi}
+\author{\ptauthor}
+\date{\ptdate}
+
+\renewcommand*{\subsubsection}{\@ifstar{\@ptsubsubsectionStar}{\@ptsubsubsectionNoStar}}
+
+\newcommand*{\@ptsubsubsectionStar}[1]{%
+
+	\vspace{0.3cm}
+	{\centering \textbf{#1}
+
+	}
+	\vspace{0.2cm}
+
+}
+
+\newcommand*{\@ptsubsubsectionNoStar}[1]{%
+
+	\vspace{0.3cm}
+	\phantomsection
+	\addcontentsline{toc}{subsubsection}{#1}
+	{\centering \textbf{#1}
+
+	}
+	\vspace{0.2cm}
+
+}
+
+\newcommand*{\poetryheadings}[0]{%
+	\pagestyle{myheadings}
+	\markboth{ | \MakeUppercase{\pttitle}\hfill }{\hfill\MakeUppercase{\ptgroup}\ | }
+}
+
+\newcommand*{\makededication}[0]{%
+	\thispagestyle{empty}
+	\vspace*{\fill}
+	\begin{flushright}
+		\emph{\ptdedication}
+	\end{flushright}
+	\vspace*{\fill}
+}
+
+\newcommand*{\@ptpoemlabeltext}{poetrytexpoem:}
+
+\newcommand*{\linktopoem}[2][false]{%
+	\newcommand*{\@ptfirstarg}{#1}
+	\newcommand*{\@ptfalse}{false}
+	\ifx \@ptfirstarg \@ptfalse
+		\hyperref[\@ptpoemlabeltext#2]{#2}\relax
+	\else
+		\hyperref[\@ptpoemlabeltext#1]{#2}\relax
+	\fi
+}
+
+\setcounter{tocdepth}{2}
+
+\newcommand*{\toptitle}{List of Poems}
+
+\renewcommand*{\listtablename}{\toptitle}
+
+\newcommand*{\topentrytype}{subsection}
+
+\newcommand*{\maketoc}{%
+	\tableofcontents
+	\pagestyle{plain}
+	\clearpage
+	\thispagestyle{empty}
+}
+
+\newcommand*{\maketop}{\@ifstar{\@ptmaketopStar}{\@ptmaketopNoStar}}
+\newcommand*{\@ptmaketopStar}{%
+	\listoftables
+	\pagestyle{plain}
+	\clearpage
+}
+\newcommand*{\@ptmaketopNoStar}{%
+	\cleardoublepage
+	\phantomsection
+	\addcontentsline{toc}{section}{\toptitle}
+	\listoftables
+	\pagestyle{plain}
+	\clearpage
+}
+
+\newcounter{poemnum}
+\newcounter{absolutepoemnum}
+
+\newcommand*{\resetnumongroup}{\newcommand*{\@ptresetnumongroup}{}}
+
+\newcommand*{\numbertop}{\newcommand*{\@ptnumbertop}{}}
+
+\newcommand*{\numberpoems}{\newcommand*{\@ptnumberpoems}{}}
+
+\newcommand*{\ptgroup}{}
+
+\newcommand*{\poemgroup}{%
+	\@ifstar{%
+		\@ptpoemgroupStar
+	}{%
+		\@ptpoemgroupNoStar
+	}
+}
+
+\newcommand*{\@ptpoemgroupStar}[1]{%
+	\ifx \@ptresetnumongroup \@ptundefined
+		\relax
+	\else
+		\setcounter{poemnum}{0}
+	\fi
+	\cleardoublepage
+	\vspace*{\fill}
+	\renewcommand*{\ptgroup}{#1}
+	\pagestyle{empty}
+	\begin{center}
+		\section*{#1}
+	\end{center}
+	\vspace*{\fill}
+	\clearpage
+}
+
+\newcommand*{\@ptpoemgroupNoStar}[1]{%
+	\ifx \@ptresetnumongroup \@ptundefined
+		\relax
+	\else
+		\setcounter{poemnum}{0}
+	\fi
+	\cleardoublepage
+	\vspace*{\fill}
+	\renewcommand*{\ptgroup}{#1}
+	\pagestyle{empty}
+	\begin{center}
+		\section{#1}
+		\addcontentsline{lot}{section}{#1}
+	\end{center}
+	\vspace*{\fill}
+	\clearpage
+}
+
+\newcommand*{\defaultfontfamily}{Calluna}
+\newcommand*{\fallbackfontfamily}{Georgia}
+
+\count255=\interactionmode
+  \batchmode
+  \font\bodyfont="\defaultfontfamily"\space at 10pt
+  \ifx\bodyfont\nullfont
+    \font\bodyfont = "\fallbackfontfamily"\space at 10pt
+    \ifx\bodyfont\nullfont
+      \errorstopmode
+      \errmessage{Default fonts not found.}
+    \else
+      \let\defaultfontfamily=\fallbackfontfamily
+    \fi
+  \fi
+\interactionmode=\count255
+
+\defaultfontfeatures{Mapping=tex-text, Ligatures=Common}
+
+\setmainfont{\defaultfontfamily}
+
+\newfontfamily\useligatures[Mapping=tex-text, Ligatures={Common, Rare}]{\defaultfontfamily}
+\newfontfamily\usediscretionary[Mapping=tex-text, Ligatures={Discretionary, Common, Rare}]{\defaultfontfamily}
+\newfontfamily\useordinals[Mapping=tex-text,VerticalPosition=Ordinal]{\defaultfontfamily}
+
+\newcommand*{\altern}[1]{{\fontspec{\defaultfontfamily:+salt}#1}}
+
+\newcommand*{\poemtitleformat}{\normalfont\bfseries\large\centering}
+
+\newenvironment{poem}[3][verse]{%
+	\newcommand*{\@ptwrapenvironment}{#1}
+	\poetryheadings
+	\addtocounter{poemnum}{1}
+	\addtocounter{absolutepoemnum}{1}
+	\begin{center}
+		\phantomsection%
+		\addcontentsline{lot}{\topentrytype}{\ifx\@ptnumbertop\@ptundefined\relax\else\arabic{poemnum}.\ \fi#2}%
+		\label{\@ptpoemlabeltext\arabic{absolutepoemnum}}
+		{\poemtitleformat \ifx\@ptnumberpoems\@ptundefined\relax\else\arabic{poemnum}\\\fi#2}\\%
+		#3
+	\end{center}
+	\begin{\@ptwrapenvironment}
+	\begingroup\setlength{\parskip}{\stanzaparskip}
+}{%
+	\endgroup
+	\end{\@ptwrapenvironment}
+	\ifx \@ptclearpageafterpoem \@ptundefined
+		\relax
+	\else
+		\clearpage
+	\fi
+}
+
+\newenvironment{annotation}[1]{%
+	\cleardoublepage
+	\poetryheadings
+	\begin{flushleft}
+	\subsection{#1}
+}{%
+
+	\end{flushleft}
+	\clearpage
+}
+
+\newlength{\stanzaparskip}
+\setlength{\stanzaparskip}{0.7em}
+
+\newcommand*{\clearpageafterpoem}{\newcommand*{\@ptclearpageafterpoem}{}}
+
+\newlength{\ptgap}
+\setlength{\ptgap}{2em}
+
+\newcommand*{\ptind}{%
+	\@ifstar{%
+		\@ptindStar
+	}{%
+		\@ptindNoStar
+	}
+}
+
+\newcommand*{\@ptindStar}{\hspace*{\ptgap}}
+\newcommand*{\@ptindNoStar}{\hspace{\ptgap}}
+
+\newlength{\ptspacergap}
+\setlength{\ptspacergap}{4em}
+
+\newcommand*{\ptspacerchar}{\S}
+
+\newcommand*{\ptspacer}{%
+  \@ifstar{%
+    \@ptspacerStar
+  }{%
+    \@ptspacerNoStar
+  }
+}
+
+\newcommand*{\@ptspacerStar}{\hspace*{\ptspacergap}\ptspacerchar\ptspacerchar\ptspacerchar}
+\newcommand*{\@ptspacerNoStar}{\hspace{\ptspacergap}\ptspacerchar\ptspacerchar\ptspacerchar}
