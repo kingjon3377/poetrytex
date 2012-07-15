@@ -79,19 +79,27 @@
 % Used when `\subsubsection*` is called.
 % This version does not create an entry in the ToC.
 \newcommand*{\@ptsubsubsectionStar}[1]{%
+
 	\vspace{0.3cm}
-	{\centering \textbf{#1}}
+	{\centering \textbf{#1}
+
+	}
 	\vspace{0.2cm}
+
 }
 
 % Used when `\subsubsection` is called.
 % This version creates an entry in the ToC.
 \newcommand*{\@ptsubsubsectionNoStar}[1]{%
+
 	\vspace{0.3cm}
 	\phantomsection
 	\addcontentsline{toc}{subsubsection}{#1}
-	{\centering \textbf{#1}}
+	{\centering \textbf{#1}
+
+	}
 	\vspace{0.2cm}
+
 }
 
 % Setup the default document headings and provide a command for inserting them
