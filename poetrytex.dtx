@@ -75,7 +75,7 @@
 %
 % \title{The \textsf{poetrytex} package}
 % \author{
-%   \textsc{Samuel Whited}\\
+%   \name{Samuel Whited}\\
 %   \texttt{sam@samwhited.com}
 % }
 % \date{\today\\v1.0\gitrev\gitdirty\gituncommitted}
@@ -102,7 +102,7 @@
 % to move away from docco and start working on a proper package that would use
 % more traditional \TeX-style docs.
 %
-% \subsubsection{About the source}
+% \subsection{About the source}
 %
 % The current design of \pkg{poetrytex} makes it usable only with \TeX\ engines
 % that natively support Unicode input and OpenType fonts, specifically XeLaTeX.
@@ -119,10 +119,57 @@
 % idea what \TeX\ is or that this project even exists it is due mostly to her
 % influence that it ever got off the ground.
 %
-% \section{Package setup and usage}
+% \section{Package building and loading}
+%
+% \paragraph{Building}
+%
+% Building \pkg{poetrytex} from source can be acomplished in multiple ways. If
+% the Makefile is present running \code{make help} will tell you everything
+% you need to know. To manually extract the files and generate the documentation
+% simply run \XeLaTeX\ against \fname{poetrytex.dtx}:
+% \begin{Verbatim}
+%   xelatex poetrytex.dtx
+% \end{Verbatim}
+% You can also run \XeLaTeX\ with the \code{-{}-shell-escape} option to generate
+% documentation which includes the current git commit short-hash in the version
+% number:
+% \begin{Verbatim}
+%   xelatex --shell-escape poetrytex.dtx
+% \end{Verbatim}
+% It should be noted that this option is extremely unsafe, and you should only
+% use it if you understand the risks.
+%
+% \paragraph{Loading}
+%
+% Using \pkg{pdflatex} works exactly as you expect:
+% \begin{Verbatim}
+%   \usepackage{poetrytex}
+% \end{Verbatim}
+%
+%
+%
+%
+% \part{Poems and annotations}
+%
+% \section{The \code{poem} environment}
+% \subsection{Grouping and numbering}
+%
+% \section{The \code{annotation} environment}
+%
+%
+%
+%
+%
+% \part{Typesetting and formatting}
+%
+% \section{Typography and typesetting}
+%
+% \subsection{OpenType feature}
+%
+% \section{}
 %
 % \clearpage
-% \part*{poetrytex.sty}
+% \part{poetrytex.sty}
 %
 % The \pkg{poetrytex} package is fairly simple as far as \TeX\ packages go, so
 % it's worth taking a look at how it works internally.
@@ -387,14 +434,16 @@
 \newcommand*{\@ptspacerNoStar}{\hspace{\ptspacergap}\ptspacerchar\ptspacerchar\ptspacerchar}
 %</poetrytex>
 %    \end{macrocode}
-
-%\part*{poetrytex-style.sty}
-
+%
+%\part{poetrytex-style.sty}
+%
 %    \begin{macrocode}
 %<*doc-style>
 \ProvidesPackage{poetrytex-style}
 
-\usepackage{hologo,url}
+\usepackage{hologo,url,fancyvrb}
+
+\fvset{gobble=2}
 
 \newcommand*{\gitrev}{%
   \immediate\write18{%
@@ -431,7 +480,12 @@
 \newcommand\LuaTeX{\hologo{LuaTeX}}
 \newcommand\LuaLaTeX{\hologo{LuaLaTeX}}
 
+\newcommand*\name[1]{\textsc{#1}}
+\newcommand*\fname[1]{\textsf{#1}}
 \newcommand*\pkg[1]{\textsf{#1}}
+\newcommand*\code[1]{\texttt{#1}}
+
+\renewcommand\partname{Part}
 %</doc-style>
 %    \end{macrocode}
 \endinput
