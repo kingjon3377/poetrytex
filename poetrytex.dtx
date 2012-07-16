@@ -376,7 +376,7 @@
 
 \newcommand*{\gitdirty}{%
   \immediate\write18{%
-    rm gitdirty.tex; git diff --shortstat | awk '/^.*/{print "*"}' > gitdirty.tex
+    rm gitdirty.tex; git diff-files --quiet || echo "*" > gitdirty.tex
   }%
   \InputIfFileExists{gitdirty.tex}{\endlinechar=-1\relax}{}\unskip%
   \immediate\write18{%
@@ -386,7 +386,7 @@
 
 \newcommand*{\gituncommitted}{%
   \immediate\write18{%
-    rm gituncommitted.tex; git status --porcelain | awk '/^M/{if(!c){print "+";++c}}' > gituncommitted.tex
+    rm gituncommitted.tex; git diff-index --quiet --cached HEAD || echo "+" > gituncommitted.tex
   }%
   \InputIfFileExists{gituncommitted.tex}{\endlinechar=-1\relax}{}\unskip%
   \immediate\write18{%
