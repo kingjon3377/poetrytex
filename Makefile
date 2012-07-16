@@ -73,7 +73,12 @@ tds: $(TDS_ZIP)
 world: all ctan
 
 gendoc: $(DTX)
+	@echo "Compiling documentation"
 	$(DO_XELATEX_WRITE18)
+	$(DO_MAKEINDEX)
+	while ($(DO_XELATEX_WRITE18) ; \
+	grep -q "Rerun to get cross" $(NAME).log ) do true; \
+	done
 
 $(DOC): $(DTX)
 	@echo "Compiling documentation"
