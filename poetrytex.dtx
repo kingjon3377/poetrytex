@@ -434,13 +434,24 @@
 
 \newcommand*{\@ptspacerStar}{\hspace*{\ptspacergap}\ptspacerchar\ptspacerchar\ptspacerchar}
 \newcommand*{\@ptspacerNoStar}{\hspace{\ptspacergap}\ptspacerchar\ptspacerchar\ptspacerchar}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 %</poetrytex>
 %    \end{macrocode}
 %
-%\part{poetrytex-style.sty}
+% \clearpage
+% \PrintChanges
 %
-%    \begin{macrocode}
+% \clearpage
+% \setcounter{IndexColumns}{2}
+% \PrintIndex
+%
+% \Finale
+%
+% \iffalse
 %<*doc-style>
+%    \begin{macrocode}
 \ProvidesPackage{poetrytex-style}
 
 \usepackage{hologo,url,fancyvrb}
@@ -488,6 +499,7 @@
 \newcommand*\code[1]{\texttt{#1}}
 
 \renewcommand\partname{Part}
-%</doc-style>
 %    \end{macrocode}
+%</doc-style>
+%\fi
 \endinput
