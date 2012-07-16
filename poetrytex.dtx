@@ -366,31 +366,31 @@
 
 \newcommand*{\gitrev}{%
   \immediate\write18{%
-    rm gitrev.tex; git rev-parse --short HEAD > gitrev.tex
+    rm gitrev.tex 2> /dev/null; git rev-parse --short HEAD > gitrev.tex
   }%
   \InputIfFileExists{gitrev.tex}{.}{}\unskip%
   \immediate\write18{%
-    rm gitrev.tex
+    rm gitrev.tex 2> /dev/null
   }%
 }
 
 \newcommand*{\gitdirty}{%
   \immediate\write18{%
-    rm gitdirty.tex; git diff-files --quiet || echo "*" > gitdirty.tex
+    rm gitdirty.tex 2> /dev/null; git diff-files --quiet || echo "*" > gitdirty.tex
   }%
   \InputIfFileExists{gitdirty.tex}{\endlinechar=-1\relax}{}\unskip%
   \immediate\write18{%
-    rm gitdirty.tex
+    rm gitdirty.tex 2> /dev/null
   }%
 }
 
 \newcommand*{\gituncommitted}{%
   \immediate\write18{%
-    rm gituncommitted.tex; git diff-index --quiet --cached HEAD || echo "+" > gituncommitted.tex
+    rm gituncommitted.tex 2> /dev/null; git diff-index --quiet --cached HEAD || echo "+" > gituncommitted.tex
   }%
   \InputIfFileExists{gituncommitted.tex}{\endlinechar=-1\relax}{}\unskip%
   \immediate\write18{%
-    rm gituncommitted.tex
+    rm gituncommitted.tex 2> /dev/null
   }%
 }
 
