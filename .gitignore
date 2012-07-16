@@ -3,9 +3,6 @@ doc-files/
 poetrytex-*
 source/*
 test.*
-poetrytex.pdf
-poetrytex.lua
-poetrytex.cfg
 .DS_Store
 .sass-cache
 Thumbs.db
@@ -49,3 +46,7 @@ temp
 *.mtc
 *.mtc0
 *.sty
+gitrev.tex
+gituncommitted.tex
+gitdirty.tex
+*.pdf
