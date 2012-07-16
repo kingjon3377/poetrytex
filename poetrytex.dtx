@@ -5,31 +5,31 @@
 \keepsilent
 \usedir{tex/latex/poetrytex}
 \preamble
-	
-	Copyright 2012 Samuel Whited
-	
-	This file may be distributed and/or modified under the
-	conditions of the LaTeX Project Public License, either
-	version 1.3c of this license or (at your option) any later
-	version. The latest version of this license is in:
-	
-	http://www.latex-project.org/lppl.txt
-	
-	and version 1.3c or later is part of all distributions of
-	LaTeX version 2008/05/04 or later.
-	
+
+  Copyright 2012 Samuel Whited
+
+  This file may be distributed and/or modified under the
+  conditions of the LaTeX Project Public License, either
+  version 1.3c of this license or (at your option) any later
+  version. The latest version of this license is in:
+
+  http://www.latex-project.org/lppl.txt
+
+  and version 1.3c or later is part of all distributions of
+  LaTeX version 2008/05/04 or later.
+
 \endpreamble
 \postamble
 
-	___________
-	Maintainer: Sam Whited
-	Website:    https://samwhited.com
-	Contact:    sam@samwhited.com
-	Public key: 0xEC2C9934
+  ___________
+  Maintainer: Sam Whited
+  Website:    https://samwhited.com
+  Contact:    sam@samwhited.com
+  Public key: 0xEC2C9934
 
-	This work consists of this file poetrytex.dtx
-	          and the derived files poetrytex.sty
-	                            and poetrytex.pdf
+  This work consists of this file poetrytex.dtx
+            and the derived files poetrytex.sty
+                              and poetrytex.pdf
 
 \endpostamble
 \askforoverwritefalse
@@ -75,8 +75,8 @@
 %
 % \title{The \textsf{poetrytex} package}
 % \author{
-%    \textsc{Samuel Whited}\\
-%    \texttt{sam@samwhited.com}
+%   \textsc{Samuel Whited}\\
+%   \texttt{sam@samwhited.com}
 % }
 % \date{\today\\v1.0\gitrev\gitdirty\gituncommitted}
 %
@@ -157,50 +157,50 @@
 
 \newcommand*{\@ptsubsubsectionStar}[1]{%
 
-	\vspace{0.3cm}
-	{\centering \textbf{#1}
+  \vspace{0.3cm}
+  {\centering \textbf{#1}
 
-	}
-	\vspace{0.2cm}
+  }
+  \vspace{0.2cm}
 
 }
 
 \newcommand*{\@ptsubsubsectionNoStar}[1]{%
 
-	\vspace{0.3cm}
-	\phantomsection
-	\addcontentsline{toc}{subsubsection}{#1}
-	{\centering \textbf{#1}
+  \vspace{0.3cm}
+  \phantomsection
+  \addcontentsline{toc}{subsubsection}{#1}
+  {\centering \textbf{#1}
 
-	}
-	\vspace{0.2cm}
+  }
+  \vspace{0.2cm}
 
 }
 
 \newcommand*{\poetryheadings}[0]{%
-	\pagestyle{myheadings}
-	\markboth{ | \MakeUppercase{\pttitle}\hfill }{\hfill\MakeUppercase{\ptgroup}\ | }
+  \pagestyle{myheadings}
+  \markboth{ | \MakeUppercase{\pttitle}\hfill }{\hfill\MakeUppercase{\ptgroup}\ | }
 }
 
 \newcommand*{\makededication}[0]{%
-	\thispagestyle{empty}
-	\vspace*{\fill}
-	\begin{flushright}
-		\emph{\ptdedication}
-	\end{flushright}
-	\vspace*{\fill}
+  \thispagestyle{empty}
+  \vspace*{\fill}
+  \begin{flushright}
+    \emph{\ptdedication}
+  \end{flushright}
+  \vspace*{\fill}
 }
 
 \newcommand*{\@ptpoemlabeltext}{poetrytexpoem:}
 
 \newcommand*{\linktopoem}[2][false]{%
-	\newcommand*{\@ptfirstarg}{#1}
-	\newcommand*{\@ptfalse}{false}
-	\ifx \@ptfirstarg \@ptfalse
-		\hyperref[\@ptpoemlabeltext#2]{#2}\relax
-	\else
-		\hyperref[\@ptpoemlabeltext#1]{#2}\relax
-	\fi
+  \newcommand*{\@ptfirstarg}{#1}
+  \newcommand*{\@ptfalse}{false}
+  \ifx \@ptfirstarg \@ptfalse
+    \hyperref[\@ptpoemlabeltext#2]{#2}\relax
+  \else
+    \hyperref[\@ptpoemlabeltext#1]{#2}\relax
+  \fi
 }
 
 \setcounter{tocdepth}{2}
@@ -212,25 +212,25 @@
 \newcommand*{\topentrytype}{subsection}
 
 \newcommand*{\maketoc}{%
-	\tableofcontents
-	\pagestyle{plain}
-	\clearpage
-	\thispagestyle{empty}
+  \tableofcontents
+  \pagestyle{plain}
+  \clearpage
+  \thispagestyle{empty}
 }
 
 \newcommand*{\maketop}{\@ifstar{\@ptmaketopStar}{\@ptmaketopNoStar}}
 \newcommand*{\@ptmaketopStar}{%
-	\listoftables
-	\pagestyle{plain}
-	\clearpage
+  \listoftables
+  \pagestyle{plain}
+  \clearpage
 }
 \newcommand*{\@ptmaketopNoStar}{%
-	\cleardoublepage
-	\phantomsection
-	\addcontentsline{toc}{section}{\toptitle}
-	\listoftables
-	\pagestyle{plain}
-	\clearpage
+  \cleardoublepage
+  \phantomsection
+  \addcontentsline{toc}{section}{\toptitle}
+  \listoftables
+  \pagestyle{plain}
+  \clearpage
 }
 
 \newcounter{poemnum}
@@ -245,46 +245,46 @@
 \newcommand*{\ptgroup}{}
 
 \newcommand*{\poemgroup}{%
-	\@ifstar{%
-		\@ptpoemgroupStar
-	}{%
-		\@ptpoemgroupNoStar
-	}
+  \@ifstar{%
+    \@ptpoemgroupStar
+  }{%
+    \@ptpoemgroupNoStar
+  }
 }
 
 \newcommand*{\@ptpoemgroupStar}[1]{%
-	\ifx \@ptresetnumongroup \@ptundefined
-		\relax
-	\else
-		\setcounter{poemnum}{0}
-	\fi
-	\cleardoublepage
-	\vspace*{\fill}
-	\renewcommand*{\ptgroup}{#1}
-	\pagestyle{empty}
-	\begin{center}
-		\section*{#1}
-	\end{center}
-	\vspace*{\fill}
-	\clearpage
+  \ifx \@ptresetnumongroup \@ptundefined
+    \relax
+  \else
+    \setcounter{poemnum}{0}
+  \fi
+  \cleardoublepage
+  \vspace*{\fill}
+  \renewcommand*{\ptgroup}{#1}
+  \pagestyle{empty}
+  \begin{center}
+    \section*{#1}
+  \end{center}
+  \vspace*{\fill}
+  \clearpage
 }
 
 \newcommand*{\@ptpoemgroupNoStar}[1]{%
-	\ifx \@ptresetnumongroup \@ptundefined
-		\relax
-	\else
-		\setcounter{poemnum}{0}
-	\fi
-	\cleardoublepage
-	\vspace*{\fill}
-	\renewcommand*{\ptgroup}{#1}
-	\pagestyle{empty}
-	\begin{center}
-		\section{#1}
-		\addcontentsline{lot}{section}{#1}
-	\end{center}
-	\vspace*{\fill}
-	\clearpage
+  \ifx \@ptresetnumongroup \@ptundefined
+    \relax
+  \else
+    \setcounter{poemnum}{0}
+  \fi
+  \cleardoublepage
+  \vspace*{\fill}
+  \renewcommand*{\ptgroup}{#1}
+  \pagestyle{empty}
+  \begin{center}
+    \section{#1}
+    \addcontentsline{lot}{section}{#1}
+  \end{center}
+  \vspace*{\fill}
+  \clearpage
 }
 
 \newcommand*{\defaultfontfamily}{Calluna}
@@ -317,38 +317,38 @@
 \newcommand*{\poemtitleformat}{\normalfont\bfseries\large\centering}
 
 \newenvironment{poem}[3][verse]{%
-	\newcommand*{\@ptwrapenvironment}{#1}
-	\poetryheadings
-	\addtocounter{poemnum}{1}
-	\addtocounter{absolutepoemnum}{1}
-	\begin{center}
-		\phantomsection%
-		\addcontentsline{lot}{\topentrytype}{\ifx\@ptnumbertop\@ptundefined\relax\else\arabic{poemnum}.\ \fi#2}%
-		\label{\@ptpoemlabeltext\arabic{absolutepoemnum}}
-		{\poemtitleformat \ifx\@ptnumberpoems\@ptundefined\relax\else\arabic{poemnum}\\\fi#2}\\%
-		#3
-	\end{center}
-	\begin{\@ptwrapenvironment}
-	\begingroup\setlength{\parskip}{\stanzaparskip}
+  \newcommand*{\@ptwrapenvironment}{#1}
+  \poetryheadings
+  \addtocounter{poemnum}{1}
+  \addtocounter{absolutepoemnum}{1}
+  \begin{center}
+    \phantomsection%
+    \addcontentsline{lot}{\topentrytype}{\ifx\@ptnumbertop\@ptundefined\relax\else\arabic{poemnum}.\ \fi#2}%
+    \label{\@ptpoemlabeltext\arabic{absolutepoemnum}}
+    {\poemtitleformat \ifx\@ptnumberpoems\@ptundefined\relax\else\arabic{poemnum}\\\fi#2}\\%
+    #3
+  \end{center}
+  \begin{\@ptwrapenvironment}
+  \begingroup\setlength{\parskip}{\stanzaparskip}
 }{%
-	\endgroup
-	\end{\@ptwrapenvironment}
-	\ifx \@ptclearpageafterpoem \@ptundefined
-		\relax
-	\else
-		\clearpage
-	\fi
+  \endgroup
+  \end{\@ptwrapenvironment}
+  \ifx \@ptclearpageafterpoem \@ptundefined
+    \relax
+  \else
+    \clearpage
+  \fi
 }
 
 \newenvironment{annotation}[1]{%
-	\cleardoublepage
-	\poetryheadings
-	\begin{flushleft}
-	\subsection{#1}
+  \cleardoublepage
+  \poetryheadings
+  \begin{flushleft}
+  \subsection{#1}
 }{%
 
-	\end{flushleft}
-	\clearpage
+  \end{flushleft}
+  \clearpage
 }
 
 \newlength{\stanzaparskip}
@@ -360,11 +360,11 @@
 \setlength{\ptgap}{2em}
 
 \newcommand*{\ptind}{%
-	\@ifstar{%
-		\@ptindStar
-	}{%
-		\@ptindNoStar
-	}
+  \@ifstar{%
+    \@ptindStar
+  }{%
+    \@ptindNoStar
+  }
 }
 
 \newcommand*{\@ptindStar}{\hspace*{\ptgap}}
