@@ -83,18 +83,48 @@
 % \maketitle
 % \tableofcontents
 %
-% \section{History}
-%
 % \section{Introduction}
 %
+% The \pkg{poetrytex} package is designed to aid in the formatting and
+% typesetting of anthologies of poetry.
+%
+% \subsection{History}
+%
+% The package started out as a collection of macros for automating simple tasks
+% that I often had to perform while working on a collection of poetry and prose.
+% After a time, I decided to turn it into an STY file which would be geared
+% more towards the idea of an anthology or a collection of works and less about
+% typesetting the verse itself (for which there were already several good
+% packages on CTAN). While the file was small this worked well---Learning to
+% use the package was easily accomplished by reading the annotated source code
+% (generated via a modified version of Jeremy Ashkenas' literate programming
+% tool `docco'). However, as the source and scope of the project grew I decided
+% to move away from docco and start working on a proper package that would use
+% more traditional \TeX-style docs.
+%
+% \subsubsection{About the source}
+%
+% The current design of \pkg{poetrytex} makes it usable only with \TeX\ engines
+% that natively support Unicode input and OpenType fonts, specifically XeLaTeX.
+%
+% I would like to eventually test it with \LuaTeX\ and work on a version with
+% the OpenType features removed to facilitate compatibility with pdf\LaTeX.
+%
+% Contributions are welcome, and the latest development version of the project
+% can always be found at \url{https://github.com/samwhited/poetrytex}.
+%
 % \subsection{Acknowledgements}
+%
+% A special thanks is in order for Brittany Taylor. Though she probably has no
+% idea what \TeX\ is or that this project even exists it is due mostly to her
+% influence that it ever got off the ground.
 %
 % \section{Package setup and usage}
 %
 % \clearpage
-% \part{poetrytex.sty}
+% \part*{poetrytex.sty}
 %
-% The \pkg{poetrytex} package is fairly simple as far as \TeX packages go, so
+% The \pkg{poetrytex} package is fairly simple as far as \TeX\ packages go, so
 % it's worth taking a look at how it works internally.
 %
 % \section{Environment setup and defaults}
@@ -358,8 +388,10 @@
 %</poetrytex>
 %    \end{macrocode}
 
-%<*doc-style>
+%\part*{poetrytex-style.sty}
+
 %    \begin{macrocode}
+%<*doc-style>
 \ProvidesPackage{poetrytex-style}
 
 \usepackage{hologo,url}
@@ -400,6 +432,6 @@
 \newcommand\LuaLaTeX{\hologo{LuaLaTeX}}
 
 \newcommand*\pkg[1]{\textsf{#1}}
-%    \end{macrocode}
 %</doc-style>
+%    \end{macrocode}
 \endinput
