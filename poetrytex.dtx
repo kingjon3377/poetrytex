@@ -83,6 +83,7 @@
 %
 % \maketitle
 % \maketoc
+% \maketop*
 %
 % \section{Introduction}
 %
@@ -294,14 +295,65 @@
 % \part{Poems and annotations}
 %
 % Now that we've got all the boilerplate, configuration, titles, tables, and
-% various defaults out of the way, it's time to move on to the core
-% functionality of \pkg{poetrytex}: displaying and organizing poems!
+% properties out of the way, it's time to move on to the core functionality of
+% \pkg{poetrytex}: displaying and organizing poems!
 %
 % \section{The \code{poem} environment}
 %
+% Inserting a poem or other writing into your anthology is acomplished by
+% wrapping it in the \code{poem} environment. This environment takes in two
+% arguments, the title and subtitle (or author, date, etc.) of the poem.
 %    \begin{macrocode}
 \newenvironment{poem}[3][verse]{%
+%    \end{macrocode}
+%
+% By default \code{poem} re-wraps your text in the \code{verse} environment.
+% However, this can be changed by passing in an optional argument with the name
+% of another environment to wrap it in (eg. \code{center}).
+%
+%    \begin{macrocode}
   \newcommand*{\@ptwrapenvironment}{#1}
+%    \end{macrocode}
+% \clearpage
+% For example, a poem wrapped in the \code{center} environment might look like
+% this:
+% \setlength\columnseprule{.4pt}
+% \begin{multicols}{2}
+% \begin{Verbatim}
+% \begin{poem}[center]
+% {The Sea Bell}
+% {J.R.R. Tolkien}
+% I walked by the sea,
+% and there came to me,\\
+% as a star-beam on the wet sand,\\
+% a white shell like a sea-bell;\\
+% trembling it lay
+% in my wet hand.\\
+% In my fingers shaken
+% I heard waken\\
+% a ding within, by a harbour bar\\
+% a buoy swinging, a call ringing\\
+% over endless seas,
+% faint now and far\ldots
+% \end{poem}
+% \end{Verbatim}
+% \columnbreak
+% \begin{poem}[center]
+% {The Sea Bell}
+% {J.R.R. Tolkien}
+% I walked by the sea,
+% and there came to me,\\
+% as a star-beam on the wet sand,\\
+% a white shell like a sea-bell;\\
+% trembling it lay in my wet hand.\\
+% In my fingers shaken I heard waken\\
+% a ding within, by a harbour bar\\
+% a buoy swinging, a call ringing\\
+% over endless seas,
+% faint now and far\ldots
+% \end{poem}
+% \end{multicols}
+%    \begin{macrocode}
   \poetryheadings
   \addtocounter{poemnum}{1}
   \addtocounter{absolutepoemnum}{1}
