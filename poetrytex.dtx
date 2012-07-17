@@ -317,12 +317,10 @@
 % \clearpage
 % For example, a poem wrapped in the \code{center} environment might look like
 % this:
-% \setlength\columnseprule{.4pt}
-% \begin{multicols}{2}
+% \begin{Example}
 % \begin{Verbatim}
 % \begin{poem}[center]
-% {The Sea Bell}
-% {J.R.R. Tolkien}
+% {The Sea Bell}{J.R.R. Tolkien}
 % I walked by the sea,
 % and there came to me,\\
 % as a star-beam on the wet sand,\\
@@ -352,7 +350,7 @@
 % over endless seas,
 % faint now and far\ldots
 % \end{poem}
-% \end{multicols}
+% \end{Example}
 %    \begin{macrocode}
   \poetryheadings
   \addtocounter{poemnum}{1}
@@ -569,6 +567,14 @@
 \usepackage{fancyvrb,hologo,multicol,url}
 
 \fvset{gobble=2}
+
+\newenvironment{Example}{%
+  \begingroup\setlength{\columnseprule}{.4pt}
+  \begin{multicols}{2}
+}{
+  \end{multicols}
+  \endgroup
+}
 
 \newcommand*{\gitrev}{%
   \immediate\write18{%
