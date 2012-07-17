@@ -76,7 +76,7 @@
 %
 % \title{The \textsf{poetrytex} package}
 % \author{
-%   \name{Samuel Whited}\\
+%   \name{Sam Whited}\\
 %   \texttt{sam@samwhited.com}
 % }
 % \date{\today\\v1.0\gitrev\gitdirty\gituncommitted}
@@ -173,27 +173,25 @@
 % \section{Environment setup and defaults}
 %
 % First we setup our environment, define some useful properties, and choose some
-% default values for those properties:
-% \begin{multicols}{2}
-% Disable chapter, section, and subsection numbering, and define defaults for
-% the title, subtitle, author, date, and dedication.
-% \columnbreak
+% default values for those properties.
+%
+% \subsection{Title page}
+%
+% We'll start with the title page:
+%
 %    \begin{macrocode}
-\setcounter{secnumdepth}{-1}
-
 \newcommand*{\pttitle}{Title}
 \newcommand*{\ptsubtitle}{Subtitle}
 \newcommand*{\ptauthor}{Author}
 \newcommand*{\ptdate}{\today}
-\newcommand*{\ptdedication}{}
 %    \end{macrocode}
-% \end{multicols}
 %
 % Since we define the properties above as commands, you can change the
 % appearance of your document by redefining them in your preamble like so:
 %
 % \begin{Verbatim}
 %   \renewcommand*{\pttitle}{My Title}
+%   \renewcommand*{\ptauthor}{The Author}
 % \end{Verbatim}
 %
 % We then use these properties to set the document title, author, and date:
@@ -206,21 +204,28 @@
 \date{\ptdate}
 %    \end{macrocode}
 % Since \code{\textbackslash maketitle} clears the internal title, author, and
-% date commands we use the \code{\textbackslash pt} equivalents so that we can
-% refer to them again later, or redefine them throughout the document---in
-% anthologies with works by multiple authors, for instance.
-%
-% 
+% date we use the \code{\textbackslash pt} equivalents so that we can refer to
+% them again later, or redefine them throughout the document---in anthologies
+% with works by multiple authors, for instance.
 %    \begin{macrocode}
-
-
-
-
-\newcommand*{\poetryheadings}[0]{%
-  \pagestyle{myheadings}
-  \markboth{ | \MakeUppercase{\pttitle}\hfill }{\hfill\MakeUppercase{\ptgroup}\ | }
-}
-
+\newcommand*{\@ptpoemlabeltext}{poetrytexpoem:}
+%    \end{macrocode}
+% Each time you create a poem in your document we automatically assign it a
+% special label that can be used to link to it later. This label is prefixed
+% with \code{\textbackslash @ptpoemlabeltext} to prevent it from conflicting
+% with user defined labels, or labels defined in other packages.
+%
+% Chances are you'll never need to touch this.
+%
+% \subsection{Dedication}
+%
+% After your title page you might want to add a dedication page.
+%
+% \begin{macro}{\makededication}
+% As with the \code{\textbackslash pttitle} and author commands you can simply
+% redefine \code{\textbackslash ptdedication} to change the dedication text.
+%    \begin{macrocode}
+\newcommand*{\ptdedication}{}
 \newcommand*{\makededication}[0]{%
   \thispagestyle{empty}
   \vspace*{\fill}
@@ -229,35 +234,48 @@
   \end{flushright}
   \vspace*{\fill}
 }
-
-\newcommand*{\@ptpoemlabeltext}{poetrytexpoem:}
-
-\newcommand*{\linktopoem}[2][false]{%
-  \newcommand*{\@ptfirstarg}{#1}
-  \newcommand*{\@ptfalse}{false}
-  \ifx \@ptfirstarg \@ptfalse
-    \hyperref[\@ptpoemlabeltext#2]{#2}\relax
-  \else
-    \hyperref[\@ptpoemlabeltext#1]{#2}\relax
-  \fi
-}
-
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Tables and links}
+%
+% Next we setup the table of contents and list of poems:
+%    \begin{macrocode}
+\setcounter{secnumdepth}{-1}
 \setcounter{tocdepth}{2}
-
 \newcommand*{\toptitle}{List of Poems}
-
 \renewcommand*{\listtablename}{\toptitle}
-
 \newcommand*{\topentrytype}{subsection}
-
+%    \end{macrocode}
+%
+% First, we set the \code{secnumdepth} and \code{tocdepth} counters to disable
+% chapter, section, and subsection numbering, and to limit the maximum depth of
+% entries in the TOC. We then choose a default value for \code{\textbackslash%
+% toptitle} which will be rendered atop the Table of Poems, and set the default
+% entry type for poems to `subsection.' As with the previous options, these can
+% all be redefined to suit your needs.
+%
+% \begin{macro}{\maketoc}
+% \begin{macro}{\maketop}
+% \begin{macro}{\maketop*}
+% Once you've configured the TOC and TOP you probably want to insert them into
+% your document somewhere. While you could just use the \LaTeX\ commands \code{%
+% \textbackslash tableofcontents} and \code{\textbackslash listoftables}, we
+% provide alternates that add a bit of formatting and clear the page. By default
+% the TOP creates a listing in the TOC---Using the star modifier prevents this.
+%    \begin{macrocode}
 \newcommand*{\maketoc}{%
   \tableofcontents
   \pagestyle{plain}
   \clearpage
   \thispagestyle{empty}
 }
-
 \newcommand*{\maketop}{\@ifstar{\@ptmaketopStar}{\@ptmaketopNoStar}}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%    \begin{macrocode}
 \newcommand*{\@ptmaketopStar}{%
   \listoftables
   \pagestyle{plain}
@@ -270,6 +288,30 @@
   \listoftables
   \pagestyle{plain}
   \clearpage
+}
+%    \end{macrocode}
+%
+% \part{Poems and annotations}
+%
+% Now that we've got all the boilerplate, configuration, titles, tables, and
+% various defaults out of the way, it's time to move on to the core
+% functionality of \pkg{poetrytex}: displaying and organizing poems!
+%
+% \section{The \code{poem} environment}
+%    \begin{macrocode}
+\newcommand*{\poetryheadings}[0]{%
+  \pagestyle{myheadings}
+  \markboth{ | \MakeUppercase{\pttitle}\hfill }{\hfill\MakeUppercase{\ptgroup}\ | }
+}
+
+\newcommand*{\linktopoem}[2][false]{%
+  \newcommand*{\@ptfirstarg}{#1}
+  \newcommand*{\@ptfalse}{false}
+  \ifx \@ptfirstarg \@ptfalse
+    \hyperref[\@ptpoemlabeltext#2]{#2}\relax
+  \else
+    \hyperref[\@ptpoemlabeltext#1]{#2}\relax
+  \fi
 }
 
 \newcounter{poemnum}
@@ -326,33 +368,6 @@
   \clearpage
 }
 
-\newcommand*{\defaultfontfamily}{Calluna}
-\newcommand*{\fallbackfontfamily}{Georgia}
-
-\count255=\interactionmode
-  \batchmode
-  \font\bodyfont="\defaultfontfamily"\space at 10pt
-  \ifx\bodyfont\nullfont
-    \font\bodyfont = "\fallbackfontfamily"\space at 10pt
-    \ifx\bodyfont\nullfont
-      \errorstopmode
-      \errmessage{Default fonts not found.}
-    \else
-      \let\defaultfontfamily=\fallbackfontfamily
-    \fi
-  \fi
-\interactionmode=\count255
-
-\defaultfontfeatures{Mapping=tex-text, Ligatures=Common}
-
-\setmainfont{\defaultfontfamily}
-
-\newfontfamily\useligatures[Mapping=tex-text, Ligatures={Common, Rare}]{\defaultfontfamily}
-\newfontfamily\usediscretionary[Mapping=tex-text, Ligatures={Discretionary, Common, Rare}]{\defaultfontfamily}
-\newfontfamily\useordinals[Mapping=tex-text,VerticalPosition=Ordinal]{\defaultfontfamily}
-
-\newcommand*{\altern}[1]{{\fontspec{\defaultfontfamily:+salt}#1}}
-
 \newcommand*{\poemtitleformat}{\normalfont\bfseries\large\centering}
 
 \newenvironment{poem}[3][verse]{%
@@ -377,17 +392,6 @@
   \else
     \clearpage
   \fi
-}
-
-\newenvironment{annotation}[1]{%
-  \cleardoublepage
-  \poetryheadings
-  \begin{flushleft}
-  \subsection{#1}
-}{%
-
-  \end{flushleft}
-  \clearpage
 }
 
 \newlength{\stanzaparskip}
@@ -424,6 +428,45 @@
 
 \newcommand*{\@ptspacerStar}{\hspace*{\ptspacergap}\ptspacerchar\ptspacerchar\ptspacerchar}
 \newcommand*{\@ptspacerNoStar}{\hspace{\ptspacergap}\ptspacerchar\ptspacerchar\ptspacerchar}
+
+\newenvironment{annotation}[1]{%
+  \cleardoublepage
+  \poetryheadings
+  \begin{flushleft}
+  \subsection{#1}
+}{%
+
+  \end{flushleft}
+  \clearpage
+}
+
+
+\newcommand*{\defaultfontfamily}{Calluna}
+\newcommand*{\fallbackfontfamily}{Georgia}
+
+\count255=\interactionmode
+  \batchmode
+  \font\bodyfont="\defaultfontfamily"\space at 10pt
+  \ifx\bodyfont\nullfont
+    \font\bodyfont = "\fallbackfontfamily"\space at 10pt
+    \ifx\bodyfont\nullfont
+      \errorstopmode
+      \errmessage{Default fonts not found.}
+    \else
+      \let\defaultfontfamily=\fallbackfontfamily
+    \fi
+  \fi
+\interactionmode=\count255
+
+\defaultfontfeatures{Mapping=tex-text, Ligatures=Common}
+
+\setmainfont{\defaultfontfamily}
+
+\newfontfamily\useligatures[Mapping=tex-text, Ligatures={Common, Rare}]{\defaultfontfamily}
+\newfontfamily\usediscretionary[Mapping=tex-text, Ligatures={Discretionary, Common, Rare}]{\defaultfontfamily}
+\newfontfamily\useordinals[Mapping=tex-text,VerticalPosition=Ordinal]{\defaultfontfamily}
+
+\newcommand*{\altern}[1]{{\fontspec{\defaultfontfamily:+salt}#1}}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
