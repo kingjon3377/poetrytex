@@ -131,6 +131,7 @@
 % Before building \pkg{poetrytex} you should verify that the following
 % dependencies are installed:
 %    \begin{macrocode}
+\RequirePackage{expl3}
 \RequirePackage{fontspec}
 \RequirePackage[pdfborder=0, bookmarks, colorlinks=false]{hyperref}
 \RequirePackage[parfill]{parskip}
@@ -559,6 +560,9 @@
   \hspace{\ptspacergap}%
   \Repeat{\ptspacernum}{\ptspacerchar}%
 }
+\ExplSyntaxOn
+\cs_new_eq:NN \Repeat \prg_replicate:nn
+\ExplSyntaxOff
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -567,7 +571,7 @@
 % \begin{Example}
 % \begin{Verbatim}
 % \renewcommand{\ptspacerchar}{\o}
-% \renewcommand{\ptspacernum}{4}
+% \renewcommand{\ptspacernum}{2}
 % \begin{poem}{The Love Song%
 % of J. Alfred Prufrock}
 % {T.S. Eliot}
@@ -789,13 +793,9 @@
 %    \begin{macrocode}
 \ProvidesPackage{poetrytex-style}
 
-\usepackage{expl3,fancyvrb,hologo,multicol,url}
+\usepackage{fancyvrb,hologo,multicol,url}
 
 \fvset{gobble=2}
-
-\ExplSyntaxOn
-\cs_new_eq:NN \Repeat \prg_replicate:nn
-\ExplSyntaxOff
 
 \newenvironment{Example}{%
   \begingroup\setlength{\columnseprule}{.4pt}
