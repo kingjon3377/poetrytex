@@ -221,13 +221,10 @@
 %    \begin{macrocode}
 \newcounter{poemnum}
 \newcounter{absolutepoemnum}
-\newcommand*{\ptgroup}{}
 %    \end{macrocode}
 % The \code{poemnum} and \code{absolutepoemnum} counters will be incremented
 % every time we include a poem in our document and can be used later to number
-% the poems. The \code{\textbackslash ptgroup} property will eventually be used
-% to divide our poems up into subgroups within the document (similar to the
-% \code{\textbackslash part} command).
+% the poems.
 %
 % \subsection{Dedication}
 %
@@ -416,7 +413,8 @@
 %    \begin{macrocode}
 \newcommand*{\poetryheadings}[0]{%
   \pagestyle{myheadings}
-  \markboth{ | \MakeUppercase{\pttitle}\hfill }{\hfill\MakeUppercase{\ptgroup}\ | }
+  \markboth{ | \MakeUppercase{\pttitle}\hfill }
+           {\hfill\MakeUppercase{\ptgroup}\ | }
 }
 %    \end{macrocode}
 % \end{macro}
@@ -434,6 +432,136 @@
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
+%
+% By redefining \code{\textbackslash poemtitleformat} we can change how the poem
+% title is rendered.
+%    \begin{macrocode}
+\newcommand*{\poemtitleformat}{\normalfont\bfseries\large\centering}
+%    \end{macrocode}
+% The \code{stanzaparskip} length is used to change the \code{parskip} within a
+% poem environment.
+%    \begin{macrocode}
+\newlength{\stanzaparskip}
+\setlength{\stanzaparskip}{0.7em}
+%    \end{macrocode}
+%
+% \begin{macro}{\clearpageafterpoem}
+% This macro causes the page to be cleared after every poem environment.
+%    \begin{macrocode}
+\newcommand*{\clearpageafterpoem}{\newcommand*{\@ptclearpageafterpoem}{}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\ptind}
+% \begin{macro}{\ptind*}
+% The \code{\textbackslash ptgap} macro and \code{\textbackslash ptind} command
+% are two of those places where \pkg{poetrytex} strays a bit into the relm of
+% poetry typesetting. They overlap with the \pkg{verse} package's\code{%
+% \textbackslash vgap} and \code{\textbackslash vin} commands, and insert
+% indentation at at the beginning of a line. This is useful for typesetting
+% poems consistently when the \pkg{verse} package is not loaded. Redefine
+% \code{\textbackslash ptgap} to change the length that \code{\textbackslash%
+% ptind} indents by. The starred version of \code{ptind} uses\code{%
+% \textbackslash hspace*}.
+%    \begin{macrocode}
+\newlength{\ptgap}
+\setlength{\ptgap}{2em}
+\newcommand*{\ptind}{%
+  \@ifstar{%
+    \@ptindStar
+  }{%
+    \@ptindNoStar
+  }
+}
+\newcommand*{\@ptindStar}{\hspace*{\ptgap}}
+\newcommand*{\@ptindNoStar}{\hspace{\ptgap}}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% If you want a stylistic marker between two poems, or between sections
+% or stanza's within a poem, the following commands are your friend.
+%
+% The \code{ptspacergap} length is the indention of the spacer, and\code{%
+% \textbackslash ptspacerchar} is the actual character that will be printed
+% \code{\textbackslash ptspacernum} times.
+%    \begin{macrocode}
+\newlength{\ptspacergap}
+\setlength{\ptspacergap}{4em}
+\newcommand*{\ptspacerchar}{\S}
+\newcommand*{\ptspacernum}{3}
+%    \end{macrocode}
+%
+% \begin{macro}{\ptspacer}
+% \begin{macro}{\ptspacer*}
+% The starred version of the \code{ptspacer} command uses \code{\textbackslash%
+% hspace*} for indention.
+%    \begin{macrocode}
+\newcommand*{\ptspacer}{%
+  \@ifstar{%
+    \@ptspacerStar
+  }{%
+    \@ptspacerNoStar
+  }
+}
+\newcommand*{\@ptspacerStar}{%
+  \hspace*{\ptspacergap}%
+  \Repeat{\ptspacernum}{\ptspacerchar}%
+}
+\newcommand*{\@ptspacerNoStar}{%
+  \hspace{\ptspacergap}%
+  \Repeat{\ptspacernum}{\ptspacerchar}%
+}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%\clearpage
+% For example:
+% \begin{Example}
+% \begin{Verbatim}
+% \renewcommand{\ptspacerchar}{\o}
+% \renewcommand{\ptspacernum}{4}
+% \begin{poem}{The Love Song%
+% of J. Alfred Prufrock}
+% {T.S. Eliot}
+% \ldots I should have been a pair%
+% of ragged claws\\
+% Scuttling across the floors of%
+% silent seas.
+%
+% \ptspacer
+%
+% And the afternoon, the evening,
+% sleeps so peacefully!\\
+% Smoothed by long fingers,\\
+% Asleep\ldots\ tired\ldots\ or%
+% it malingers,\\
+% Stretched on the floor, here%
+% beside you and me\ldots
+% \end{poem}
+% \end{Verbatim}
+% \columnbreak
+% \renewcommand{\ptspacerchar}{\o}
+% \renewcommand{\ptspacernum}{2}
+% \begin{poem}{The Love Song%
+% of J. Alfred Prufrock}
+% {T.S. Eliot}
+% \ldots I should have been a pair%
+% of ragged claws\\
+% Scuttling across the floors of%
+% silent seas.
+%
+% \ptspacer
+%
+% And the afternoon, the evening,
+% sleeps so peacefully!\\
+% Smoothed by long fingers,\\
+% Asleep\ldots\ tired\ldots\ or%
+% it malingers,\\
+% Stretched on the floor, here%
+% beside you and me\ldots
+% \end{poem}
+% \end{Example}
 %
 % \section{Groups and linking}
 %
@@ -464,8 +592,10 @@
 % Dividing poems up into groups can be accomplished with the \code{poemgroup}
 % command. The command creates a title-page for the group at the current
 % location and adds entries to the TOP and TOC unless the starred version of the
-% command is used.
+% command is used. The \code{\textbackslash ptgroup} command will always contain
+% a reference to the current group in case you need to refer to it later.
 %    \begin{macrocode}
+\newcommand*{\ptgroup}{}
 \newcommand*{\poemgroup}{%
   \@ifstar{%
     \@ptpoemgroupStar
@@ -474,7 +604,7 @@
   }
 }
 \newcommand*{\@ptpoemgroupStar}[1]{%
-  \ifx \@ptresetnumongroup \@ptundefined
+  \ifx\@ptresetnumongroup\@ptundefined
     \relax
   \else
     \setcounter{poemnum}{0}
@@ -490,7 +620,7 @@
   \clearpage
 }
 \newcommand*{\@ptpoemgroupNoStar}[1]{%
-  \ifx \@ptresetnumongroup \@ptundefined
+  \ifx\@ptresetnumongroup\@ptundefined
     \relax
   \else
     \setcounter{poemnum}{0}
@@ -511,41 +641,6 @@
 % \end{macro}
 %
 %    \begin{macrocode}
-\newcommand*{\poemtitleformat}{\normalfont\bfseries\large\centering}
-
-\newlength{\stanzaparskip}
-\setlength{\stanzaparskip}{0.7em}
-
-\newcommand*{\clearpageafterpoem}{\newcommand*{\@ptclearpageafterpoem}{}}
-
-\newlength{\ptgap}
-\setlength{\ptgap}{2em}
-
-\newcommand*{\ptind}{%
-  \@ifstar{%
-    \@ptindStar
-  }{%
-    \@ptindNoStar
-  }
-}
-\newcommand*{\@ptindStar}{\hspace*{\ptgap}}
-\newcommand*{\@ptindNoStar}{\hspace{\ptgap}}
-
-\newlength{\ptspacergap}
-\setlength{\ptspacergap}{4em}
-
-\newcommand*{\ptspacerchar}{\S}
-
-\newcommand*{\ptspacer}{%
-  \@ifstar{%
-    \@ptspacerStar
-  }{%
-    \@ptspacerNoStar
-  }
-}
-\newcommand*{\@ptspacerStar}{\hspace*{\ptspacergap}\ptspacerchar\ptspacerchar\ptspacerchar}
-\newcommand*{\@ptspacerNoStar}{\hspace{\ptspacergap}\ptspacerchar\ptspacerchar\ptspacerchar}
-
 \newenvironment{annotation}[1]{%
   \cleardoublepage
   \poetryheadings
@@ -556,8 +651,19 @@
   \end{flushleft}
   \clearpage
 }
-
-
+%    \end{macrocode}
+%
+%
+% \part{Backwards compatibility}
+%
+% Back when \pkg{poetrytex} was a collection of simple macros for one of my
+% personal projects it made sense for it to contain functionality related to
+% typography and miscellaneous document formatting. These features are now
+% outside the scope of the package but are included for backwards compatibility.
+%
+% They will be removed if the package ever finds its way onto CTAN, and should
+% not be used for new projects.
+%    \begin{macrocode}
 \newcommand*{\defaultfontfamily}{Calluna}
 \newcommand*{\fallbackfontfamily}{Georgia}
 
@@ -584,14 +690,10 @@
 \newfontfamily\useordinals[Mapping=tex-text,VerticalPosition=Ordinal]{\defaultfontfamily}
 
 \newcommand*{\altern}[1]{{\fontspec{\defaultfontfamily:+salt}#1}}
-%    \end{macrocode}
-%
-%    \begin{macrocode}
+
 \renewcommand*{\subsubsection}{%
   \@ifstar{\@ptsubsubsectionStar}{\@ptsubsubsectionNoStar}%
 }
-
-%% Backwards compatibility
 \newcommand*{\@ptsubsubsectionStar}[1]{%
 
   \vspace{0.3cm}
@@ -601,7 +703,6 @@
   \vspace{0.2cm}
 
 }
-
 \newcommand*{\@ptsubsubsectionNoStar}[1]{%
 
   \vspace{0.3cm}
@@ -613,6 +714,9 @@
   \vspace{0.2cm}
 
 }
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 %</poetrytex>
 %    \end{macrocode}
 %
@@ -630,9 +734,13 @@
 %    \begin{macrocode}
 \ProvidesPackage{poetrytex-style}
 
-\usepackage{fancyvrb,hologo,multicol,url}
+\usepackage{expl3,fancyvrb,hologo,multicol,url}
 
 \fvset{gobble=2}
+
+\ExplSyntaxOn
+\cs_new_eq:NN \Repeat \prg_replicate:nn
+\ExplSyntaxOff
 
 \newenvironment{Example}{%
   \begingroup\setlength{\columnseprule}{.4pt}
