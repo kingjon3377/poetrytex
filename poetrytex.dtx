@@ -405,6 +405,9 @@
 %
 % The \code{poem} environment provides some reasonable defaults for formatting
 % your work but chances are you want a little more control.
+%
+% \subsection{Headings}
+%
 % \begin{macro}{\poetryheadings}
 % Every time a new \code{poem} or \code{annotation} environment is created, we
 % automatically call \code{\textbackslash poetryheadings}. By redefining this,
@@ -418,6 +421,8 @@
 }
 %    \end{macrocode}
 % \end{macro}
+%
+% \subsection{Numbering}
 %
 % \begin{macro}{\resetnumongroup}
 % \begin{macro}{\numberpoems}
@@ -433,11 +438,8 @@
 % \end{macro}
 % \end{macro}
 %
-% By redefining \code{\textbackslash poemtitleformat} we can change how the poem
-% title is rendered.
-%    \begin{macrocode}
-\newcommand*{\poemtitleformat}{\normalfont\bfseries\large\centering}
-%    \end{macrocode}
+% \subsection{Spacing and indentation}
+%
 % The \code{stanzaparskip} length is used to change the \code{parskip} within a
 % poem environment.
 %    \begin{macrocode}
@@ -515,6 +517,15 @@
 % {\ipa /ˈlɪme(ə)rɛk/}!
 % \end{poem}
 % \end{Example}
+%
+% \subsection{Stylization}
+%
+% By redefining \code{\textbackslash poemtitleformat} we can change how the poem
+% title is rendered.
+%    \begin{macrocode}
+\newcommand*{\poemtitleformat}{\normalfont\bfseries\large\centering}
+%    \end{macrocode}
+%
 %
 % If you want a stylistic marker between two poems, or between sections
 % or stanza's within a poem, the following commands are your friend.
@@ -600,7 +611,7 @@
 % \end{poem}
 % \end{Example}
 %
-% \section{Groups and linking}
+% \subsection{Groups and linking}
 %
 % When putting together a large collection of poetry and prose you most likely
 % need a way to organize your works and find them quickly. While the table of
@@ -676,6 +687,14 @@
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
+%
+% \section{The \code{annotation} environment}
+%
+% Annotations allow you to insert text into your document that maintains some
+% of the page formatting of the \code{poem} environment without the text itself
+% actually being formatted like verse. It uses \code{\textbackslash%
+% poetryheadings}, clears the page twice, and adds itself to the TOC (but not
+% the TOP). The page is also cleared again after the annotation.
 %
 %    \begin{macrocode}
 \newenvironment{annotation}[1]{%
