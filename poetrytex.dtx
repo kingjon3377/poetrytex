@@ -479,6 +479,43 @@
 % \end{macro}
 % \end{macro}
 %
+% Using it works something like this:
+% \begin{Example}
+% \begin{Verbatim}
+% \setlength{\ptgap}{3em}
+% \newfontfamily\ipa{Charis SIL}
+% \begin{poem}{PoE\TeX}
+% {An {\ipa /ɪɡˈzɑːmpəl/} poem}
+% There once was a poem called%
+% PoE\TeX\\*
+% That's name sounded somewhat%
+% {\ipa /pəˈθɛtɛk/}.\\*
+% \ptind It was really quite%
+% sad,\\*
+% \ptind to see pronunciation%
+% so bad,\\*
+% And to read such a terrible%
+% {\ipa /ˈlɪme(ə)rɛk/}!
+% \end{poem}
+% \end{Verbatim}
+% \columnbreak
+% \setlength{\ptgap}{3em}
+% \newfontfamily\ipa{Charis SIL}
+% \begin{poem}{PoE\TeX}
+% {An {\ipa /ɪɡˈzɑːmpəl/} poem}
+% There once was a poem called%
+% PoE\TeX\\*
+% That's name sounded somewhat%
+% {\ipa /pəˈθɛtɛk/}.\\*
+% \ptind It was really quite%
+% sad,\\*
+% \ptind to see pronunciation%
+% so bad,\\*
+% And to read such a terrible%
+% {\ipa /ˈlɪme(ə)rɛk/}!
+% \end{poem}
+% \end{Example}
+%
 % If you want a stylistic marker between two poems, or between sections
 % or stanza's within a poem, the following commands are your friend.
 %
@@ -515,7 +552,7 @@
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
-%\clearpage
+%
 % For example:
 % \begin{Example}
 % \begin{Verbatim}
