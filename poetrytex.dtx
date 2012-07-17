@@ -218,6 +218,17 @@
 %
 % Chances are you'll never need to touch this.
 %
+%    \begin{macrocode}
+\newcounter{poemnum}
+\newcounter{absolutepoemnum}
+\newcommand*{\ptgroup}{}
+%    \end{macrocode}
+% The \code{poemnum} and \code{absolutepoemnum} counters will be incremented
+% every time we include a poem in our document and can be used later to number
+% the poems. The \code{\textbackslash ptgroup} property will eventually be used
+% to divide our poems up into subgroups within the document (similar to the
+% \code{\textbackslash part} command).
+%
 % \subsection{Dedication}
 %
 % After your title page you might want to add a dedication page.
@@ -291,6 +302,13 @@
   \clearpage
 }
 %    \end{macrocode}
+% \begin{macro}{\numbertop}
+% Placing this command in your document preamble will cause the table of poems
+% to be numbered.
+%    \begin{macrocode}
+\newcommand*{\numbertop}{\newcommand*{\@ptnumbertop}{}}
+%    \end{macrocode}
+% \end{macro}
 %
 % \part{Poems and annotations}
 %
@@ -314,7 +332,6 @@
 %    \begin{macrocode}
   \newcommand*{\@ptwrapenvironment}{#1}
 %    \end{macrocode}
-% \clearpage
 % For example, a poem wrapped in the \code{center} environment might look like
 % this:
 % \begin{Example}
@@ -351,15 +368,27 @@
 % faint now and far\ldots
 % \end{poem}
 % \end{Example}
+%
+% Now we render the page header, title, and the actual poem:
 %    \begin{macrocode}
   \poetryheadings
   \addtocounter{poemnum}{1}
   \addtocounter{absolutepoemnum}{1}
   \begin{center}
     \phantomsection%
-    \addcontentsline{lot}{\topentrytype}{\ifx\@ptnumbertop\@ptundefined\relax\else\arabic{poemnum}.\ \fi#2}%
+    \addcontentsline{lot}{\topentrytype}{%
+      \ifx\@ptnumbertop\@ptundefined%
+        \relax%
+      \else%
+        \arabic{poemnum}.\ %
+      \fi#2}%
     \label{\@ptpoemlabeltext\arabic{absolutepoemnum}}
-    {\poemtitleformat \ifx\@ptnumberpoems\@ptundefined\relax\else\arabic{poemnum}\\\fi#2}\\%
+    {\poemtitleformat %
+      \ifx\@ptnumberpoems\@ptundefined
+        \relax
+      \else
+        \arabic{poemnum}\\%
+      \fi#2}\\%
     #3
   \end{center}
   \begin{\@ptwrapenvironment}
@@ -367,18 +396,58 @@
 }{%
   \endgroup
   \end{\@ptwrapenvironment}
-  \ifx \@ptclearpageafterpoem \@ptundefined
+  \ifx\@ptclearpageafterpoem\@ptundefined
     \relax
   \else
     \clearpage
   \fi
 }
-
+%    \end{macrocode}
+%
+% \section{Formatting}
+%
+% The \code{poem} environment provides some reasonable defaults for formatting
+% your work but chances are you want a little more control.
+% \begin{macro}{\poetryheadings}
+% Every time a new \code{poem} or \code{annotation} environment is created, we
+% automatically call \code{\textbackslash poetryheadings}. By redefining this,
+% you can change how your headings look, use packages like \pkg{fancyhdr}, or
+% remove headers from poem pages alltogether.
+%    \begin{macrocode}
 \newcommand*{\poetryheadings}[0]{%
   \pagestyle{myheadings}
   \markboth{ | \MakeUppercase{\pttitle}\hfill }{\hfill\MakeUppercase{\ptgroup}\ | }
 }
-
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\resetnumongroup}
+% \begin{macro}{\numberpoems}
+% These commands determine if the \code{poemnum} counter should be reset when
+% the poem group changes, and if the poems should display their number above the
+% title. Generally these should be called from the preamble, but they can be
+% defined at any point in your document to change how numbering works, or turn
+% on numbering from that point forward.
+%    \begin{macrocode}
+\newcommand*{\resetnumongroup}{\newcommand*{\@ptresetnumongroup}{}}
+\newcommand*{\numberpoems}{\newcommand*{\@ptnumberpoems}{}}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% \section{Groups and linking}
+%
+% When putting together a large collection of poetry and prose you most likely
+% need a way to organize your works and find them quickly. While the table of
+% poems helps we might also want to link directly to poems, or further subdivide
+% the collection into groups of related works (by year written, or subject
+% matter for instance).
+%
+% \begin{macro}{\linktopoem}
+% We can link to poems easily enough by providing \code{linktopoem} with the
+% number of the poem and the text for the link. If only one argument is given
+% it is used as both the link destination and text.
+%    \begin{macrocode}
 \newcommand*{\linktopoem}[2][false]{%
   \newcommand*{\@ptfirstarg}{#1}
   \newcommand*{\@ptfalse}{false}
@@ -388,18 +457,15 @@
     \hyperref[\@ptpoemlabeltext#1]{#2}\relax
   \fi
 }
-
-\newcounter{poemnum}
-\newcounter{absolutepoemnum}
-
-\newcommand*{\resetnumongroup}{\newcommand*{\@ptresetnumongroup}{}}
-
-\newcommand*{\numbertop}{\newcommand*{\@ptnumbertop}{}}
-
-\newcommand*{\numberpoems}{\newcommand*{\@ptnumberpoems}{}}
-
-\newcommand*{\ptgroup}{}
-
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\poemgroup}
+% \begin{macro}{\poemgroup*}
+% Dividing poems up into groups can be accomplished with the \code{poemgroup}
+% command. The command creates a title-page for the group at the current
+% location and adds entries to the TOP and TOC unless the starred version of the
+% command is used.
+%    \begin{macrocode}
 \newcommand*{\poemgroup}{%
   \@ifstar{%
     \@ptpoemgroupStar
@@ -407,7 +473,6 @@
     \@ptpoemgroupNoStar
   }
 }
-
 \newcommand*{\@ptpoemgroupStar}[1]{%
   \ifx \@ptresetnumongroup \@ptundefined
     \relax
@@ -424,7 +489,6 @@
   \vspace*{\fill}
   \clearpage
 }
-
 \newcommand*{\@ptpoemgroupNoStar}[1]{%
   \ifx \@ptresetnumongroup \@ptundefined
     \relax
@@ -442,7 +506,11 @@
   \vspace*{\fill}
   \clearpage
 }
-
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+%    \begin{macrocode}
 \newcommand*{\poemtitleformat}{\normalfont\bfseries\large\centering}
 
 \newlength{\stanzaparskip}
@@ -460,7 +528,6 @@
     \@ptindNoStar
   }
 }
-
 \newcommand*{\@ptindStar}{\hspace*{\ptgap}}
 \newcommand*{\@ptindNoStar}{\hspace{\ptgap}}
 
@@ -476,7 +543,6 @@
     \@ptspacerNoStar
   }
 }
-
 \newcommand*{\@ptspacerStar}{\hspace*{\ptspacergap}\ptspacerchar\ptspacerchar\ptspacerchar}
 \newcommand*{\@ptspacerNoStar}{\hspace{\ptspacergap}\ptspacerchar\ptspacerchar\ptspacerchar}
 
