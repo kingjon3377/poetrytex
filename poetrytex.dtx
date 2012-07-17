@@ -298,7 +298,32 @@
 % functionality of \pkg{poetrytex}: displaying and organizing poems!
 %
 % \section{The \code{poem} environment}
+%
 %    \begin{macrocode}
+\newenvironment{poem}[3][verse]{%
+  \newcommand*{\@ptwrapenvironment}{#1}
+  \poetryheadings
+  \addtocounter{poemnum}{1}
+  \addtocounter{absolutepoemnum}{1}
+  \begin{center}
+    \phantomsection%
+    \addcontentsline{lot}{\topentrytype}{\ifx\@ptnumbertop\@ptundefined\relax\else\arabic{poemnum}.\ \fi#2}%
+    \label{\@ptpoemlabeltext\arabic{absolutepoemnum}}
+    {\poemtitleformat \ifx\@ptnumberpoems\@ptundefined\relax\else\arabic{poemnum}\\\fi#2}\\%
+    #3
+  \end{center}
+  \begin{\@ptwrapenvironment}
+  \begingroup\setlength{\parskip}{\stanzaparskip}
+}{%
+  \endgroup
+  \end{\@ptwrapenvironment}
+  \ifx \@ptclearpageafterpoem \@ptundefined
+    \relax
+  \else
+    \clearpage
+  \fi
+}
+
 \newcommand*{\poetryheadings}[0]{%
   \pagestyle{myheadings}
   \markboth{ | \MakeUppercase{\pttitle}\hfill }{\hfill\MakeUppercase{\ptgroup}\ | }
@@ -369,30 +394,6 @@
 }
 
 \newcommand*{\poemtitleformat}{\normalfont\bfseries\large\centering}
-
-\newenvironment{poem}[3][verse]{%
-  \newcommand*{\@ptwrapenvironment}{#1}
-  \poetryheadings
-  \addtocounter{poemnum}{1}
-  \addtocounter{absolutepoemnum}{1}
-  \begin{center}
-    \phantomsection%
-    \addcontentsline{lot}{\topentrytype}{\ifx\@ptnumbertop\@ptundefined\relax\else\arabic{poemnum}.\ \fi#2}%
-    \label{\@ptpoemlabeltext\arabic{absolutepoemnum}}
-    {\poemtitleformat \ifx\@ptnumberpoems\@ptundefined\relax\else\arabic{poemnum}\\\fi#2}\\%
-    #3
-  \end{center}
-  \begin{\@ptwrapenvironment}
-  \begingroup\setlength{\parskip}{\stanzaparskip}
-}{%
-  \endgroup
-  \end{\@ptwrapenvironment}
-  \ifx \@ptclearpageafterpoem \@ptundefined
-    \relax
-  \else
-    \clearpage
-  \fi
-}
 
 \newlength{\stanzaparskip}
 \setlength{\stanzaparskip}{0.7em}
