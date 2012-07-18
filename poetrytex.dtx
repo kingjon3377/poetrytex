@@ -721,11 +721,17 @@
 %    \end{macrocode}
 %
 % \clearpage
-% \PrintChanges
-%
-% \clearpage
 % \setcounter{IndexColumns}{2}
 % \PrintIndex
+%
+% \makeatletter
+%   \renewenvironment{theglossary}{%
+%   \glossary@prologue
+%   \setlength\emergencystretch{5em}
+%   \GlossaryParms \let\item\@idxitem \ignorespaces}{}
+% \makeatother
+% \clearpage
+% \PrintChanges
 %
 % \Finale
 %
