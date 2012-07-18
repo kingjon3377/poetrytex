@@ -64,6 +64,7 @@ DO_XELATEX = xelatex --interaction=nonstopmode $<  $(REDIRECT)
 DO_XELATEX_WRITE18 = xelatex --shell-escape --interaction=nonstopmode $<  $(REDIRECT)
 DO_XETEX = xetex --interaction=nonstopmode $< $(REDIRECT)
 DO_MAKEINDEX = makeindex -s gind.ist $(subst .dtx,,$<)  $(REDIRECT)  2>&1
+DO_MAKECHANGES = makeindex -s gglo.ist -o $(NAME).gls $(NAME).glo $< $(REDIRECT) 2>&1
 
 all: $(GENERATED)
 doc: $(COMPILED)
@@ -76,6 +77,7 @@ gendoc: $(DTX)
 	@echo "Compiling documentation"
 	$(DO_XELATEX_WRITE18)
 	$(DO_MAKEINDEX)
+	$(DO_MAKECHANGES)
 	while ($(DO_XELATEX_WRITE18) ; \
 	grep -q "Rerun to get cross" $(NAME).log ) do true; \
 	done
@@ -84,6 +86,7 @@ $(DOC): $(DTX)
 	@echo "Compiling documentation"
 	$(DO_XELATEX)
 	$(DO_MAKEINDEX)
+	$(DO_MAKECHANGES)
 	while ($(DO_XELATEX) ; \
 	grep -q "Rerun to get cross" $(NAME).log ) do true; \
 	done

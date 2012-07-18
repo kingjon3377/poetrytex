@@ -79,7 +79,7 @@
 %   \name{Sam Whited}\\
 %   \texttt{sam@samwhited.com}
 % }
-% \date{\today\\v1.0\gitrev\gitdirty\gituncommitted}
+% \date{\today\\v1.0\githead\gitdirty\gituncommitted}
 %
 % \maketitle
 % \maketoc
@@ -119,6 +119,9 @@
 % A special thanks is in order for Brittany Taylor. Though she probably has no
 % idea what \TeX\ is or that this project even exists it is due mostly to her
 % influence that it ever got off the ground.
+%
+% \StopEventually{}
+% \changes{1.0}{2012/07/18}{Converted package to dtx}
 %
 % \section{Package building and loading}
 %
@@ -541,6 +544,7 @@
 %    \end{macrocode}
 %
 % \begin{macro}{\ptspacer}
+% \changes{1.0}{2012/07/17}{Repeat \code{\textbackslash ptspacernum} times}
 % \begin{macro}{\ptspacer*}
 % The starred version of the \code{ptspacer} command uses \code{\textbackslash%
 % hspace*} for indention.
@@ -554,14 +558,14 @@
 }
 \newcommand*{\@ptspacerStar}{%
   \hspace*{\ptspacergap}%
-  \Repeat{\ptspacernum}{\ptspacerchar}%
+  \@ptrepeat{\ptspacernum}{\ptspacerchar}%
 }
 \newcommand*{\@ptspacerNoStar}{%
   \hspace{\ptspacergap}%
-  \Repeat{\ptspacernum}{\ptspacerchar}%
+  \@ptrepeat{\ptspacernum}{\ptspacerchar}%
 }
 \ExplSyntaxOn
-\cs_new_eq:NN \Repeat \prg_replicate:nn
+\cs_new_eq:NN \@ptrepeat \prg_replicate:nn
 \ExplSyntaxOff
 %    \end{macrocode}
 % \end{macro}
@@ -805,13 +809,13 @@
   \endgroup
 }
 
-\newcommand*{\gitrev}{%
+\newcommand*{\githead}{%
   \immediate\write18{%
-    rm gitrev.tex 2> /dev/null; git rev-parse --short HEAD > gitrev.tex
+    rm githead.tex 2> /dev/null; git rev-parse --short HEAD > githead.tex
   }%
   \InputIfFileExists{gitrev.tex}{.}{}\unskip%
   \immediate\write18{%
-    rm gitrev.tex 2> /dev/null
+    rm githead.tex 2> /dev/null
   }%
 }
 
