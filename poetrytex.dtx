@@ -133,9 +133,9 @@
 %
 % Before building \pkg{poetrytex} you should verify that the following
 % dependencies are installed:
+% \changes{1.0}{2012/07/18}{Removed fontspec / xelatex dependency}
 %    \begin{macrocode}
 \RequirePackage{expl3}
-\RequirePackage{fontspec}
 \RequirePackage[pdfborder=0, bookmarks, colorlinks=false]{hyperref}
 \RequirePackage[parfill]{parskip}
 %    \end{macrocode}
@@ -487,37 +487,37 @@
 % Using it works something like this:
 % \begin{Example}
 % \begin{Verbatim}
-% \setlength{\ptgap}{3em}
-% \newfontfamily\ipa{Charis SIL}
-% \begin{poem}{PoE\TeX}
-% {An {\ipa /ɪɡˈzɑːmpəl/} poem}
+% \setlength{\ptgap}{2em}
+% \begin{poem}[flushleft]{PoE\TeX}
+% {An {\tipaencoding
+% /Ig"zA:mp@l/} poem}
 % There once was a poem called%
 % PoE\TeX\\*
 % That's name sounded somewhat%
-% {\ipa /pəˈθɛtɛk/}.\\*
+% {\tipaencoding /p@"TEtEk/}.\\*
 % \ptind It was really quite%
 % sad,\\*
 % \ptind to see pronunciation%
 % so bad,\\*
 % And to read such a terrible%
-% {\ipa /ˈlɪme(ə)rɛk/}!
+% {\tipaencoding /"lIme(@)rEk/}!
 % \end{poem}
 % \end{Verbatim}
 % \columnbreak
-% \setlength{\ptgap}{3em}
-% \newfontfamily\ipa{Charis SIL}
-% \begin{poem}{PoE\TeX}
-% {An {\ipa /ɪɡˈzɑːmpəl/} poem}
+% \setlength{\ptgap}{2em}
+% \begin{poem}[flushleft]{PoE\TeX}
+% {An {\tipaencoding
+% /Ig"zA:mp@l/} poem}
 % There once was a poem called%
 % PoE\TeX\\*
 % That's name sounded somewhat%
-% {\ipa /pəˈθɛtɛk/}.\\*
+% {\tipaencoding /p@"TEtEk/}.\\*
 % \ptind It was really quite%
 % sad,\\*
 % \ptind to see pronunciation%
 % so bad,\\*
 % And to read such a terrible%
-% {\ipa /ˈlɪme(ə)rɛk/}!
+% {\tipaencoding /"lIme(@)rEk/}!
 % \end{poem}
 % \end{Example}
 %
@@ -716,69 +716,6 @@
 }
 %    \end{macrocode}
 %
-%
-% \part{Backwards compatibility}
-%
-% Back when \pkg{poetrytex} was a collection of simple macros for one of my
-% personal projects it made sense for it to contain functionality related to
-% typography and miscellaneous document formatting. These features are now
-% outside the scope of the package but are included for backwards compatibility.
-%
-% They will be removed if the package ever finds its way onto CTAN, and should
-% not be used for new projects.
-%    \begin{macrocode}
-\newcommand*{\defaultfontfamily}{Calluna}
-\newcommand*{\fallbackfontfamily}{Georgia}
-
-\count255=\interactionmode
-  \batchmode
-  \font\bodyfont="\defaultfontfamily"\space at 10pt
-  \ifx\bodyfont\nullfont
-    \font\bodyfont = "\fallbackfontfamily"\space at 10pt
-    \ifx\bodyfont\nullfont
-      \errorstopmode
-      \errmessage{Default fonts not found.}
-    \else
-      \let\defaultfontfamily=\fallbackfontfamily
-    \fi
-  \fi
-\interactionmode=\count255
-
-\defaultfontfeatures{Mapping=tex-text, Ligatures=Common}
-
-\setmainfont{\defaultfontfamily}
-
-\newfontfamily\useligatures[Mapping=tex-text, Ligatures={Common, Rare}]{\defaultfontfamily}
-\newfontfamily\usediscretionary[Mapping=tex-text, Ligatures={Discretionary, Common, Rare}]{\defaultfontfamily}
-\newfontfamily\useordinals[Mapping=tex-text,VerticalPosition=Ordinal]{\defaultfontfamily}
-
-\newcommand*{\altern}[1]{{\fontspec{\defaultfontfamily:+salt}#1}}
-
-\renewcommand*{\subsubsection}{%
-  \@ifstar{\@ptsubsubsectionStar}{\@ptsubsubsectionNoStar}%
-}
-\newcommand*{\@ptsubsubsectionStar}[1]{%
-
-  \vspace{0.3cm}
-  {\centering \textbf{#1}
-
-  }
-  \vspace{0.2cm}
-
-}
-\newcommand*{\@ptsubsubsectionNoStar}[1]{%
-
-  \vspace{0.3cm}
-  \phantomsection
-  \addcontentsline{toc}{subsubsection}{#1}
-  {\centering \textbf{#1}
-
-  }
-  \vspace{0.2cm}
-
-}
-%    \end{macrocode}
-%
 %    \begin{macrocode}
 %</poetrytex>
 %    \end{macrocode}
@@ -797,7 +734,7 @@
 %    \begin{macrocode}
 \ProvidesPackage{poetrytex-style}
 
-\usepackage{fancyvrb,hologo,multicol,url}
+\usepackage{fancyvrb,hologo,multicol,tipa,url}
 
 \fvset{gobble=2}
 
