@@ -102,13 +102,16 @@
 % to move away from docco and start working on a proper package that would use
 % more traditional \TeX-style docs.
 %
-% \subsection{About the source}
+% \subsection{License / about the source}
 %
-% The current design of \pkg{poetrytex} makes it usable only with \TeX\ engines
-% that natively support Unicode input and OpenType fonts, specifically XeLaTeX.
+% This project may be distributed and/or modified under the conditions of the
+% \LaTeX\ Project Public License, either version 1.3c of this license or (at
+% your opinion) any later version. The latest vesrion of this license is in:
 %
-% I would like to eventually test it with \LuaTeX\ and work on a version with
-% the OpenType features removed to facilitate compatibility with pdf\LaTeX.
+% \url{http://www.latex-project.org/lppl.txt}
+%
+% and version 1.3c or later is part of all distributions of \LaTeX\ version
+% 2008/05/04 or later.
 %
 % Contributions are welcome, and the latest development version of the project
 % can always be found at \url{https://github.com/samwhited/poetrytex}.
@@ -135,22 +138,21 @@
 % \changes{1.0}{2012/07/18}{Removed fontspec / xelatex dependency}
 %    \begin{macrocode}
 \RequirePackage{expl3}
-\RequirePackage[pdfborder=0, bookmarks, colorlinks=false]{hyperref}
+\RequirePackage[pdfborder=0, bookmarks, colorlinks=false, hidelinks]{hyperref}
 \RequirePackage[parfill]{parskip}
 %    \end{macrocode}
 % Once you have all the required packages, building \pkg{poetrytex} from source
 % can be acomplished in multiple ways. If the Makefile is present running
 % \code{make help} will tell you everything you need to know. To manually
-% extract the files and generate the documentation simply run \XeLaTeX\ against
-% \fname{poetrytex.dtx}:
+% extract the files and generate the documentation simply run \code{pdflatex}
+% or \XeLaTeX\ against \fname{poetrytex.dtx}:
 %
 % \begin{Verbatim}
-%   xelatex poetrytex.dtx
+%   pdflatex poetrytex.dtx
 % \end{Verbatim}
 %
-% You can also run \XeLaTeX\ with the \code{-{}-shell-escape} option to generate
-% documentation which includes the current git commit short-hash in the version
-% number:
+% You can also use the \code{-{}-shell-escape} option to generate documentation
+% which includes the current git commit short-hash in the version number:
 %
 % \begin{Verbatim}
 %   xelatex --shell-escape poetrytex.dtx
@@ -162,7 +164,8 @@
 %
 % \paragraph{Loading}
 %
-% Using \pkg{poetrytex} works exactly as you expect:
+% Using \pkg{poetrytex} in your project works exactly as you'd expect:
+%
 % \begin{Verbatim}
 %   \usepackage{poetrytex}
 % \end{Verbatim}
