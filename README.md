@@ -7,6 +7,12 @@ XeLaTeX.
 You can dive straight in  by checking out a few
 [example poems](https://github.com/SamWhited/poetrytex/wiki/Example-Poems).
 
+## Development
+
+Development of this package occurs primarily on
+[GitHub](https://github.com/SamWhited/poetrytex). Issues and pull requests
+should be submitted there.
+
 ## License
 
 Copyright 2012 Samuel Whited
