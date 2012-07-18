@@ -60,9 +60,9 @@ CTAN_ZIP = $(NAME).zip
 TDS_ZIP = $(NAME).tds.zip
 ZIPS = $(CTAN_ZIP) $(TDS_ZIP)
 
-DO_XELATEX = xelatex --interaction=nonstopmode $<  $(REDIRECT)
-DO_XELATEX_WRITE18 = xelatex --shell-escape --interaction=nonstopmode $<  $(REDIRECT)
-DO_XETEX = xetex --interaction=nonstopmode $< $(REDIRECT)
+DO_LATEX = pdflatex --interaction=nonstopmode $<  $(REDIRECT)
+DO_LATEX_WRITE18 = pdflatex --shell-escape --interaction=nonstopmode $<  $(REDIRECT)
+DO_TEX = tex --interaction=nonstopmode $< $(REDIRECT)
 DO_MAKEINDEX = makeindex -s gind.ist $(subst .dtx,,$<)  $(REDIRECT)  2>&1
 DO_MAKECHANGES = makeindex -s gglo.ist -o $(NAME).gls $(NAME).glo $< $(REDIRECT) 2>&1
 
@@ -75,25 +75,25 @@ world: all ctan
 
 gendoc: $(DTX)
 	@echo "Compiling documentation"
-	$(DO_XELATEX_WRITE18)
+	$(DO_LATEX_WRITE18)
 	$(DO_MAKEINDEX)
 	$(DO_MAKECHANGES)
-	while ($(DO_XELATEX_WRITE18) ; \
+	while ($(DO_LATEX_WRITE18) ; \
 	grep -q "Rerun to get cross" $(NAME).log ) do true; \
 	done
 
 $(DOC): $(DTX)
 	@echo "Compiling documentation"
-	$(DO_XELATEX)
+	$(DO_LATEX)
 	$(DO_MAKEINDEX)
 	$(DO_MAKECHANGES)
-	while ($(DO_XELATEX) ; \
+	while ($(DO_LATEX) ; \
 	grep -q "Rerun to get cross" $(NAME).log ) do true; \
 	done
 
 
 $(UNPACKED): $(DTX)
-	@$(DO_XETEX)
+	@$(DO_TEX)
 
 $(CTAN_ZIP): $(CTAN_FILES) $(TDS_ZIP)
 	@echo "Making $@ for CTAN upload."
