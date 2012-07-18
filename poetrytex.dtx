@@ -756,7 +756,7 @@
   \immediate\write18{%
     rm githead.tex 2> /dev/null; git rev-parse --short HEAD > githead.tex
   }%
-  \InputIfFileExists{gitrev.tex}{.}{}\unskip%
+  \InputIfFileExists{githead.tex}{.}{}\unskip%
   \immediate\write18{%
     rm githead.tex 2> /dev/null
   }%
