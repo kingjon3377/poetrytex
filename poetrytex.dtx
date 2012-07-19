@@ -106,7 +106,7 @@
 %
 % This project may be distributed and/or modified under the conditions of the
 % \LaTeX\ Project Public License, either version 1.3c of this license or (at
-% your opinion) any later version. The latest vesrion of this license is in:
+% your opinion) any later version. The latest version of this license is in:
 %
 % \url{http://www.latex-project.org/lppl.txt}
 %
@@ -142,7 +142,7 @@
 \RequirePackage[parfill]{parskip}
 %    \end{macrocode}
 % Once you have all the required packages, building \pkg{poetrytex} from source
-% can be acomplished in multiple ways. If the Makefile is present running
+% can be accomplished in multiple ways. If the Makefile is present running
 % \code{make help} will tell you everything you need to know. To manually
 % extract the files and generate the documentation simply run \code{pdflatex}
 % or \XeLaTeX\ against \fname{poetrytex.dtx}:
@@ -275,8 +275,9 @@
 % Once you've configured the TOC and TOP you probably want to insert them into
 % your document somewhere. While you could just use the \LaTeX\ commands \code{%
 % \textbackslash tableofcontents} and \code{\textbackslash listoftables}, we
-% provide alternates that add a bit of formatting and clear the page. By default
-% the TOP creates a listing in the TOC---Using the star modifier prevents this.
+% provide alternatives that add a bit of formatting and clear the page. By
+% default the TOP creates a listing in the TOC---Using the star modifier
+% prevents this.
 %    \begin{macrocode}
 \newcommand*{\maketoc}{%
   \tableofcontents
@@ -320,7 +321,7 @@
 %
 % \section{The \code{poem} environment}
 %
-% Inserting a poem or other writing into your anthology is acomplished by
+% Inserting a poem or other writing into your anthology is accomplished by
 % wrapping it in the \code{poem} environment. This environment takes in two
 % arguments, the title and subtitle (or author, date, etc.) of the poem.
 %    \begin{macrocode}
@@ -417,7 +418,7 @@
 % Every time a new \code{poem} or \code{annotation} environment is created, we
 % automatically call \code{\textbackslash poetryheadings}. By redefining this,
 % you can change how your headings look, use packages like \pkg{fancyhdr}, or
-% remove headers from poem pages alltogether.
+% remove headers from poem pages altogether.
 %    \begin{macrocode}
 \newcommand*{\poetryheadings}[0]{%
   \pagestyle{myheadings}
@@ -490,7 +491,7 @@
 % \begin{macro}{\ptind}
 % \begin{macro}{\ptind*}
 % The \code{\textbackslash ptgap} macro and \code{\textbackslash ptind} command
-% are two of those places where \pkg{poetrytex} strays a bit into the relm of
+% are two of those places where \pkg{poetrytex} strays a bit into the realm of
 % poetry typesetting. They overlap with the \pkg{verse} package's\code{%
 % \textbackslash vgap} and \code{\textbackslash vin} commands, and insert
 % indentation at at the beginning of a line. This is useful for typesetting
@@ -562,9 +563,9 @@
 %
 %
 % If you want a stylistic marker between two poems, or between sections
-% or stanza's within a poem, the following commands are your friend.
+% or stanzas within a poem, the following commands are your friend.
 %
-% The \code{ptspacergap} length is the indention of the spacer, and\code{%
+% The \code{ptspacergap} length is the indentation of the spacer, and\code{%
 % \textbackslash ptspacerchar} is the actual character that will be printed
 % \code{\textbackslash ptspacernum} times.
 %    \begin{macrocode}
