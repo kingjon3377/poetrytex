@@ -1,6 +1,6 @@
 # PoetryTeX
-**PoetryTeX** is a TeX package designed to aid in the formatting and typesetting
-of anthologies of poetry and other writings.
+**PoetryTeX** is a TeX package designed to aid in the formatting of anthologies
+of poetry and other writings.
 
 You can dive straight in  by checking out a few
 [example poems](https://github.com/SamWhited/poetrytex/wiki/Example-Poems).
