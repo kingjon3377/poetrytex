@@ -185,15 +185,25 @@
 %
 % We'll start with the title page:
 %
+% \begin{macro}{\pttitle}
+% \begin{macro}{\ptsubtitle}
+% \begin{macro}{\ptauthor}
+% \begin{macro}{\ptdate}
+% These properties will affect the appearance of \code{\textbackslash%
+% maketitle}:
 %    \begin{macrocode}
 \newcommand*{\pttitle}{Title}
 \newcommand*{\ptsubtitle}{Subtitle}
 \newcommand*{\ptauthor}{Author}
 \newcommand*{\ptdate}{\today}
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 %
-% Since we define the properties above as commands, you can change the
-% appearance of your document by redefining them in your preamble like so:
+% Since we define them as commands, you can change the appearance of your
+% title page by redefining them in your preamble like so:
 %
 % \begin{Verbatim}
 %   \renewcommand*{\pttitle}{My Title}
@@ -223,21 +233,29 @@
 %
 % Chances are you'll never need to touch this.
 %
+% \begin{macro}{poemnum}
+% \begin{macro}{absolutepoemnum}
+% The \code{poemnum} and \code{absolutepoemnum} counters will be incremented
+% every time we include a poem in our document and can be used later to number
+% the poems.
 %    \begin{macrocode}
 \newcounter{poemnum}
 \newcounter{absolutepoemnum}
 %    \end{macrocode}
-% The \code{poemnum} and \code{absolutepoemnum} counters will be incremented
-% every time we include a poem in our document and can be used later to number
-% the poems.
+% \end{macro}
+% \end{macro}
 %
 % \subsection{Dedication}
 %
 % After your title page you might want to add a dedication page.
 %
 % \begin{macro}{\makededication}
+% \begin{macro}{\ptdedication}
 % As with the \code{\textbackslash pttitle} and author commands you can simply
 % redefine \code{\textbackslash ptdedication} to change the dedication text.
+%
+% To create a dedication page, the \code{\textbackslash makededication} command
+% can be called.
 %    \begin{macrocode}
 \newcommand*{\ptdedication}{}
 \newcommand*{\makededication}[0]{%
@@ -250,24 +268,33 @@
 }
 %    \end{macrocode}
 % \end{macro}
+% \end{macro}
 %
 % \subsection{Tables and links}
 %
 % Next we setup the table of contents and list of poems:
+%
+% \begin{macro}{\toptitle}
+% \begin{macro}{\topentrytype}
+% The value of \code{\textbackslash toptitle} will be rendered atop the Table of
+% Poems, and \code{\textbackslash topentrytype} will set the default entry type
+% for poems in the TOP.
+%    \begin{macrocode}
+\newcommand*{\toptitle}{List of Poems}
+\newcommand*{\topentrytype}{subsection}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% We then set the \code{secnumdepth} and \code{tocdepth} counters to disable
+% chapter, section, and subsection numbering, and to limit the maximum depth of
+% entries in the TOC.
+%
 %    \begin{macrocode}
 \setcounter{secnumdepth}{-1}
 \setcounter{tocdepth}{2}
-\newcommand*{\toptitle}{List of Poems}
 \renewcommand*{\listtablename}{\toptitle}
-\newcommand*{\topentrytype}{subsection}
 %    \end{macrocode}
-%
-% First, we set the \code{secnumdepth} and \code{tocdepth} counters to disable
-% chapter, section, and subsection numbering, and to limit the maximum depth of
-% entries in the TOC. We then choose a default value for \code{\textbackslash%
-% toptitle} which will be rendered atop the Table of Poems, and set the default
-% entry type for poems to `subsection.' As with the previous options, these can
-% all be redefined to suit your needs.
 %
 % \begin{macro}{\maketoc}
 % \begin{macro}{\maketop}
@@ -287,11 +314,6 @@
   \thispagestyle{empty}
 }
 \newcommand*{\maketop}{\@ifstar{\@ptmaketopStar}{\@ptmaketopNoStar}}
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-%    \begin{macrocode}
 \newcommand*{\@ptmaketopStar}{%
   \listoftables
   \pagestyle{plain}
@@ -306,6 +328,10 @@
   \clearpage
 }
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
 % \begin{macro}{\numbertop}
 % Placing this command in your document preamble will cause the table of poems
 % to be numbered.
@@ -322,6 +348,7 @@
 %
 % \section{The \code{poem} environment}
 %
+% \begin{environment}{poem}
 % Inserting a poem or other writing into your anthology is accomplished by
 % wrapping it in the \code{poem} environment. This environment takes in two
 % arguments, the title and subtitle (or author, date, etc.) of the poem.
@@ -407,6 +434,7 @@
   \fi
 }
 %    \end{macrocode}
+% \end{environment}
 %
 % \section{Formatting}
 %
@@ -475,26 +503,29 @@
 %
 % \subsection{Spacing and indentation}
 %
-% The \code{stanzaparskip} length is used to change the \code{parskip} within a
-% poem environment.
+% \begin{macro}{\stanzaparskip}
+% This length is used to change the \code{parskip} within a poem environment.
 %    \begin{macrocode}
 \newlength{\stanzaparskip}
 \setlength{\stanzaparskip}{0.7em}
 %    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}{\clearpageafterpoem}
-% This macro causes the page to be cleared after every poem environment.
+% \code{clearpageafterpoem} causes the page to be cleared after every poem
+% environment.
 %    \begin{macrocode}
 \newcommand*{\clearpageafterpoem}{\newcommand*{\@ptclearpageafterpoem}{}}
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\ptgap}
 % \begin{macro}{\ptind}
 % \begin{macro}{\ptind*}
-% The \code{\textbackslash ptgap} macro and \code{\textbackslash ptind} command
-% are two of those places where \pkg{poetrytex} strays a bit into the realm of
-% poetry typesetting. They overlap with the \pkg{verse} package's\code{%
-% \textbackslash vgap} and \code{\textbackslash vin} commands, and insert
+% The \code{\textbackslash ptgap} length and \code{\textbackslash ptind}
+% command are two of those places where \pkg{poetrytex} strays a bit into the
+% realm of poetry typesetting. They overlap with the \pkg{verse} package's
+% \code{\textbackslash vgap} and \code{\textbackslash vin} commands, and insert
 % indentation at at the beginning of a line. This is useful for typesetting
 % poems consistently when the \pkg{verse} package is not loaded. Redefine
 % \code{\textbackslash ptgap} to change the length that \code{\textbackslash%
@@ -513,6 +544,7 @@
 \newcommand*{\@ptindStar}{\hspace*{\ptgap}}
 \newcommand*{\@ptindNoStar}{\hspace{\ptgap}}
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 %
@@ -556,16 +588,21 @@
 %
 % \subsection{Stylization}
 %
+% \begin{macro}{\poemtitleformat}
 % By redefining \code{\textbackslash poemtitleformat} we can change how the poem
 % title is rendered.
 %    \begin{macrocode}
 \newcommand*{\poemtitleformat}{\normalfont\bfseries\large\centering}
 %    \end{macrocode}
+% \end{macro}
 %
 %
 % If you want a stylistic marker between two poems, or between sections
 % or stanzas within a poem, the following commands are your friend.
 %
+% \begin{macro}{\ptspacergap}
+% \begin{macro}{\ptspacerchar}
+% \begin{macro}{\ptspacernum}
 % The \code{ptspacergap} length is the indentation of the spacer, and\code{%
 % \textbackslash ptspacerchar} is the actual character that will be printed
 % \code{\textbackslash ptspacernum} times.
@@ -575,6 +612,9 @@
 \newcommand*{\ptspacerchar}{\S}
 \newcommand*{\ptspacernum}{3}
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 %
 % \begin{macro}{\ptspacer}
 % \changes{1.0}{2012/07/17}{Repeat \code{\textbackslash ptspacernum} times}
@@ -675,13 +715,16 @@
 }
 %    \end{macrocode}
 % \end{macro}
+%
+% \begin{macro}{\ptgroup}
 % \begin{macro}{\poemgroup}
 % \begin{macro}{\poemgroup*}
-% Dividing poems up into groups can be accomplished with the \code{poemgroup}
-% command. The command creates a title-page for the group at the current
-% location and adds entries to the TOP and TOC unless the starred version of the
-% command is used. The \code{\textbackslash ptgroup} command will always contain
-% a reference to the current group in case you need to refer to it later.
+% Dividing poems up into groups can be accomplished with the \code{%
+% \textbackslash poemgroup} command. The command creates a title-page for the
+% group at the current location and adds entries to the TOP and TOC unless the
+% starred version of the command is used. The \code{\textbackslash ptgroup}
+% command will always contain a reference to the current group in case you need
+% to refer to it later.
 %    \begin{macrocode}
 \newcommand*{\ptgroup}{}
 \newcommand*{\poemgroup}{%
@@ -727,27 +770,34 @@
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
+% \end{macro}
 %
 % \section{The \code{annotation} environment}
 %
-% Annotations allow you to insert text into your document that maintains some
-% of the page formatting of the \code{poem} environment without the text itself
-% actually being formatted like verse. It uses \code{\textbackslash%
-% poetryheadings}, clears the page twice, and adds itself to the TOC (but not
-% the TOP). The page is also cleared again after the annotation.
+% \begin{environment}{annotation}
+% \changes{1.1}{2012/07/20}{Annotations now take in an optional `environment' argument}
+% Annotations allow you to insert prose that relates to a specific poem into
+% your document. It uses \code{\textbackslash poetryheadings}, clears the page
+% twice, and adds itself to the TOC (but not the TOP). The page is also cleared
+% again after the annotation.
 %
+% Like the \code{poetry} environment, an optional first argument can be used to
+% specify the environment in which the annotation will be wrapped. This defaults
+% to \code{flushleft}.
 %    \begin{macrocode}
-\newenvironment{annotation}[1]{%
+\newenvironment{annotation}[2][flushleft]{%
+  \newcommand*{\@ptwrapenvironment}{#1}
   \cleardoublepage
   \poetryheadings
-  \begin{flushleft}
+  \begin{\@ptwrapenvironment}
   \subsection{#1}
 }{%
 
-  \end{flushleft}
+  \end{\@ptwrapenvironment}
   \clearpage
 }
 %    \end{macrocode}
+% \end{environment}
 %
 %    \begin{macrocode}
 %</poetrytex>
