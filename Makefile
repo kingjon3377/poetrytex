@@ -98,7 +98,11 @@ $(UNPACKED): $(DTX)
 $(CTAN_ZIP): $(CTAN_FILES) $(TDS_ZIP)
 	@echo "Making $@ for CTAN upload."
 	@$(RM) -- $@
-	@zip -9 $@ $^ >/dev/null
+	@mkdir -p $(NAME)/
+	@cp $^ $(NAME)/
+	@rm $(NAME)/*.zip
+	@zip -9 $@ $(NAME)/* $(NAME).tds.zip >/dev/null
+	@rm -rf $(NAME)/
 
 define run-install
 @mkdir -p $(RUNDIR) && cp $(RUNFILES) $(RUNDIR)
