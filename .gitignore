@@ -50,3 +50,5 @@ gitrev.tex
 gituncommitted.tex
 gitdirty.tex
 *.pdf
+*.zip
+README

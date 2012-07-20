@@ -36,7 +36,7 @@ REDIRECT = > /dev/null
 # Files grouped by generation mode
 COMPILED = $(DOC)
 UNPACKED = poetrytex.sty
-SOURCE = $(DTX) Makefile README.md
+SOURCE = $(DTX) Makefile README
 GENERATED = $(COMPILED) $(UNPACKED)
 
 CTAN_FILES = $(SOURCE) $(COMPILED)
@@ -148,7 +148,7 @@ manifest:
 	@for f in $(GENERATED); do echo $$f; done
 
 clean:
-	@$(RM) -- *.log *.aux *.toc *.idx *.ind *.ilg *.glo *.gls *.example *.out *.synctex* *.tmp poetrytex-style.sty *.ins poetrytex*.pdf poetrytex*.dvi
+	@$(RM) -- *.log *.aux *.toc *.idx *.ind *.ilg *.glo *.gls *.example *.out *.synctex* *.tmp poetrytex-style.sty *.ins poetrytex*.pdf poetrytex*.dvi README
 	@$(RM) -- $(GENERATED) $(ZIPS)
 	@$(RM) -- $(builddir)/*
 
