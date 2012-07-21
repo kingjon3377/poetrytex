@@ -249,21 +249,24 @@
 %
 % After your title page you might want to add a dedication page.
 %
-% \begin{macro}{\makededication}
 % \begin{macro}{\ptdedication}
+% \begin{macro}{\makededication}
+% \changes{1.1}{2012/07/21}{Added optional `environment' argument}
 % As with the \code{\textbackslash pttitle} and author commands you can simply
 % redefine \code{\textbackslash ptdedication} to change the dedication text.
 %
 % To create a dedication page, the \code{\textbackslash makededication} command
-% can be called.
+% can be called. By default, this command aligns everything to the right,
+% however, by adding an optional argument you can specify any environment to
+% wrap the dedication in.
 %    \begin{macrocode}
-\newcommand*{\ptdedication}{}
-\newcommand*{\makededication}[0]{%
+\newcommand*{\ptdedication}{Renew \textsf{\textbackslash ptdedication}}
+\newcommand*{\makededication}[1][flushright]{%
   \thispagestyle{empty}
   \vspace*{\fill}
-  \begin{flushright}
+  \begin{#1}
     \emph{\ptdedication}
-  \end{flushright}
+  \end{#1}
   \vspace*{\fill}
 }
 %    \end{macrocode}
@@ -775,7 +778,7 @@
 % \section{The \code{annotation} environment}
 %
 % \begin{environment}{annotation}
-% \changes{1.1}{2012/07/20}{Annotations now take in an optional `environment' argument}
+% \changes{1.1}{2012/07/20}{Added optional `environment' argument}
 % Annotations allow you to insert prose that relates to a specific poem into
 % your document. It uses \code{\textbackslash poetryheadings}, clears the page
 % twice, and adds itself to the TOC (but not the TOP). The page is also cleared
