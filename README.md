@@ -5,11 +5,14 @@ of poetry and other writings.
 You can dive straight in  by checking out a few
 [example poems](https://github.com/SamWhited/poetrytex/wiki/Example-Poems).
 
-## Development
+## Download
 
 Development of this package occurs primarily on
 [GitHub](https://github.com/SamWhited/poetrytex). Issues and pull requests
 should be submitted there.
+
+The current release version of PoetryTeX is available from
+[CTAN](http://ctan.org/pkg/poetrytex).
 
 ## License
 
