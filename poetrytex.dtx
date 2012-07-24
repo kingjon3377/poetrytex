@@ -706,14 +706,14 @@
 % matter for instance).
 %
 % \begin{macro}{\linktopoem}
-% We can link to poems easily enough by providing \code{linktopoem} with the
-% number of the poem and the text for the link. If only one argument is given
-% it is used as both the link destination and text.
+% \changes{1.1}{2012/07/24}{Fix spacing and multiple use issues}
+% We can \emph{\linktopoem[1]{link}} \emph{\linktopoem[2]{to}}%
+% \emph{\linktopoem[3]{poems}} easily enough by providing \code{linktopoem} with
+% the text for the link and, optionally, the number of the poem to link to. If
+% only one argument is given it is used as both the link destination and text.
 %    \begin{macrocode}
-\newcommand*{\linktopoem}[2][false]{%
-  \newcommand*{\@ptfirstarg}{#1}
-  \newcommand*{\@ptfalse}{false}
-  \ifx \@ptfirstarg \@ptfalse
+\newcommand*{\linktopoem}[2][ptnull]{%
+  \ifx{#1}{ptnull}
     \hyperref[\@ptpoemlabeltext#2]{#2}\relax
   \else
     \hyperref[\@ptpoemlabeltext#1]{#2}\relax
