@@ -223,13 +223,15 @@
 % date we use the \code{\textbackslash pt} equivalents so that we can refer to
 % them again later, or redefine them throughout the document---in anthologies
 % with works by multiple authors, for instance.
-%    \begin{macrocode}
-\newcommand*{\@ptpoemlabeltext}{poetrytexpoem:}
-%    \end{macrocode}
+% \begin{macro}{\@ptpoemlabeltext}
 % Each time you create a poem in your document we automatically assign it a
 % special label that can be used to link to it later. This label is prefixed
 % with \code{\textbackslash @ptpoemlabeltext} to prevent it from conflicting
 % with user defined labels, or labels defined in other packages.
+%    \begin{macrocode}
+\newcommand*{\@ptpoemlabeltext}{poetrytexpoem:}
+%    \end{macrocode}
+% \end{macro}
 %
 % Chances are you'll never need to touch this.
 %
