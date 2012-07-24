@@ -239,7 +239,9 @@
 % \begin{macro}{absolutepoemnum}
 % The \code{poemnum} and \code{absolutepoemnum} counters will be incremented
 % every time we include a poem in our document and can be used later to number
-% the poems.
+% the poems. The \code{absolutepoemnum} counter will never be reset by \pkg{%
+% poetrytex} while \code{poemnum} may sometimes be reset to 0 (at the beginning
+% of a new \code{poemgroup} for instance).
 %    \begin{macrocode}
 \newcounter{poemnum}
 \newcounter{absolutepoemnum}
@@ -478,7 +480,6 @@
 % \end{macro}
 % \end{macro}
 % Using \code{\textbackslash numberpoems} results in:
-% \clearpage
 % \begin{Example}
 % \begin{Verbatim}
 % \numberpoems
