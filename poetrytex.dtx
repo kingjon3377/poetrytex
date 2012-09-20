@@ -78,7 +78,7 @@
 %   \name{Sam Whited}\\
 %   \texttt{sam@samwhited.com}
 % }
-% \date{\today\\v1.1\githead\gitdirty\gituncommitted}
+% \date{\today\\v1.2\githead\gitdirty\gituncommitted}
 %
 % \maketitle
 % \maketoc
@@ -189,6 +189,8 @@
 % \begin{macro}{\ptsubtitle}
 % \begin{macro}{\ptauthor}
 % \begin{macro}{\ptdate}
+% \begin{macro}{\ptdefaultenv}
+% \changes{1.2}{2012/09/20}{Added an option to change the default environment}
 % These properties will affect the appearance of \code{\textbackslash%
 % maketitle}:
 %    \begin{macrocode}
@@ -196,7 +198,9 @@
 \newcommand*{\ptsubtitle}{Subtitle}
 \newcommand*{\ptauthor}{Author}
 \newcommand*{\ptdate}{\today}
+\newcommand*{\ptdefaultenv}{verse}
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -360,12 +364,13 @@
 % wrapping it in the \code{poem} environment. This environment takes in two
 % arguments, the title and subtitle (or author, date, etc.) of the poem.
 %    \begin{macrocode}
-\newenvironment{poem}[3][verse]{%
+\newenvironment{poem}[3][\ptdefaultenv]{%
 %    \end{macrocode}
 %
 % By default \code{poem} re-wraps your text in the \code{verse} environment.
 % However, this can be changed by passing in an optional argument with the name
-% of another environment to wrap it in (eg. \code{center}).
+% of another environment to wrap it in (eg. \code{center}) or, for all poems, by
+% redefining \code{ptdefaultenv}.
 %
 %    \begin{macrocode}
   \newcommand*{\@ptwrapenvironment}{#1}
