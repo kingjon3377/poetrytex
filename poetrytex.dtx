@@ -360,6 +360,7 @@
 % \section{The \code{poem} environment}
 %
 % \begin{environment}{poem}
+% \changes{1.2}{2012/09/20}{Use \code{hypertarget} instead of \code{label}}
 % Inserting a poem or other writing into your anthology is accomplished by
 % wrapping it in the \code{poem} environment. This environment takes in two
 % arguments, the title and subtitle (or author, date, etc.) of the poem.
@@ -425,7 +426,7 @@
       \else%
         \arabic{poemnum}.\ %
       \fi#2}%
-    \label{\@ptpoemlabeltext\arabic{absolutepoemnum}}
+    \hypertarget{\@ptpoemlabeltext\arabic{absolutepoemnum}}{}
     {\poemtitleformat%
       \ifx\@ptnumberpoems\@ptundefined
         \relax
@@ -712,6 +713,7 @@
 %
 % \begin{macro}{\linktopoem}
 % \changes{1.1}{2012/07/24}{Fix spacing and multiple use issues}
+% \changes{1.2}{2012/09/20}{Use \code{hyperlink} when linking to a poem}
 % We can \emph{\linktopoem[1]{link}} \emph{\linktopoem[2]{to}}%
 % \emph{\linktopoem[3]{poems}} easily enough by providing \code{linktopoem} with
 % the text for the link and, optionally, the number of the poem to link to. If
@@ -719,9 +721,9 @@
 %    \begin{macrocode}
 \newcommand*{\linktopoem}[2][ptnull]{%
   \ifx{#1}{ptnull}
-    \hyperref[\@ptpoemlabeltext#2]{#2}\relax
+    \hyperlink{\@ptpoemlabeltext#2}{#2}\relax
   \else
-    \hyperref[\@ptpoemlabeltext#1]{#2}\relax
+    \hyperlink{\@ptpoemlabeltext#1}{#2}\relax
   \fi
 }
 %    \end{macrocode}
