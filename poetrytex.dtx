@@ -189,8 +189,6 @@
 % \begin{macro}{\ptsubtitle}
 % \begin{macro}{\ptauthor}
 % \begin{macro}{\ptdate}
-% \begin{macro}{\ptdefaultenv}
-% \changes{1.2}{2012/09/20}{Added an option to change the default environment}
 % These properties will affect the appearance of \code{\textbackslash%
 % maketitle}:
 %    \begin{macrocode}
@@ -198,9 +196,7 @@
 \newcommand*{\ptsubtitle}{Subtitle}
 \newcommand*{\ptauthor}{Author}
 \newcommand*{\ptdate}{\today}
-\newcommand*{\ptdefaultenv}{verse}
 %    \end{macrocode}
-% \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -227,6 +223,9 @@
 % date we use the \code{\textbackslash pt} equivalents so that we can refer to
 % them again later, or redefine them throughout the document---in anthologies
 % with works by multiple authors, for instance.
+%
+% \subsection{Poem config}
+%
 % \begin{macro}{\@ptpoemlabeltext}
 % Each time you create a poem in your document we automatically assign it a
 % special label that can be used to link to it later. This label is prefixed
@@ -251,6 +250,15 @@
 \newcounter{absolutepoemnum}
 %    \end{macrocode}
 % \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\ptdefaultenv}
+% \changes{1.2}{2012/09/20}{Added an option to change the default environment}
+% This contains the name of the default environment in which we should wrap
+% poems.
+%    \begin{macrocode}
+\newcommand*{\ptdefaultenv}{verse}
+%    \end{macrocode}
 % \end{macro}
 %
 % \subsection{Dedication}
@@ -598,7 +606,7 @@
 % \end{poem}
 % \end{Example}
 %
-% \subsection{Stylization}
+% \subsection{Style}
 %
 % \begin{macro}{\poemtitleformat}
 % By redefining \code{\textbackslash poemtitleformat} we can change how the poem
