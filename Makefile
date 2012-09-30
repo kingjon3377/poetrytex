@@ -79,7 +79,7 @@ gendoc: $(DTX)
 	$(DO_MAKEINDEX)
 	$(DO_MAKECHANGES)
 	while ($(DO_LATEX_WRITE18) ; \
-	grep -q "Rerun to get cross" $(NAME).log ) do true; \
+	grep -q "Rerun to get" $(NAME).log ) do true; \
 	done
 
 $(DOC): $(DTX)
@@ -88,7 +88,7 @@ $(DOC): $(DTX)
 	$(DO_MAKEINDEX)
 	$(DO_MAKECHANGES)
 	while ($(DO_LATEX) ; \
-	grep -q "Rerun to get cross" $(NAME).log ) do true; \
+	grep -q "Rerun to get" $(NAME).log ) do true; \
 	done
 
 
