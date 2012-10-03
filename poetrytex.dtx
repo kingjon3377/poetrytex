@@ -142,9 +142,10 @@
 % \changes{1.0}{2012/07/18}{Removed \pkg{fontspec} / \pkg{xelatex} dependency}
 % \changes{1.2}{2012/10/03}{Removed \pkg{parskip} dependency}
 % \changes{1.2}{2012/10/03}{Removed default \pkg{hyperref} options}
+% \changes{1.3}{2012/10/03}{Load \pkg{hyperref} at end of package}
 %    \begin{macrocode}
 \RequirePackage{expl3}
-\RequirePackage{hyperref}
+\AtEndOfPackage{\RequirePackage{hyperref}}
 %    \end{macrocode}
 % Once you have all the required packages, building \pkg{poetrytex} from source
 % can be accomplished in multiple ways. If the Makefile is present running
@@ -293,6 +294,16 @@
 % poems.
 %    \begin{macrocode}
 \newcommand*{\ptdefaultenv}{verse}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\ptannotationenv}
+% \changes{1.3}{2012/10/30}{Added an option to change the default annotation
+% environment}
+% This contains the name of the default environment in which we should wrap
+% annotations.
+%    \begin{macrocode}
+\newcommand*{\ptannotationenv}{flushleft}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -843,10 +854,10 @@
 % again after the annotation.
 %
 % Like the \code{poetry} environment, an optional first argument can be used to
-% specify the environment in which the annotation will be wrapped. This defaults
-% to \code{flushleft}.
+% specify the environment in which the annotation will be wrapped. The default
+% is \code{flushleft} and can be changed by redefining \code{ptannotationenv}.
 %    \begin{macrocode}
-\newenvironment{annotation}[2][flushleft]{%
+\newenvironment{annotation}[2][\ptannotationenv]{%
   \newcommand*{\@ptwrapenvironment}{#1}
   \cleardoublepage
   \poetryheadings
