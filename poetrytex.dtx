@@ -139,11 +139,12 @@
 %
 % Before building \pkg{poetrytex} you should verify that the following
 % dependencies are installed:
-% \changes{1.0}{2012/07/18}{Removed fontspec / xelatex dependency}
+% \changes{1.0}{2012/07/18}{Removed \pkg{fontspec} / \pkg{xelatex} dependency}
+% \changes{1.2}{2012/10/03}{Removed \pkg{parskip} dependency}
+% \changes{1.2}{2012/10/03}{Removed default \pkg{hyperref} options}
 %    \begin{macrocode}
 \RequirePackage{expl3}
-\RequirePackage[pdfborder=0, bookmarks, colorlinks=false, hidelinks]{hyperref}
-\RequirePackage[parfill]{parskip}
+\RequirePackage{hyperref}
 %    \end{macrocode}
 % Once you have all the required packages, building \pkg{poetrytex} from source
 % can be accomplished in multiple ways. If the Makefile is present running
@@ -165,13 +166,43 @@
 % It should be noted that this option is extremely unsafe and you should only
 % use it if you understand the risks.
 %
-%
 % \paragraph{Loading}
 %
 % Using \pkg{poetrytex} in your project works exactly as you'd expect:
 %
 % \begin{Verbatim}
 %   \usepackage{poetrytex}
+% \end{Verbatim}
+%
+% \hypertarget{POETRYTEX:OPTIONS}{}
+% \changes{1.2}{2012/10/03}{Added various package options}
+% \begin{macro}{verse}
+% \begin{macro}{numbertop}
+% \begin{macro}{resetnumongroup}
+% \begin{macro}{numberpoems}
+% \begin{macro}{clearpageafterpoem}
+% The package can also be loaded with any of the following options:
+%    \begin{macrocode}
+\DeclareOption{verse}{\usepackage{verse}}
+\DeclareOption{numbertop}{\numbertop}
+\DeclareOption{resetnumongroup}{\resetnumongroup}
+\DeclareOption{numberpoems}{\numberpoems}
+\DeclareOption{clearpageafterpoem}{\clearpageafterpoem}
+\DeclareOption{clearpageafterpoems}{\clearpageafterpoem}
+\DeclareOption*{%
+  \PassOptionsToPackage{\CurrentOption}{hyperref}%
+}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% For instance:
+%
+% \begin{Verbatim}
+%   \usepackage[numberpoems,clearpageafterpoem]{poetrytex}
 % \end{Verbatim}
 %
 %
@@ -825,7 +856,10 @@
 %    \end{macrocode}
 % \end{environment}
 %
+% Now that everything is defined we can process any
+% \hyperlink{POETRYTEX:OPTIONS}{options} that were passed in by the user:
 %    \begin{macrocode}
+\ProcessOptions\relax
 %</poetrytex>
 %    \end{macrocode}
 %
@@ -855,6 +889,7 @@
 \ProvidesPackage{poetrytex-style}
 
 \usepackage{fancyvrb,hologo,multicol,tipa,url}
+\usepackage[parfill]{parskip}
 
 \fvset{gobble=2}
 
