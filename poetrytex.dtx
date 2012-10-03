@@ -421,6 +421,7 @@
 %    \end{macrocode}
 % For example, a poem wrapped in the \code{center} environment might look like
 % this:
+%
 % \begin{Example}
 % \begin{Verbatim}
 % \begin{poem}[center]
@@ -529,6 +530,7 @@
 % \end{macro}
 % \end{macro}
 % Using \code{\textbackslash numberpoems} results in:
+%
 % \begin{Example}
 % \begin{Verbatim}
 % \numberpoems
@@ -606,6 +608,7 @@
 % \end{macro}
 %
 % Using it works something like this:
+%
 % \begin{Example}
 % \begin{Verbatim}
 % \setlength{\ptgap}{2em}
@@ -701,6 +704,7 @@
 % \end{macro}
 %
 % For example:
+%
 % \begin{Example}
 % \begin{Verbatim}
 % \renewcommand{\ptspacerchar}{\o}
@@ -888,7 +892,7 @@
 %    \begin{macrocode}
 \ProvidesPackage{poetrytex-style}
 
-\usepackage{fancyvrb,hologo,multicol,tipa,url}
+\usepackage{fancyvrb,hologo,framed,multicol,tipa,url}
 \usepackage[pdfborder=0, bookmarks, colorlinks=false, hidelinks]{hyperref}
 \usepackage[parfill]{parskip}
 
@@ -896,9 +900,11 @@
 
 \newenvironment{Example}{%
   \begingroup\setlength{\columnseprule}{.4pt}
+  \begin{minipage}{\textwidth}
   \begin{multicols}{2}
 }{
   \end{multicols}
+  \end{minipage}
   \endgroup
 }
 
