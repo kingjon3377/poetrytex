@@ -20,6 +20,7 @@ help:
 	@echo '                   all  -  unpack & doc'
 	@echo '                 world  -  all & ctan'
 	@echo '                 clean  -  remove all generated and built files'
+	@echo '                preview -  preview the documentation'
 	@echo ' '
 	@echo '                   install  -  install the complete package into your home texmf tree'
 	@echo '               sty-install  -  install the package code only'
@@ -81,6 +82,10 @@ gendoc: $(DTX)
 	while ($(DO_LATEX_WRITE18) ; \
 	grep -q "Rerun to get" $(NAME).log ) do true; \
 	done
+
+COMMAND = command -v $(1) >/dev/null 2>&1
+preview:
+	($(COMMAND) evince && evince $(NAME).pdf) || ($(COMMAND) open && open $(NAME).pdf)
 
 $(DOC): $(DTX)
 	@echo "Compiling documentation"
