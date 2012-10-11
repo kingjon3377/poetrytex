@@ -84,7 +84,7 @@ gendoc: $(DTX)
 	done
 
 COMMAND = command -v $(1) >/dev/null 2>&1
-preview:
+preview: $(DOC)
 	($(COMMAND) evince && evince $(NAME).pdf) || ($(COMMAND) open && open $(NAME).pdf)
 
 $(DOC): $(DTX)
