@@ -335,11 +335,15 @@
 %
 % \begin{macro}{\ptdefaultenv}
 % \changes{1.2}{2012/09/20}{Added an option to change the default environment}
-% This contains the name of the default environment in which we should wrap
-% poems.
+% \begin{macro}{\pttitleenv}
+% \changes{1.4}{2013/02/13}{Allow changing of the poem title environment}
+% These macros contain the names of the default environments in which we should
+% wrap poems and poem titles.
 %    \begin{macrocode}
 \newcommand*{\ptdefaultenv}{verse}
+\newcommand*{\pttitleenv}{center}
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 %
 % \begin{macro}{\ptannotationenv}
@@ -525,7 +529,7 @@
     \addtocounter{absoluteuntitledpoemnum}{1}
   \fi
   \vspace*{\poemvspace}
-  \begin{center}
+  \begin{\pttitleenv}
     \phantomsection%
     \addcontentsline{lot}{\topentrytype}{%
       \ifx\@ptnumbertop\@ptundefined%
@@ -555,7 +559,7 @@
         #2\\%
       \fi}%
     #3
-  \end{center}
+  \end{\pttitleenv}
   \begin{\@ptwrapenvironment}
     \begingroup\setlength{\parskip}{\stanzaparskip}%
 }{%
@@ -728,7 +732,7 @@
 % By redefining \code{\textbackslash poemtitleformat} we can change how the poem
 % title is rendered.
 %    \begin{macrocode}
-\newcommand*{\poemtitleformat}{\normalfont\bfseries\large\centering}
+\newcommand*{\poemtitleformat}{\normalfont\bfseries\large}
 %    \end{macrocode}
 % \end{macro}
 %
