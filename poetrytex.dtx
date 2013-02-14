@@ -309,11 +309,39 @@
 % Sometimes you might want to insert a certain amount of vertical space before
 % every poem. For instance, maybe you have several poems without titles and you
 % need a visual cue to let your readers know that a new poem is starting. This
-% can be acomplished by redefining \code{\textbackslash poemvspace}:
+% can be acomplished by setting \code{\textbackslash poemvspace}:
 %
 %    \begin{macrocode}
-\newcommand*{\poemvspace}{0em}
+\newlength{\poemvspace}
+\setlength{\poemvspace}{0em}
 %    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\pttitleleftspace}
+% \changes{1.4}{2013/02/14}{Add macro to define poem title left hspace}
+% \begin{macro}{\pttitlerightspace}
+% \changes{1.4}{2013/02/14}{Add macro to define poem title right hspace}
+% \begin{macro}{\ptsubtitleleftspace}
+% \changes{1.4}{2013/02/14}{Add macro to define poem subtitle left hspace}
+% \begin{macro}{\ptsubtitlerightspace}
+% \changes{1.4}{2013/02/14}{Add macro to define poem subtitle right hspace}
+% To indent the poems title or subtitle to the left or the right, set the length
+% of \code{\textbackslash pttitleleftspace} and \code{\textbackslash%
+% pttitlerightspace}.
+%
+%    \begin{macrocode}
+\newlength{\pttitleleftspace}
+\setlength{\pttitleleftspace}{0em}
+\newlength{\pttitlerightspace}
+\setlength{\pttitlerightspace}{0em}
+\newlength{\ptsubtitleleftspace}
+\setlength{\ptsubtitleleftspace}{0em}
+\newlength{\ptsubtitlerightspace}
+\setlength{\ptsubtitlerightspace}{0em}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 % \end{macro}
 %
 % \begin{macro}{\ptusedefaulttitles}
@@ -541,7 +569,8 @@
         \ptdefaulttitle%
       \else%
         #2%
-      \fi}%
+      \fi%
+    }%
     \hypertarget{\@ptpoemlabeltext\arabic{absolutepoemnum}}{}
     {\poemtitleformat%
       \ifx\@ptnumberpoems\@ptundefined
@@ -553,12 +582,14 @@
         \ifx\@ptusedefaulttitles\@ptundefined%
           \relax%
         \else%
-          \ptdefaulttitle\\%
+          \hspace*{\pttitleleftspace}\ptdefaulttitle%
+          \hspace*{\pttitlerightspace}\\%
         \fi%
       \else
-        #2\\%
-      \fi}%
-    #3
+        \hspace*{\pttitleleftspace}#2\hspace*{\pttitlerightspace}\\%
+      \fi%
+    }%
+    \hspace*{\ptsubtitleleftspace}#3\hspace*{\ptsubtitlerightspace}
   \end{\pttitleenv}
   \begin{\@ptwrapenvironment}
     \begingroup\setlength{\parskip}{\stanzaparskip}%
