@@ -82,7 +82,7 @@
 %   \name{Sam Whited}\\
 %   \texttt{sam@samwhited.com}
 % }
-% \date{\today\\v1.3\githead\gitdirty\gituncommitted}
+% \date{\today\\v1.4\githead\gitdirty\gituncommitted}
 %
 % \maketitle
 % \maketoc
@@ -276,16 +276,51 @@
 %
 % \begin{macro}{poemnum}
 % \begin{macro}{absolutepoemnum}
+% \begin{macro}{untitledpoemnum}
+% \changes{1.4}{2013/02/12}{Create a new counter to keep track of untitled%
+% poems}
+% \begin{macro}{absoluteuntitledpoemnum}
+% \changes{1.4}{2013/02/12}{Create a new counter to keep track of untitled%
+% poems}
 % The \code{poemnum} and \code{absolutepoemnum} counters will be incremented
 % every time we include a poem in our document and can be used later to number
 % the poems. The \code{absolutepoemnum} counter will never be reset by \pkg{%
 % poetrytex} while \code{poemnum} may sometimes be reset to 0 (at the beginning
-% of a new \code{poemgroup} for instance).
+% of a new \code{poemgroup} for instance). The \code{untitledpoemnum} and
+% \code{absoluteuntitledpoemnum} are similar except that they are only
+% incremented when the poem does not have a title.
 %    \begin{macrocode}
 \newcounter{poemnum}
 \newcounter{absolutepoemnum}
+\newcounter{untitledpoemnum}
+\newcounter{absoluteuntitledpoemnum}
 %    \end{macrocode}
 % \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\poemvspace}
+% \changes{1.4}{2013/02/11}{Allow whitespace before every poem}
+% Sometimes you might want to insert a certain amount of vertical space before
+% every poem. For instance, maybe you have several poems without titles and you
+% need a visual cue to let your readers know that a new poem is starting. This
+% can be acomplished by redefining \code{\textbackslash poemvspace}:
+%
+%    \begin{macrocode}
+\newcommand*{\poemvspace}{0em}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\ptdefaulttitle}
+% \changes{1.4}{2013/02/12}{Add a default poem title}
+% The default title for poems that don't include one.
+%
+%    \begin{macrocode}
+\newcommand*{\ptdefaulttitle}{%
+  Untitled No. \arabic{absoluteuntitledpoemnum}%
+}
+%    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\ptdefaultenv}
@@ -422,14 +457,16 @@
 \newenvironment{poem}[3][\ptdefaultenv]{%
 %    \end{macrocode}
 %
+% \begin{macro}{\@ptwrapenvironment}
 % By default \code{poem} re-wraps your text in the \code{verse} environment.
 % However, this can be changed by passing in an optional argument with the name
 % of another environment to wrap it in (eg. \code{center}) or, for all poems, by
 % redefining \code{ptdefaultenv}.
-%
 %    \begin{macrocode}
   \newcommand*{\@ptwrapenvironment}{#1}
 %    \end{macrocode}
+% \end{macro}
+%
 % For example, a poem wrapped in the \code{center} environment might look like
 % this:
 %
@@ -473,6 +510,11 @@
   \poetryheadings
   \addtocounter{poemnum}{1}
   \addtocounter{absolutepoemnum}{1}
+  \ifx&#2&%
+    \addtocounter{untitledpoemnum}{1}
+    \addtocounter{absoluteuntitledpoemnum}{1}
+  \fi
+  \vspace*{\poemvspace}
   \begin{center}
     \phantomsection%
     \addcontentsline{lot}{\topentrytype}{%
@@ -480,20 +522,30 @@
         \relax%
       \else%
         \arabic{poemnum}.\ %
-      \fi#2}%
+      \fi%
+      \ifx&#2&%
+        \ptdefaulttitle%
+      \else%
+        #2%
+      \fi}%
     \hypertarget{\@ptpoemlabeltext\arabic{absolutepoemnum}}{}
     {\poemtitleformat%
       \ifx\@ptnumberpoems\@ptundefined
         \relax
       \else
         \arabic{poemnum}\\%
-      \fi#2}\\%
+      \fi%
+      \ifx&#2&%
+        \ptdefaulttitle%
+      \else
+        #2%
+      \fi}\\%
     #3
   \end{center}
   \begin{\@ptwrapenvironment}
-  \begingroup\setlength{\parskip}{\stanzaparskip}
+    \begingroup\setlength{\parskip}{\stanzaparskip}%
 }{%
-  \endgroup
+    \endgroup
   \end{\@ptwrapenvironment}
   \ifx\@ptclearpageafterpoem\@ptundefined
     \relax
@@ -811,6 +863,7 @@
     \relax
   \else
     \setcounter{poemnum}{0}
+    \setcounter{untitledpoemnum}{0}
   \fi
   \cleardoublepage
   \vspace*{\fill}
@@ -827,6 +880,7 @@
     \relax
   \else
     \setcounter{poemnum}{0}
+    \setcounter{untitledpoemnum}{0}
   \fi
   \cleardoublepage
   \vspace*{\fill}
