@@ -325,6 +325,7 @@
 % blank.
 %
 %    \begin{macrocode}
+\newcommand*{\ptusedefaulttitles}{\newcommand*{\@ptusedefaulttitles}{}}
 \newcommand*{\ptdefaulttitle}{%
   Untitled No. \arabic{absoluteuntitledpoemnum}%
 }
@@ -545,7 +546,7 @@
         \arabic{poemnum}\\%
       \fi%
       \ifx&#2&%
-        \ifx\ptusedefaulttitles\@ptundefined%
+        \ifx\@ptusedefaulttitles\@ptundefined%
           \relax%
         \else%
           \ptdefaulttitle\\%
