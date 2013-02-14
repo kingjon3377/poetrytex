@@ -181,6 +181,8 @@
 % \begin{macro}{numbertop}
 % \begin{macro}{resetnumongroup}
 % \begin{macro}{numberpoems}
+% \begin{macro}{usedefaulttitles}
+% \changes{1.4}{2012/02/13}{Add package option to use default titles}
 % \begin{macro}{clearpageafterpoem}
 % The package can also be loaded with any of the following options:
 %    \begin{macrocode}
@@ -188,12 +190,14 @@
 \DeclareOption{numbertop}{\numbertop}
 \DeclareOption{resetnumongroup}{\resetnumongroup}
 \DeclareOption{numberpoems}{\numberpoems}
+\DeclareOption{usedefaulttitles}{\ptusedefaulttitles}
 \DeclareOption{clearpageafterpoem}{\clearpageafterpoem}
 \DeclareOption{clearpageafterpoems}{\clearpageafterpoem}
 \DeclareOption*{%
   \PassOptionsToPackage{\CurrentOption}{hyperref}%
 }
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -312,15 +316,20 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\ptusedefaulttitles}
 % \begin{macro}{\ptdefaulttitle}
 % \changes{1.4}{2013/02/12}{Add a default poem title}
-% The default title for poems that don't include one.
+% The default title for poems that don't include one. If \code{\textbackslash
+% ptusedefaulttitles} is called the default title will be displayed above the
+% poem itself as well as in the table of contents. Otherwise the title is left
+% blank.
 %
 %    \begin{macrocode}
 \newcommand*{\ptdefaulttitle}{%
   Untitled No. \arabic{absoluteuntitledpoemnum}%
 }
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 %
 % \begin{macro}{\ptdefaultenv}
@@ -536,10 +545,14 @@
         \arabic{poemnum}\\%
       \fi%
       \ifx&#2&%
-        \ptdefaulttitle%
+        \ifx\ptusedefaulttitles\@ptundefined%
+          \relax%
+        \else%
+          \ptdefaulttitle\\%
+        \fi%
       \else
-        #2%
-      \fi}\\%
+        #2\\%
+      \fi}%
     #3
   \end{center}
   \begin{\@ptwrapenvironment}
