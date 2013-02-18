@@ -82,7 +82,7 @@
 %   \name{Sam Whited}\\
 %   \texttt{sam@samwhited.com}
 % }
-% \date{\today\\v1.4\githead\gitdirty\gituncommitted}
+% \date{\today\\\gitdescribe}
 %
 % \maketitle
 % \maketoc
@@ -1022,33 +1022,13 @@
   \endgroup
 }
 
-\newcommand*{\githead}{%
+\newcommand*{\gitdescribe}{%
   \immediate\write18{%
-    rm githead.tex 2> /dev/null; git rev-parse --short HEAD > githead.tex
+    rm gitdescribe.tex 2> /dev/null; (git describe --tags --dirty || echo "v0.0") 2> /dev/null > gitdescribe.tex
   }%
-  \InputIfFileExists{githead.tex}{.}{}\unskip%
+  \InputIfFileExists{gitdescribe.tex}{}{}\unskip%
   \immediate\write18{%
-    rm githead.tex 2> /dev/null
-  }%
-}
-
-\newcommand*{\gitdirty}{%
-  \immediate\write18{%
-    rm gitdirty.tex 2> /dev/null; git diff-files --quiet || echo "*" > gitdirty.tex
-  }%
-  \InputIfFileExists{gitdirty.tex}{\endlinechar=-1\relax}{}\unskip%
-  \immediate\write18{%
-    rm gitdirty.tex 2> /dev/null
-  }%
-}
-
-\newcommand*{\gituncommitted}{%
-  \immediate\write18{%
-    rm gituncommitted.tex 2> /dev/null; git diff-index --quiet --cached HEAD || echo "+" > gituncommitted.tex
-  }%
-  \InputIfFileExists{gituncommitted.tex}{\endlinechar=-1\relax}{}\unskip%
-  \immediate\write18{%
-    rm gituncommitted.tex 2> /dev/null
+    rm gitdescribe.tex 2> /dev/null
   }%
 }
 
