@@ -438,6 +438,27 @@
 \renewcommand*{\listtablename}{\toptitle}
 %    \end{macrocode}
 %
+% \begin{macro}{\beforetoc}
+% \changes{1.4}{2012/02/18}{Add hook before table of contents}
+% \begin{macro}{\aftertoc}
+% \changes{1.4}{2012/02/18}{Add hook after table of contents}
+% \begin{macro}{\beforetop}
+% \changes{1.4}{2012/02/18}{Add hook before table of poems}
+% \begin{macro}{\aftertop}
+% \changes{1.4}{2012/02/18}{Add hook after table of poems}
+% Several hooks are provided which allow you to insert content before or after
+% the tables:
+%    \begin{macrocode}
+\newcommand{\beforetoc}{}
+\newcommand{\aftertoc}{}
+\newcommand{\beforetop}{}
+\newcommand{\aftertop}{}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
 % \begin{macro}{\maketoc}
 % \begin{macro}{\maketop}
 % \begin{macro}{\maketop*}
@@ -450,23 +471,30 @@
 % document.
 %    \begin{macrocode}
 \newcommand*{\maketoc}{%
+  \beforetoc
   \tableofcontents
   \pagestyle{plain}
+  \aftertoc
   \clearpage
   \thispagestyle{empty}
 }
 \newcommand*{\maketop}{\@ifstar{\@ptmaketopStar}{\@ptmaketopNoStar}}
 \newcommand*{\@ptmaketopStar}{%
+  \cleardoublepage
+  \beforetop
   \listoftables
   \pagestyle{plain}
+  \aftertop
   \clearpage
 }
 \newcommand*{\@ptmaketopNoStar}{%
   \cleardoublepage
+  \beforetop
   \phantomsection
   \addcontentsline{toc}{section}{\toptitle}
   \listoftables
   \pagestyle{plain}
+  \aftertop
   \clearpage
 }
 %    \end{macrocode}
