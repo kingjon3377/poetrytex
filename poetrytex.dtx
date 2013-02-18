@@ -563,7 +563,7 @@
       \ifx\@ptnumbertop\@ptundefined%
         \relax%
       \else%
-        \arabic{poemnum}.\ %
+        \toppoemnum%
       \fi%
       \ifx&#2&%
         \ptdefaulttitle%
@@ -576,7 +576,7 @@
       \ifx\@ptnumberpoems\@ptundefined
         \relax
       \else
-        \arabic{poemnum}\\%
+        \titlepoemnum
       \fi%
       \ifx&#2&%
         \ifx\@ptusedefaulttitles\@ptundefined%
@@ -671,6 +671,18 @@
 % \ldots
 % \end{poem}
 % \end{Example}
+%
+% \begin{macro}{\titlepoemnum}
+% \begin{macro}{\toppoemnum}
+% These commands are used to insert the poem number into the poem title and the
+% table of poems respectively. By redefining them you can customize how the
+% numbering looks.
+%    \begin{macrocode}
+\newcommand*{\titlepoemnum}{\arabic{poemnum}\\}
+\newcommand*{\toppoemnum}{\arabic{poemnum}.\ }
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
 %
 % \subsection{Spacing and indentation}
 %
