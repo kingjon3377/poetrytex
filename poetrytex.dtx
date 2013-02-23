@@ -143,8 +143,10 @@
 % \changes{1.2}{2012/10/03}{Removed \pkg{parskip} dependency}
 % \changes{1.2}{2012/10/03}{Removed default \pkg{hyperref} options}
 % \changes{1.3}{2012/10/03}{Load \pkg{hyperref} at end of package}
+% \changes{1.5}{2013/02/23}{Require \pkg{tcloft} package}
 %    \begin{macrocode}
 \RequirePackage{expl3}
+\RequirePackage{tocloft}
 \AtEndOfPackage{\RequirePackage{hyperref}}
 %    \end{macrocode}
 % Once you have all the required packages, building \pkg{poetrytex} from source
@@ -281,11 +283,11 @@
 % \begin{macro}{poemnum}
 % \begin{macro}{absolutepoemnum}
 % \begin{macro}{untitledpoemnum}
-% \changes{1.4}{2013/02/12}{Create a new counter to keep track of untitled%
-% poems}
+% \changes{1.4}{2013/02/12}{Create a new counter to track untitled poems}
 % \begin{macro}{absoluteuntitledpoemnum}
-% \changes{1.4}{2013/02/12}{Create a new counter to keep track of untitled%
-% poems}
+% \changes{1.4}{2013/02/12}{Create a new counter to track of untitled poems}
+% \begin{macro}{poemgroupnum}
+% \changes{1.5}{2013/02/23}{Create a new counter to track poem groups}
 % The \code{poemnum} and \code{absolutepoemnum} counters will be incremented
 % every time we include a poem in our document and can be used later to number
 % the poems. The \code{absolutepoemnum} counter will never be reset by \pkg{%
@@ -298,7 +300,9 @@
 \newcounter{absolutepoemnum}
 \newcounter{untitledpoemnum}
 \newcounter{absoluteuntitledpoemnum}
+\newcounter{poemgroupnum}
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -416,6 +420,13 @@
 %
 % Next we setup the table of contents and list of poems:
 %
+% \begin{macro}{\listofpoems}
+%    \begin{macrocode}
+\newlistof[\resetnumon]{poem}{top}{\toptitle}
+\newcommand*{\listofpoems}{\listofpoem}
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\toptitle}
 % \begin{macro}{\topentrytype}
 % The value of \code{\textbackslash toptitle} will be rendered atop the Table of
@@ -482,7 +493,7 @@
 \newcommand*{\@ptmaketopStar}{%
   \cleardoublepage
   \beforetop
-  \listoftables
+  \listofpoems
   \pagestyle{plain}
   \aftertop
   \clearpage
@@ -492,7 +503,7 @@
   \beforetop
   \phantomsection
   \addcontentsline{toc}{section}{\toptitle}
-  \listoftables
+  \listofpoems
   \pagestyle{plain}
   \aftertop
   \clearpage
@@ -586,8 +597,9 @@
   \fi
   \vspace*{\poemvspace}
   \begin{\pttitleenv}
+    \refstepcounter{poem}%
     \phantomsection%
-    \addcontentsline{lot}{\topentrytype}{%
+    \addcontentsline{top}{\topentrytype}{%
       \ifx\@ptnumbertop\@ptundefined%
         \relax%
       \else%
@@ -656,6 +668,8 @@
 %
 % \subsection{Numbering}
 %
+% \begin{macro}{\resetnumon}
+% \changes{1.5}{2013/02/23}{Allow user to reset poem nums on counter change}
 % \begin{macro}{\resetnumongroup}
 % \begin{macro}{\numberpoems}
 % These commands determine if the \code{poemnum} counter should be reset when
@@ -664,9 +678,14 @@
 % defined at any point in your document to change how numbering works, or to
 % turn on numbering from that point forward.
 %    \begin{macrocode}
-\newcommand*{\resetnumongroup}{\newcommand*{\@ptresetnumongroup}{}}
+\newcommand*{\resetnumon}{}
+\newcommand*{\resetnumongroup}{%
+  \newcommand*{\@ptresetnumongroup}{}%
+  \renewcommand*{\resetnumon}{poemgroupnum}%
+}
 \newcommand*{\numberpoems}{\newcommand*{\@ptnumberpoems}{}}
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 % Using \code{\textbackslash numberpoems} results in:
@@ -1001,13 +1020,7 @@
 %    \begin{macrocode}
 \newcommand*{\ptgroup}{}
 \newcommand*{\poemgroup}{%
-  \@ifstar{%
-    \@ptpoemgroupStar
-  }{%
-    \@ptpoemgroupNoStar
-  }
-}
-\newcommand*{\@ptpoemgroupStar}[1]{%
+  \addtocounter{poemgroupnum}{1}
   \ifx\@ptresetnumongroup\@ptundefined
     \relax
   \else
@@ -1016,6 +1029,13 @@
   \fi
   \cleardoublepage
   \vspace*{\fill}
+  \@ifstar{%
+    \@ptpoemgroupStar
+  }{%
+    \@ptpoemgroupNoStar
+  }
+}
+\newcommand*{\@ptpoemgroupStar}[1]{%
   \renewcommand*{\ptgroup}{#1}
   \pagestyle{empty}
   \begin{center}
@@ -1025,19 +1045,11 @@
   \clearpage
 }
 \newcommand*{\@ptpoemgroupNoStar}[1]{%
-  \ifx\@ptresetnumongroup\@ptundefined
-    \relax
-  \else
-    \setcounter{poemnum}{0}
-    \setcounter{untitledpoemnum}{0}
-  \fi
-  \cleardoublepage
-  \vspace*{\fill}
   \renewcommand*{\ptgroup}{#1}
   \pagestyle{empty}
   \begin{center}
     \section{#1}
-    \addcontentsline{lot}{section}{#1}
+    \addcontentsline{top}{section}{#1}
   \end{center}
   \vspace*{\fill}
   \clearpage
