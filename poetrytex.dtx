@@ -421,10 +421,15 @@
 % Next we setup the table of contents and list of poems:
 %
 % \begin{macro}{\listofpoems}
+% \changes{1.5}{2013/02/23}{Use custom table for list of poems}
+% \begin{macro}{\resetnumon}
+% \changes{1.5}{2013/02/23}{Allow user to reset poem nums on counter change}
 %    \begin{macrocode}
+\newcommand*{\resetnumon}{}
 \newlistof[\resetnumon]{poem}{top}{\toptitle}
 \newcommand*{\listofpoems}{\listofpoem}
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 %
 % \begin{macro}{\toptitle}
@@ -668,8 +673,6 @@
 %
 % \subsection{Numbering}
 %
-% \begin{macro}{\resetnumon}
-% \changes{1.5}{2013/02/23}{Allow user to reset poem nums on counter change}
 % \begin{macro}{\resetnumongroup}
 % \begin{macro}{\numberpoems}
 % These commands determine if the \code{poemnum} counter should be reset when
@@ -678,14 +681,12 @@
 % defined at any point in your document to change how numbering works, or to
 % turn on numbering from that point forward.
 %    \begin{macrocode}
-\newcommand*{\resetnumon}{}
 \newcommand*{\resetnumongroup}{%
   \newcommand*{\@ptresetnumongroup}{}%
   \renewcommand*{\resetnumon}{poemgroupnum}%
 }
 \newcommand*{\numberpoems}{\newcommand*{\@ptnumberpoems}{}}
 %    \end{macrocode}
-% \end{macro}
 % \end{macro}
 % \end{macro}
 % Using \code{\textbackslash numberpoems} results in:
