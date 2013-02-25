@@ -143,7 +143,7 @@
 % \changes{1.2}{2012/10/03}{Removed \pkg{parskip} dependency}
 % \changes{1.2}{2012/10/03}{Removed default \pkg{hyperref} options}
 % \changes{1.3}{2012/10/03}{Load \pkg{hyperref} at end of package}
-% \changes{1.5}{2013/02/23}{Require \pkg{tcloft} package}
+% \changes{2.0}{2013/02/23}{Require \pkg{tcloft} package}
 %    \begin{macrocode}
 \RequirePackage{expl3}
 \RequirePackage{tocloft}
@@ -287,7 +287,7 @@
 % \begin{macro}{absoluteuntitledpoemnum}
 % \changes{1.4}{2013/02/12}{Create a new counter to track of untitled poems}
 % \begin{macro}{poemgroupnum}
-% \changes{1.5}{2013/02/23}{Create a new counter to track poem groups}
+% \changes{2.0}{2013/02/23}{Create a new counter to track poem groups}
 % The \code{poemnum} and \code{absolutepoemnum} counters will be incremented
 % every time we include a poem in our document and can be used later to number
 % the poems. The \code{absolutepoemnum} counter will never be reset by \pkg{%
@@ -421,9 +421,9 @@
 % Next we setup the table of contents and list of poems:
 %
 % \begin{macro}{\listofpoems}
-% \changes{1.5}{2013/02/23}{Use custom table for list of poems}
+% \changes{2.0}{2013/02/23}{Use custom table for list of poems}
 % \begin{macro}{\resetnumon}
-% \changes{1.5}{2013/02/23}{Allow user to reset poem nums on counter change}
+% \changes{2.0}{2013/02/23}{Allow user to reset poem nums on counter change}
 %    \begin{macrocode}
 \newcommand*{\resetnumon}{}
 \newlistof[\resetnumon]{poem}{top}{\toptitle}
