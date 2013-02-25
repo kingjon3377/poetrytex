@@ -41,6 +41,7 @@ temp
 *.synctex.gz
 *.synctex.gz(busy)
 *.toc
+*.top
 *.vrb
 *.maf
 *.mtc
