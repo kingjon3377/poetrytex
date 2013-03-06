@@ -185,6 +185,8 @@
 % \begin{macro}{numberpoems}
 % \begin{macro}{usedefaulttitles}
 % \changes{1.4}{2012/02/13}{Add package option to use default titles}
+% \begin{macro}{useincipits}
+% \changes{2.0}{2012/03/06}{Add package option to use incipits}
 % \begin{macro}{clearpageafterpoem}
 % The package can also be loaded with any of the following options:
 %    \begin{macrocode}
@@ -193,12 +195,14 @@
 \DeclareOption{resetnumongroup}{\resetnumongroup}
 \DeclareOption{numberpoems}{\numberpoems}
 \DeclareOption{usedefaulttitles}{\ptusedefaulttitles}
+\DeclareOption{useincipits}{\ptuseincipits}
 \DeclareOption{clearpageafterpoem}{\clearpageafterpoem}
 \DeclareOption{clearpageafterpoems}{\clearpageafterpoem}
 \DeclareOption*{%
   \PassOptionsToPackage{\CurrentOption}{hyperref}%
 }
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -351,17 +355,23 @@
 % \begin{macro}{\ptusedefaulttitles}
 % \begin{macro}{\ptdefaulttitle}
 % \changes{1.4}{2013/02/12}{Add a default poem title}
-% The default title for poems that don't include one. If \code{\textbackslash
-% ptusedefaulttitles} is called the default title will be displayed above the
-% poem itself as well as in the table of contents. Otherwise the title is left
-% blank.
+% \begin{macro}{\ptuseincipits}
+% \changes{2.0}{2013/03/06}{Add option for using incipits in the ToP}
+% The default title for poems that don't include one. If
+% \code{\textbackslash ptusedefaulttitles} is called the default title will be
+% displayed above the poem itself as well as in the table of contents. Otherwise
+% the title is left blank. We can also use incipits in the ToP by calling
+% \code{\textbackslash ptuseincipits}. This will override the default title in
+% the ToP, but will not be displayed atop the poem itself.
 %
 %    \begin{macrocode}
 \newcommand*{\ptusedefaulttitles}{\newcommand*{\@ptusedefaulttitles}{}}
 \newcommand*{\ptdefaulttitle}{%
   Untitled No. \arabic{absoluteuntitledpoemnum}%
 }
+\newcommand*{\ptuseincipits}{\newcommand*{\@ptuseincipits}{}}
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 %
@@ -538,6 +548,17 @@
 % properties out of the way, it's time to move on to the core functionality of
 % \pkg{poetrytex}: displaying and organizing poems!
 %
+% \begin{macro}{\theincipit}
+% \changes{2.0}{2013/03/06}{Allow the user to insert the incipit}
+% This will expand to the incipit for the current poem if one has been declared.
+%
+%    \begin{macrocode}
+\newcommand*{\theincipit}{%
+  \csname @poem\arabic{absolutepoemnum} incipit\endcsname%
+}
+%    \end{macrocode}
+% \end{macro}
+%
 % \section{The \code{poem} environment}
 %
 % \begin{environment}{poem}
@@ -597,6 +618,60 @@
 % \end{poem}
 % \end{Example}
 %
+% \begin{macro}{\incipit}
+% \changes{2.0}{2013/03/06}{Allow the user to declare an incipit}
+% An incipit can be declared within the poem environment using the
+% \code{\textbackslash incipit} command. This will reprint the first argument so
+% you don't have to write your first line twice. This is useful for untitled
+% poems as you can put their incipit in the ToP in place of a default title.
+%    \begin{macrocode}
+\newcommand*{\incipit}[1]{%
+  \global\expandafter\def%
+    \csname%
+      @poem\arabic{absolutepoemnum} incipit%
+    \endcsname{##1}%
+  ##1%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% An untitled poem with a default title and an incipit in the ToP might look
+% something like this:
+%
+% \begin{Example}
+% \begin{Verbatim}
+% \ptusedefaulttitles
+% \ptuseincipits
+% \begin{poem}{}{Traditional}
+% \incipit{Media vita in morte%
+%   sumus};\\*
+% Quem qu\ae rimus adjutorem nisi%
+%   te, Domine?\\*
+% Qui pro peccatis nostris juste%
+%   irasceris\\*
+% Sancte Deus, Sancte fortis,%
+%   Sancte et misericors
+%   Salvator,\\*
+% Amar\ae morti ne tradas nos.
+% \end{poem}
+% \end{Verbatim}
+% \columnbreak
+% \ptusedefaulttitles
+% \ptuseincipits
+% \begin{poem}{}{Traditional}
+% \incipit{Media vita in morte%
+%   sumus};\\*
+% Quem qu\ae rimus adjutorem nisi%
+%   te, Domine?\\*
+% Qui pro peccatis nostris juste%
+%   irasceris\\*
+% Sancte Deus, Sancte fortis,%
+%   Sancte et misericors%
+%   Salvator,\\*
+% Amar\ae morti ne tradas nos.
+% \end{poem}
+% \end{Example}
+%
 % Now we render the page header, title, and the actual poem:
 %    \begin{macrocode}
   \poetryheadings
@@ -617,7 +692,11 @@
         \toppoemnum%
       \fi%
       \ifx&#2&%
-        \ptdefaulttitle%
+        \ifx\@ptuseincipits\@ptundefined%
+          \ptdefaulttitle%
+        \else%
+          {\incipittopformat \theincipit}%
+        \fi%
       \else%
         #2%
       \fi%
@@ -893,6 +972,13 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\incipittopformat}
+% \changes{2.0}{2013/02/23}{Add hook for incipit formatting in the ToP}
+% Similarly we can change how the incipit is rendered in the Table of Poems:
+%    \begin{macrocode}
+\newcommand*{\incipittopformat}{\itshape}
+%    \end{macrocode}
+% \end{macro}
 %
 % If you want a stylistic marker between two poems, or between sections
 % or stanzas within a poem, the following commands are your friend.
