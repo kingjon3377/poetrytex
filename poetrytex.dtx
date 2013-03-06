@@ -424,6 +424,12 @@
 % \changes{2.0}{2013/02/23}{Use custom table for list of poems}
 % \begin{macro}{\resetnumon}
 % \changes{2.0}{2013/02/23}{Allow user to reset poem nums on counter change}
+% The \code{\textbackslash listofpoems} command is nothing more than a
+% convenient alias for \code{\textbackslash listofpoem} as defined by the
+% \pkg{tocloft} package. We can reset poem numbering at a given point by
+% redefining the \code{\textbackslash resetnumon} macro. This should probably
+% not be changed by users directly. Instead, use the built in macro
+% \code{\textbackslash resetnumongroup}.
 %    \begin{macrocode}
 \newcommand*{\resetnumon}{}
 \newlistof[\resetnumon]{poem}{top}{\toptitle}
