@@ -450,13 +450,18 @@
 %
 % \begin{macro}{\toptitle}
 % \begin{macro}{\topentrytype}
+% \begin{macro}{\toptocentrytype}
+% \changes{2.0}{2013/03/07}{Add hook to change ToP entry type in ToC}
 % The value of \code{\textbackslash toptitle} will be rendered atop the Table of
 % Poems, and \code{\textbackslash topentrytype} will set the default entry type
-% for poems in the TOP.
+% for poems in the TOP. \code{\textbackslash toptocentrytype} sets the default
+% entry type for the TOP in the TOC.
 %    \begin{macrocode}
 \newcommand*{\toptitle}{List of Poems}
 \newcommand*{\topentrytype}{subsection}
+\newcommand*{\toptocentrytype}{section}
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 %
@@ -523,7 +528,7 @@
   \cleardoublepage
   \beforetop
   \phantomsection
-  \addcontentsline{toc}{section}{\toptitle}
+  \addcontentsline{toc}{\toptocentrytype}{\toptitle}
   \listofpoems
   \pagestyle{plain}
   \aftertop
