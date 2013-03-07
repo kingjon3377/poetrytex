@@ -1194,7 +1194,7 @@
 % \clearpage
 % \setcounter{IndexColumns}{2}
 % \phantomsection
-% \addcontentsline{toc}{section}{Index}
+% \addcontentsline{toc}{part}{Index}
 % \PrintIndex
 %
 % \makeatletter
@@ -1205,9 +1205,10 @@
 % \makeatother
 % \clearpage
 % \phantomsection
-% \addcontentsline{toc}{section}{Change History}
+% \addcontentsline{toc}{part}{Change History}
 % \PrintChanges
 % \changes{1.1}{2012/07/19}{Added an example table of poems}
+% \renewcommand*{\toptocentrytype}{part}
 % \renewcommand*{\beforetop}{\hypertarget{POETRYTEX:TOP}{}}
 % \maketop
 % \Finale
