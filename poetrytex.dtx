@@ -392,6 +392,28 @@
 % \end{macro}
 % \end{macro}
 %
+% \begin{macro}{\ptdefaultgroupenv}
+% \changes{2.0}{2013/03/09}{Allow changing of the default group environment}
+% \begin{macro}{\grouppagestyle}
+% \changes{2.0}{2013/03/09}{Allow changing of group page style}
+% \begin{macro}{\pregroupvspace}
+% \changes{2.0}{2013/03/09}{Allow change in vspace before group}
+% \begin{macro}{\postgroupvspace}
+% \changes{2.0}{2013/03/09}{Allow change in vspace after group}
+% The following macros can be used to configure how the poem group page looks.
+%    \begin{macrocode}
+\newcommand*{\ptdefaultgroupenv}{center}
+\newcommand*{\grouppagestyle}{empty}
+\newlength{\pregroupvspace}
+\newlength{\postgroupvspace}
+\setlength{\pregroupvspace}{\fill}
+\setlength{\postgroupvspace}{\fill}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
 % \begin{macro}{\ptannotationenv}
 % \changes{1.3}{2012/10/30}{Added an option to change the default annotation
 % environment}
@@ -628,6 +650,20 @@
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \subsection{Poem group}
+%
+% \begin{macro}{\beforepoemgroup}
+% \changes{2.0}{2013/03/09}{Add hook before group}
+% \begin{macro}{\afterpoemgroup}
+% \changes{2.0}{2013/03/09}{Add hook after group}
+% The following hooks occur before and after a new poem group.
+%    \begin{macrocode}
+\newcommand*{\beforepoemgroup}{\cleardoublepage}
+\newcommand*{\afterpoemgroup}{\clearpage}
+%    \end{macrocode}
 % \end{macro}
 % \end{macro}
 %
@@ -1202,7 +1238,7 @@
 % to refer to it later.
 %    \begin{macrocode}
 \newcommand*{\ptgroup}{}
-\newcommand*{\poemgroup}{%
+\newcommand*{\poemgroup}[1]{%
   \addtocounter{poemgroupnum}{1}
   \ifx\@ptresetnumongroup\@ptundefined
     \relax
@@ -1210,32 +1246,26 @@
     \setcounter{poemnum}{0}
     \setcounter{untitledpoemnum}{0}
   \fi
-  \cleardoublepage
-  \vspace*{\fill}
-  \@ifstar{%
-    \@ptpoemgroupStar
-  }{%
-    \@ptpoemgroupNoStar
-  }
+  \beforepoemgroup
+  \vspace*{\pregroupvspace}
+  \renewcommand*{\ptgroup}{#1}
+  \pagestyle{\grouppagestyle}
+  \begin{\ptdefaultgroupenv}
+    \@ifstar{%
+      \@ptpoemgroupStar{#1}
+    }{%
+      \@ptpoemgroupNoStar{#1}
+    }
+  \end{\ptdefaultgroupenv}
+  \vspace*{\postgroupvspace}
+  \afterpoemgroup
 }
 \newcommand*{\@ptpoemgroupStar}[1]{%
-  \renewcommand*{\ptgroup}{#1}
-  \pagestyle{empty}
-  \begin{center}
-    \section*{#1}
-  \end{center}
-  \vspace*{\fill}
-  \clearpage
+  \section*{#1}
 }
 \newcommand*{\@ptpoemgroupNoStar}[1]{%
-  \renewcommand*{\ptgroup}{#1}
-  \pagestyle{empty}
-  \begin{center}
-    \section{#1}
-    \addcontentsline{top}{section}{#1}
-  \end{center}
-  \vspace*{\fill}
-  \clearpage
+  \section{#1}
+  \addcontentsline{top}{section}{#1}
 }
 %    \end{macrocode}
 % \end{macro}
