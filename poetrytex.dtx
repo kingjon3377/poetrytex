@@ -259,11 +259,15 @@
 % We then use these properties to set the document title, author, and date:
 %    \begin{macrocode}
 \title{%
-  \pttitle%
-  \ifx\ptsubtitle\@ptundefined\relax\else\\\ptsubtitle\fi%
+  \beforetitle\pttitle\aftertitle%
+  \ifx\ptsubtitle\@ptundefined%
+    \relax%
+  \else%
+    \\\beforesubtitle\ptsubtitle\aftersubtitle%
+  \fi%
 }
-\author{\ptauthor}
-\date{\ptdate}
+\author{\beforeauthor\ptauthor\afterauthor}
+\date{\beforedate\ptdate\afterdate}
 %    \end{macrocode}
 % Since \code{\textbackslash maketitle} clears the internal title, author, and
 % date we use the \code{\textbackslash pt} equivalents so that we can refer to
@@ -416,11 +420,11 @@
 \newcommand*{\ptdedication}{Renew \textsf{\textbackslash ptdedication}}
 \newcommand*{\makededication}[1][flushright]{%
   \thispagestyle{empty}
-  \vspace*{\fill}
+  \vspace*{\prededicationvspace}
   \begin{#1}
-    \emph{\ptdedication}
+    \beforededication{\dedicationformat\ptdedication}\afterdedication
   \end{#1}
-  \vspace*{\fill}
+  \vspace*{\postdedicationvspace}
 }
 %    \end{macrocode}
 % \end{macro}
@@ -475,27 +479,6 @@
 \renewcommand*{\listtablename}{\toptitle}
 %    \end{macrocode}
 %
-% \begin{macro}{\beforetoc}
-% \changes{1.4}{2012/02/18}{Add hook before table of contents}
-% \begin{macro}{\aftertoc}
-% \changes{1.4}{2012/02/18}{Add hook after table of contents}
-% \begin{macro}{\beforetop}
-% \changes{1.4}{2012/02/18}{Add hook before table of poems}
-% \begin{macro}{\aftertop}
-% \changes{1.4}{2012/02/18}{Add hook after table of poems}
-% Several hooks are provided which allow you to insert content before or after
-% the tables:
-%    \begin{macrocode}
-\newcommand{\beforetoc}{}
-\newcommand{\aftertoc}{}
-\newcommand{\beforetop}{}
-\newcommand{\aftertop}{}
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-%
 % \begin{macro}{\maketoc}
 % \begin{macro}{\maketop}
 % \begin{macro}{\maketop*}
@@ -545,6 +528,107 @@
 %    \begin{macrocode}
 \newcommand*{\numbertop}{\newcommand*{\@ptnumbertop}{}}
 %    \end{macrocode}
+% \end{macro}
+%
+% \section{Hooks and formatting}
+% \changes{2.0}{2013/03/08}{Refactor hooks into new section}
+% A great many commands are provided to act as hooks into various parts of
+% \pkg{poetrytex}. These commands don't do anything initially, but can be
+% redefined to customize the way \pkg{poetrytex} behaves.
+%
+% \subsection{Title page}
+%
+% \begin{macro}{\beforetitle}
+% \changes{2.0}{2013/03/08}{Add hook before title}
+% \begin{macro}{\aftertitle}
+% \changes{2.0}{2013/03/08}{Add hook after title}
+% \begin{macro}{\beforesubtitle}
+% \changes{2.0}{2013/03/08}{Add hook before subtitle}
+% \begin{macro}{\aftersubtitle}
+% \changes{2.0}{2013/03/08}{Add hook after subtitle}
+% \begin{macro}{\beforeauthor}
+% \changes{2.0}{2013/03/08}{Add hook before author}
+% \begin{macro}{\afterauthor}
+% \changes{2.0}{2013/03/08}{Add hook after author}
+% \begin{macro}{\beforedate}
+% \changes{2.0}{2013/03/08}{Add hook before date}
+% \begin{macro}{\afterdate}
+% \changes{2.0}{2013/03/08}{Add hook after date}
+% These hooks get inserted before or after elements on the title page or
+% dedication. If the element has formatting, they will be inserted outside of
+% the formatted block, but inside of any enclosing environments.
+%    \begin{macrocode}
+\newcommand*{\beforetitle}{}
+\newcommand*{\aftertitle}{}
+\newcommand*{\beforesubtitle}{}
+\newcommand*{\aftersubtitle}{}
+\newcommand*{\beforeauthor}{}
+\newcommand*{\afterauthor}{}
+\newcommand*{\beforedate}{}
+\newcommand*{\afterdate}{}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \subsection{Dedication}
+%
+% \begin{macro}{\dedicationformat}
+% \changes{2.0}{2013/03/08}{Allow customization of dedication format}
+% \begin{macro}{\prededicationvspace}
+% \changes{2.0}{2013/03/08}{Add length for setting the pre-dedication vspace}
+% \begin{macro}{\postdedicationvspace}
+% \changes{2.0}{2013/03/08}{Add length for setting the post-dedication vspace}
+% \begin{macro}{\beforededication}
+% \changes{2.0}{2013/03/08}{Add hook before dedication}
+% \begin{macro}{\afterdedication}
+% \changes{2.0}{2013/03/08}{Add hook after dedication}
+% Redefine \code{\textbackslash dedicationformat} to change how the dedicaton
+% text is formatted. You can change the length of the vspace around the
+% dedication using \code{\textbackslash pre} and \code{\textbackslash
+% postdedicationvspace} or use the \code{before} and \code{afterdedication}
+% hooks to insert text around the deciation text.
+%    \begin{macrocode}
+\newcommand*{\dedicationformat}{\normalfont\itshape}
+\newlength{\prededicationvspace}
+\newlength{\postdedicationvspace}
+\setlength{\prededicationvspace}{\fill}
+\setlength{\postdedicationvspace}{\fill}
+\newcommand*{\beforededication}{}
+\newcommand*{\afterdedication}{}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \subsection{Tables and links}
+%
+% \begin{macro}{\beforetoc}
+% \changes{1.4}{2012/02/18}{Add hook before table of contents}
+% \begin{macro}{\aftertoc}
+% \changes{1.4}{2012/02/18}{Add hook after table of contents}
+% \begin{macro}{\beforetop}
+% \changes{1.4}{2012/02/18}{Add hook before table of poems}
+% \begin{macro}{\aftertop}
+% \changes{1.4}{2012/02/18}{Add hook after table of poems}
+% Several hooks are provided which allow you to insert content before or after
+% the tables:
+%    \begin{macrocode}
+\newcommand{\beforetoc}{}
+\newcommand{\aftertoc}{}
+\newcommand{\beforetop}{}
+\newcommand{\aftertop}{}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 % \end{macro}
 %
 % \part{Poems and annotations}
