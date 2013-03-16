@@ -468,22 +468,23 @@
 % \code{\textbackslash resetnumongroup}.
 %    \begin{macrocode}
 \newcommand*{\resetnumon}{}
-\newlistof[\resetnumon]{poem}{top}{\toptitle}
+\newlistof[\resetnumon]{poem}{top}{\topname}
 \newcommand*{\listofpoems}{\listofpoem}
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
 %
-% \begin{macro}{\toptitle}
+% \begin{macro}{\topname}
+% \changes{2.0}{2013/03/16}{Rename from \code{\textbackslash toptitle}}
 % \begin{macro}{\topentrytype}
 % \begin{macro}{\toptocentrytype}
 % \changes{2.0}{2013/03/07}{Add hook to change ToP entry type in ToC}
-% The value of \code{\textbackslash toptitle} will be rendered atop the Table of
+% The value of \code{\textbackslash topname} will be rendered atop the Table of
 % Poems, and \code{\textbackslash topentrytype} will set the default entry type
 % for poems in the TOP. \code{\textbackslash toptocentrytype} sets the default
 % entry type for the TOP in the TOC.
 %    \begin{macrocode}
-\newcommand*{\toptitle}{List of Poems}
+\newcommand*{\topname}{List of Poems}
 \newcommand*{\topentrytype}{subsection}
 \newcommand*{\toptocentrytype}{section}
 %    \end{macrocode}
@@ -498,7 +499,7 @@
 %    \begin{macrocode}
 \setcounter{secnumdepth}{-1}
 \setcounter{tocdepth}{2}
-\renewcommand*{\listtablename}{\toptitle}
+\renewcommand*{\listtablename}{\topname}
 %    \end{macrocode}
 %
 % \begin{macro}{\maketoc}
@@ -533,7 +534,7 @@
   \cleardoublepage
   \beforetop
   \phantomsection
-  \addcontentsline{toc}{\toptocentrytype}{\toptitle}
+  \addcontentsline{toc}{\toptocentrytype}{\topname}
   \listofpoems
   \pagestyle{plain}
   \aftertop
