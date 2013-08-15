@@ -79,10 +79,10 @@
 %
 % \title{The \textsf{poetrytex} package}
 % \author{
-%   \name{Sam Whited}\\
+%   \name{Sam Whited}\\*
 %   \texttt{sam@samwhited.com}
 % }
-% \date{\today\\\gitdescribe}
+% \date{\today\\*\gitdescribe}
 %
 % \maketitle
 % \maketoc
@@ -263,7 +263,7 @@
   \ifx\ptsubtitle\@ptundefined%
     \relax%
   \else%
-    \\\beforesubtitle\ptsubtitle\aftersubtitle%
+    \\*\beforesubtitle\ptsubtitle\aftersubtitle%
   \fi%
 }
 \author{\beforeauthor\ptauthor\afterauthor}
@@ -839,10 +839,10 @@
           \relax%
         \else%
           \hspace*{\pttitleleftspace}\ptdefaulttitle%
-          \hspace*{\pttitlerightspace}\\%
+          \hspace*{\pttitlerightspace}\\*%
         \fi%
       \else
-        \hspace*{\pttitleleftspace}#2\hspace*{\pttitlerightspace}\\%
+        \hspace*{\pttitleleftspace}#2\hspace*{\pttitlerightspace}\\*%
       \fi%
     }%
     \hspace*{\ptsubtitleleftspace}#3\hspace*{\ptsubtitlerightspace}
@@ -942,7 +942,7 @@
 % table of poems respectively. By redefining them you can customize how the
 % numbering looks.
 %    \begin{macrocode}
-\newcommand*{\titlepoemnum}{\arabic{poemnum}\\}
+\newcommand*{\titlepoemnum}{\arabic{poemnum}\\*}
 \newcommand*{\toppoemnum}{\arabic{poemnum}.\ }
 %    \end{macrocode}
 % \end{macro}
