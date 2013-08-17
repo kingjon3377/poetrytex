@@ -143,7 +143,8 @@
 % \changes{1.2}{2012/10/03}{Removed \pkg{parskip} dependency}
 % \changes{1.2}{2012/10/03}{Removed default \pkg{hyperref} options}
 % \changes{1.3}{2012/10/03}{Load \pkg{hyperref} at end of package}
-% \changes{2.0}{2013/02/23}{Require \pkg{tcloft} package}
+% \changes{2.0.0}{2013/02/23}{Require \pkg{tcloft} package}
+% \changes{2.0.0}{2013/08/17}{Begin using semantic versioning (semver.org)}
 %    \begin{macrocode}
 \RequirePackage{expl3}
 \RequirePackage{tocloft}
@@ -186,7 +187,7 @@
 % \begin{macro}{usedefaulttitles}
 % \changes{1.4}{2012/02/13}{Add package option to use default titles}
 % \begin{macro}{useincipits}
-% \changes{2.0}{2012/03/06}{Add package option to use incipits}
+% \changes{2.0.0}{2012/03/06}{Add package option to use incipits}
 % \begin{macro}{clearpageafterpoem}
 % The package can also be loaded with any of the following options:
 %    \begin{macrocode}
@@ -295,7 +296,7 @@
 % \begin{macro}{absoluteuntitledpoemnum}
 % \changes{1.4}{2013/02/12}{Create a new counter to track of untitled poems}
 % \begin{macro}{poemgroupnum}
-% \changes{2.0}{2013/02/23}{Create a new counter to track poem groups}
+% \changes{2.0.0}{2013/02/23}{Create a new counter to track poem groups}
 % The \code{poemnum} and \code{absolutepoemnum} counters will be incremented
 % every time we include a poem in our document and can be used later to number
 % the poems. The \code{absolutepoemnum} counter will never be reset by \pkg{%
@@ -360,7 +361,7 @@
 % \begin{macro}{\ptdefaulttitle}
 % \changes{1.4}{2013/02/12}{Add a default poem title}
 % \begin{macro}{\ptuseincipits}
-% \changes{2.0}{2013/03/06}{Add option for using incipits in the ToP}
+% \changes{2.0.0}{2013/03/06}{Add option for using incipits in the ToP}
 % The default title for poems that don't include one. If
 % \code{\textbackslash ptusedefaulttitles} is called the default title will be
 % displayed above the poem itself as well as in the table of contents. Otherwise
@@ -393,13 +394,13 @@
 % \end{macro}
 %
 % \begin{macro}{\ptdefaultgroupenv}
-% \changes{2.0}{2013/03/09}{Allow changing of the default group environment}
+% \changes{2.0.0}{2013/03/09}{Allow changing of the default group environment}
 % \begin{macro}{\grouppagestyle}
-% \changes{2.0}{2013/03/09}{Allow changing of group page style}
+% \changes{2.0.0}{2013/03/09}{Allow changing of group page style}
 % \begin{macro}{\pregroupvspace}
-% \changes{2.0}{2013/03/09}{Allow change in vspace before group}
+% \changes{2.0.0}{2013/03/09}{Allow change in vspace before group}
 % \begin{macro}{\postgroupvspace}
-% \changes{2.0}{2013/03/09}{Allow change in vspace after group}
+% \changes{2.0.0}{2013/03/09}{Allow change in vspace after group}
 % The following macros can be used to configure how the poem group page looks.
 %    \begin{macrocode}
 \newcommand*{\ptdefaultgroupenv}{center}
@@ -457,9 +458,9 @@
 % Next we setup the table of contents and list of poems:
 %
 % \begin{macro}{\listofpoems}
-% \changes{2.0}{2013/02/23}{Use custom table for list of poems}
+% \changes{2.0.0}{2013/02/23}{Use custom table for list of poems}
 % \begin{macro}{\resetnumon}
-% \changes{2.0}{2013/02/23}{Allow user to reset poem nums on counter change}
+% \changes{2.0.0}{2013/02/23}{Allow user to reset poem nums on counter change}
 % The \code{\textbackslash listofpoems} command is nothing more than a
 % convenient alias for \code{\textbackslash listofpoem} as defined by the
 % \pkg{tocloft} package. We can reset poem numbering at a given point by
@@ -475,10 +476,10 @@
 % \end{macro}
 %
 % \begin{macro}{\topname}
-% \changes{2.0}{2013/03/16}{Rename from \code{\textbackslash toptitle}}
+% \changes{2.0.0}{2013/03/16}{Rename from \code{\textbackslash toptitle}}
 % \begin{macro}{\topentrytype}
 % \begin{macro}{\toptocentrytype}
-% \changes{2.0}{2013/03/07}{Add hook to change ToP entry type in ToC}
+% \changes{2.0.0}{2013/03/07}{Add hook to change ToP entry type in ToC}
 % The value of \code{\textbackslash topname} will be rendered atop the Table of
 % Poems, and \code{\textbackslash topentrytype} will set the default entry type
 % for poems in the TOP. \code{\textbackslash toptocentrytype} sets the default
@@ -554,7 +555,7 @@
 % \end{macro}
 %
 % \section{Hooks and formatting}
-% \changes{2.0}{2013/03/08}{Refactor hooks into new section}
+% \changes{2.0.0}{2013/03/08}{Refactor hooks into new section}
 % A great many commands are provided to act as hooks into various parts of
 % \pkg{poetrytex}. These commands don't do anything initially, but can be
 % redefined to customize the way \pkg{poetrytex} behaves.
@@ -562,21 +563,21 @@
 % \subsection{Title page}
 %
 % \begin{macro}{\beforetitle}
-% \changes{2.0}{2013/03/08}{Add hook before title}
+% \changes{2.0.0}{2013/03/08}{Add hook before title}
 % \begin{macro}{\aftertitle}
-% \changes{2.0}{2013/03/08}{Add hook after title}
+% \changes{2.0.0}{2013/03/08}{Add hook after title}
 % \begin{macro}{\beforesubtitle}
-% \changes{2.0}{2013/03/08}{Add hook before subtitle}
+% \changes{2.0.0}{2013/03/08}{Add hook before subtitle}
 % \begin{macro}{\aftersubtitle}
-% \changes{2.0}{2013/03/08}{Add hook after subtitle}
+% \changes{2.0.0}{2013/03/08}{Add hook after subtitle}
 % \begin{macro}{\beforeauthor}
-% \changes{2.0}{2013/03/08}{Add hook before author}
+% \changes{2.0.0}{2013/03/08}{Add hook before author}
 % \begin{macro}{\afterauthor}
-% \changes{2.0}{2013/03/08}{Add hook after author}
+% \changes{2.0.0}{2013/03/08}{Add hook after author}
 % \begin{macro}{\beforedate}
-% \changes{2.0}{2013/03/08}{Add hook before date}
+% \changes{2.0.0}{2013/03/08}{Add hook before date}
 % \begin{macro}{\afterdate}
-% \changes{2.0}{2013/03/08}{Add hook after date}
+% \changes{2.0.0}{2013/03/08}{Add hook after date}
 % These hooks get inserted before or after elements on the title page or
 % dedication. If the element has formatting, they will be inserted outside of
 % the formatted block, but inside of any enclosing environments.
@@ -602,15 +603,15 @@
 % \subsection{Dedication}
 %
 % \begin{macro}{\dedicationformat}
-% \changes{2.0}{2013/03/08}{Allow customization of dedication format}
+% \changes{2.0.0}{2013/03/08}{Allow customization of dedication format}
 % \begin{macro}{\prededicationvspace}
-% \changes{2.0}{2013/03/08}{Add length for setting the pre-dedication vspace}
+% \changes{2.0.0}{2013/03/08}{Add length for setting the pre-dedication vspace}
 % \begin{macro}{\postdedicationvspace}
-% \changes{2.0}{2013/03/08}{Add length for setting the post-dedication vspace}
+% \changes{2.0.0}{2013/03/08}{Add length for setting the post-dedication vspace}
 % \begin{macro}{\beforededication}
-% \changes{2.0}{2013/03/08}{Add hook before dedication}
+% \changes{2.0.0}{2013/03/08}{Add hook before dedication}
 % \begin{macro}{\afterdedication}
-% \changes{2.0}{2013/03/08}{Add hook after dedication}
+% \changes{2.0.0}{2013/03/08}{Add hook after dedication}
 % Redefine \code{\textbackslash dedicationformat} to change how the dedicaton
 % text is formatted. You can change the length of the vspace around the
 % dedication using \code{\textbackslash pre} and \code{\textbackslash
@@ -657,9 +658,9 @@
 % \subsection{Poem group}
 %
 % \begin{macro}{\beforepoemgroup}
-% \changes{2.0}{2013/03/09}{Add hook before group}
+% \changes{2.0.0}{2013/03/09}{Add hook before group}
 % \begin{macro}{\afterpoemgroup}
-% \changes{2.0}{2013/03/09}{Add hook after group}
+% \changes{2.0.0}{2013/03/09}{Add hook after group}
 % The following hooks occur before and after a new poem group.
 %    \begin{macrocode}
 \newcommand*{\beforepoemgroup}{\cleardoublepage}
@@ -675,7 +676,7 @@
 % \pkg{poetrytex}: displaying and organizing poems!
 %
 % \begin{macro}{\theincipit}
-% \changes{2.0}{2013/03/06}{Allow the user to insert the incipit}
+% \changes{2.0.0}{2013/03/06}{Allow the user to insert the incipit}
 % This will expand to the incipit for the current poem if one has been declared.
 %
 %    \begin{macrocode}
@@ -689,6 +690,7 @@
 %
 % \begin{environment}{poem}
 % \changes{1.2}{2012/09/20}{Use \code{hypertarget} instead of \code{label}}
+% \changes{2.0.0}{2013/08/15}{Prevent orphan / widow lines in stanzas (\href{https://github.com/SamWhited/poetrytex/issues/7}{Issue \#7)}}
 % Inserting a poem or other writing into your anthology is accomplished by
 % wrapping it in the \code{poem} environment. This environment takes in two
 % arguments, the title and subtitle (or author, date, etc.) of the poem.
@@ -745,7 +747,7 @@
 % \end{Example}
 %
 % \begin{macro}{\incipit}
-% \changes{2.0}{2013/03/06}{Allow the user to declare an incipit}
+% \changes{2.0.0}{2013/03/06}{Allow the user to declare an incipit}
 % An incipit can be declared within the poem environment using the
 % \code{\textbackslash incipit} command. This will reprint the first argument so
 % you don't have to write your first line twice. This is useful for untitled
@@ -1100,7 +1102,7 @@
 % \end{macro}
 %
 % \begin{macro}{\incipittopformat}
-% \changes{2.0}{2013/02/23}{Add hook for incipit formatting in the ToP}
+% \changes{2.0.0}{2013/02/23}{Add hook for incipit formatting in the ToP}
 % Similarly we can change how the incipit is rendered in the Table of Poems:
 %    \begin{macrocode}
 \newcommand*{\incipittopformat}{\itshape}
