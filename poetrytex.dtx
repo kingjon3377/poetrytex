@@ -181,7 +181,11 @@
 % \hypertarget{POETRYTEX:OPTIONS}{}
 % \changes{1.2}{2012/10/03}{Added various package options}
 % \begin{macro}{verse}
+% \begin{macro}{poemsintoc}
+% \changes{2.0.0}{2012/08/17}{Add option to insert poems in the ToC}
 % \begin{macro}{numbertop}
+% \begin{macro}{numbertoc}
+% \changes{2.0.0}{2012/08/17}{Add option to number poems in the ToC}
 % \begin{macro}{resetnumongroup}
 % \begin{macro}{numberpoems}
 % \begin{macro}{usedefaulttitles}
@@ -192,7 +196,9 @@
 % The package can also be loaded with any of the following options:
 %    \begin{macrocode}
 \DeclareOption{verse}{\usepackage{verse}}
+\DeclareOption{poemsintoc}{\listpoemsintoc}
 \DeclareOption{numbertop}{\numbertop}
+\DeclareOption{numbertoc}{\numbertoc}
 \DeclareOption{resetnumongroup}{\resetnumongroup}
 \DeclareOption{numberpoems}{\numberpoems}
 \DeclareOption{usedefaulttitles}{\ptusedefaulttitles}
@@ -203,6 +209,8 @@
   \PassOptionsToPackage{\CurrentOption}{hyperref}%
 }
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -493,6 +501,20 @@
 % \end{macro}
 % \end{macro}
 %
+% \begin{macro}{\listpoemsintoc}
+% \changes{2.0.0}{2013/08/17}{List poems in the table of contents}
+% \begin{macro}{\tocentrytype}
+% \changes{2.0.0}{2013/08/17}{Sets the entry type for poems in the ToC}
+% Using these commands you can cause poems to be listed in the ToC and set the
+% entry type just like the ToP. By default, the ToC entry type is set to
+% \code{\textbackslash topentrytype}.
+%    \begin{macrocode}
+\newcommand*{\listpoemsintoc}{\newcommand*{\@ptlistpoemsintoc}{}}
+\newcommand*{\tocentrytype}{\topentrytype}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
 % We then set the \code{secnumdepth} and \code{tocdepth} counters to disable
 % chapter, section, and subsection numbering, and to limit the maximum depth of
 % entries in the TOC.
@@ -547,11 +569,15 @@
 % \end{macro}
 %
 % \begin{macro}{\numbertop}
-% Placing this command in your document preamble will cause the table of poems
-% to be numbered.
+% \begin{macro}{\numbertoc}
+% \changes{2.0.0}{2012/08/17}{Number poems in the table of contents}
+% Placing one of these commands in your document preamble will cause the table
+% of poems or table of contents to be numbered.
 %    \begin{macrocode}
 \newcommand*{\numbertop}{\newcommand*{\@ptnumbertop}{}}
+\newcommand*{\numbertoc}{\newcommand*{\@ptnumbertoc}{}}
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 %
 % \section{Hooks and formatting}
@@ -829,6 +855,26 @@
         #2%
       \fi%
     }%
+    \ifx\@ptlistpoemsintoc\@ptundefined%
+      \relax%
+    \else%
+      \addcontentsline{toc}{\tocentrytype}{%
+        \ifx\@ptnumbertoc\@ptundefined%
+          \relax%
+        \else%
+          \tocpoemnum%
+        \fi%
+        \ifx&#2&%
+          \ifx\@ptuseincipits\@ptundefined%
+            \ptdefaulttitle%
+          \else%
+            {\incipittocformat \theincipit}%
+          \fi%
+        \else%
+          #2%
+        \fi%
+      }%
+    \fi%
     \hypertarget{\@ptpoemlabeltext\arabic{absolutepoemnum}}{}
     {\poemtitleformat%
       \ifx\@ptnumberpoems\@ptundefined
@@ -940,13 +986,17 @@
 % \changes{1.4}{2012/02/18}{Add hook for poem number formatting}
 % \begin{macro}{\toppoemnum}
 % \changes{1.4}{2012/02/18}{Add hook for Table of Poems poem number formatting}
-% These commands are used to insert the poem number into the poem title and the
-% table of poems respectively. By redefining them you can customize how the
-% numbering looks.
+% \begin{macro}{\tocpoemnum}
+% \changes{2.0.0}{2013/08/17}{Add hook for Table of Contents poem number formatting}
+% These commands are used to insert the poem number into the poem title, the
+% table of poems, and the table of contents respectively. By redefining them you
+% can customize how the numbering looks.
 %    \begin{macrocode}
 \newcommand*{\titlepoemnum}{\arabic{poemnum}\\*}
 \newcommand*{\toppoemnum}{\arabic{poemnum}.\ }
+\newcommand*{\tocpoemnum}{\toppoemnum}
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 %
@@ -1103,10 +1153,15 @@
 %
 % \begin{macro}{\incipittopformat}
 % \changes{2.0.0}{2013/02/23}{Add hook for incipit formatting in the ToP}
-% Similarly we can change how the incipit is rendered in the Table of Poems:
+% \begin{macro}{\incipittocformat}
+% \changes{2.0.0}{2013/08/17}{Add hook for incipit formatting in the ToC}
+% Similarly we can change how the incipit is rendered in the Table of Poems or
+% Table of Contents:
 %    \begin{macrocode}
 \newcommand*{\incipittopformat}{\itshape}
+\newcommand*{\incipittocformat}{\incipittopformat}
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 %
 % If you want a stylistic marker between two poems, or between sections
