@@ -104,7 +104,8 @@
 % (generated via a modified version of Jeremy Ashkenas' literate programming
 % tool `docco'). However, as the source and scope of the project grew I decided
 % to move away from docco and start working on a proper package that would use
-% more traditional \TeX-style docs.
+% more traditional \TeX-style docs. As of version 2.0.0, I began using
+% \href{https://semver.org}{semantic versioning} to track releases.
 %
 % \subsection{License / about the source}
 %
@@ -123,8 +124,10 @@
 % \subsection{Acknowledgements}
 %
 % A special thanks is in order for Brittany Taylor. Though she probably has no
-% idea what \TeX\ is or that this project even exists it is due mostly to her
-% influence that it ever got off the ground.
+% idea what \TeX\ is, or that this project even exists, it is due mostly to her
+% influence that it ever got off the ground. Secondly: to Sarah Snyder, who
+% helped me to start writing again after many wasted years, and is always
+% obliging when I want to lose at Scrabble.
 %
 % \StopEventually{}
 % \changes{1.0}{2012/07/18}{Converted package to dtx}
@@ -444,9 +447,9 @@
 % redefine \code{\textbackslash ptdedication} to change the dedication text.
 %
 % To create a dedication page, the \code{\textbackslash makededication} command
-% can be called. By default, this command aligns everything to the right,
-% however, by adding an optional argument you can specify any environment to
-% wrap the dedication in.
+% can be called. By default, this command aligns everything to the right using
+% the \textsf{flushright} environment, however, by adding an optional argument
+% you can specify another environment to wrap the dedication in.
 %    \begin{macrocode}
 \newcommand*{\ptdedication}{Renew \textsf{\textbackslash ptdedication}}
 \newcommand*{\makededication}[1][flushright]{%
@@ -458,6 +461,21 @@
   \vspace*{\postdedicationvspace}
 }
 %    \end{macrocode}
+% For example, you might do something like the following:
+%
+% \begin{Example}
+% \begin{Verbatim}
+% \renewcommand*{\ptdedication}{%
+% A sappy dedication.%
+% }
+% \makededication[center]
+% \end{Verbatim}
+% \columnbreak
+% \renewcommand*{\ptdedication}{%
+% A sappy dedication.%
+% }
+% \makededication[center]
+% \end{Example}
 % \end{macro}
 % \end{macro}
 %
@@ -528,13 +546,12 @@
 % \begin{macro}{\maketoc}
 % \begin{macro}{\maketop}
 % \begin{macro}{\maketop*}
-% Once you've configured the TOC and TOP you probably want to insert them into
-% your document somewhere. While you could just use the \LaTeX\ commands \code{%
-% \textbackslash tableofcontents} and \code{\textbackslash listoftables}, we
-% provide alternatives that add a bit of formatting and clear the page. By
-% default the TOP creates a listing in the TOC---Using the star modifier
-% prevents this. An example table of poems can be found at the end of this
-% document.
+% Once you've configured the ToC and ToP you probably want to insert them into
+% your document somewhere. While you could just use the \LaTeX\ command
+% \code{\textbackslash tableofcontents} for the ToC, we provide an alternative
+% that adds a bit of formatting and clears the page. By default the TOP creates
+% a listing for itself in the TOC---using the star modifier prevents this. An
+% example table of poems can be found at the end of this document.
 %    \begin{macrocode}
 \newcommand*{\maketoc}{%
   \beforetoc
@@ -642,7 +659,7 @@
 % text is formatted. You can change the length of the vspace around the
 % dedication using \code{\textbackslash pre} and \code{\textbackslash
 % postdedicationvspace} or use the \code{before} and \code{afterdedication}
-% hooks to insert text around the deciation text.
+% hooks to insert text around the dedication text.
 %    \begin{macrocode}
 \newcommand*{\dedicationformat}{\normalfont\itshape}
 \newlength{\prededicationvspace}
@@ -700,17 +717,6 @@
 % Now that we've got all the boilerplate, configuration, titles, tables, and
 % properties out of the way, it's time to move on to the core functionality of
 % \pkg{poetrytex}: displaying and organizing poems!
-%
-% \begin{macro}{\theincipit}
-% \changes{2.0.0}{2013/03/06}{Allow the user to insert the incipit}
-% This will expand to the incipit for the current poem if one has been declared.
-%
-%    \begin{macrocode}
-\newcommand*{\theincipit}{%
-  \csname @poem\arabic{absolutepoemnum} incipit\endcsname%
-}
-%    \end{macrocode}
-% \end{macro}
 %
 % \section{The \code{poem} environment}
 %
@@ -785,6 +791,18 @@
       @poem\arabic{absolutepoemnum} incipit%
     \endcsname{##1}%
   ##1%
+}
+%    \end{macrocode}
+% \end{macro}
+
+% \begin{macro}{\theincipit}
+% \changes{2.0.0}{2013/03/06}{Allow the user to insert the incipit}
+% After an incipit has been declared, this will expand to the text of the
+% incipit for the current poem.
+%
+%    \begin{macrocode}
+\newcommand*{\theincipit}{%
+  \csname @poem\arabic{absolutepoemnum} incipit\endcsname%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -920,8 +938,9 @@
 % \begin{macro}{\poetryheadings}
 % Every time a new \code{poem} or \code{annotation} environment is created we
 % automatically call \code{\textbackslash poetryheadings}. By redefining this
-% you can change how your headings look, use packages like \pkg{fancyhdr}, or
-% remove headers from poem pages altogether.
+% you can change how your headings look, use packages like
+% \pkg{\href{http://ctan.org/pkg/fancyhdr}{fancyhdr}}, or remove headers from
+% poem pages altogether.
 %    \begin{macrocode}
 \newcommand*{\poetryheadings}[0]{%
   \pagestyle{myheadings}
