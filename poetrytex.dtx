@@ -1430,7 +1430,7 @@
 \newcommand*{\gitdescribe}{%
   \immediate\write18{%
     rm gitdescribe.tex 2> /dev/null; (git describe --tags --dirty ||%
-      echo "v0.0") 2> /dev/null > gitdescribe.tex
+      echo "v0.0.0") 2> /dev/null > gitdescribe.tex
   }%
   \InputIfFileExists{gitdescribe.tex}{}{}\unskip%
   \immediate\write18{%
