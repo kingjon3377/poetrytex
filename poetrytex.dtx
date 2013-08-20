@@ -508,8 +508,8 @@
 % \changes{2.0.0}{2013/03/07}{Add hook to change ToP entry type in ToC}
 % The value of \code{\textbackslash topname} will be rendered atop the Table of
 % Poems, and \code{\textbackslash topentrytype} will set the default entry type
-% for poems in the TOP. \code{\textbackslash toptocentrytype} sets the default
-% entry type for the TOP in the TOC.
+% for poems in the ToP. \code{\textbackslash toptocentrytype} sets the default
+% entry type for the ToP in the ToC.
 %    \begin{macrocode}
 \newcommand*{\topname}{List of Poems}
 \newcommand*{\topentrytype}{subsection}
@@ -535,7 +535,7 @@
 %
 % We then set the \code{secnumdepth} and \code{tocdepth} counters to disable
 % chapter, section, and subsection numbering, and to limit the maximum depth of
-% entries in the TOC.
+% entries in the ToC.
 %
 %    \begin{macrocode}
 \setcounter{secnumdepth}{-1}
@@ -549,8 +549,8 @@
 % Once you've configured the ToC and ToP you probably want to insert them into
 % your document somewhere. While you could just use the \LaTeX\ command
 % \code{\textbackslash tableofcontents} for the ToC, we provide an alternative
-% that adds a bit of formatting and clears the page. By default the TOP creates
-% a listing for itself in the TOC---using the star modifier prevents this. An
+% that adds a bit of formatting and clears the page. By default the ToP creates
+% a listing for itself in the ToC---using the star modifier prevents this. An
 % example table of poems can be found at the end of this document.
 %    \begin{macrocode}
 \newcommand*{\maketoc}{%
@@ -1309,7 +1309,7 @@
 % \begin{macro}{\poemgroup*}
 % Dividing poems up into groups can be accomplished with the \code{%
 % \textbackslash poemgroup} command. The command creates a title-page for the
-% group at the current location and adds entries to the TOP and TOC unless the
+% group at the current location and adds entries to the ToP and ToC unless the
 % starred version of the command is used. The \code{\textbackslash ptgroup}
 % command will always contain a reference to the current group in case you need
 % to refer to it later.
@@ -1355,7 +1355,7 @@
 % \changes{1.1}{2012/07/20}{Added optional `environment' argument}
 % Annotations allow you to insert prose that relates to a specific poem into
 % your document. It uses \code{\textbackslash poetryheadings}, clears the page
-% twice, and adds itself to the TOC (but not the TOP). The page is also cleared
+% twice, and adds itself to the ToC (but not the ToP). The page is also cleared
 % again after the annotation.
 %
 % Like the \code{poetry} environment, an optional first argument can be used to
