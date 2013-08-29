@@ -928,7 +928,7 @@
 %    \end{macrocode}
 % \end{environment}
 %
-% \section{Formatting}
+% \section{Formatting poems}
 %
 % The \code{poem} environment provides some reasonable defaults for formatting
 % your work but chances are you want a little more control.
@@ -936,9 +936,9 @@
 % \subsection{Headings}
 %
 % \begin{macro}{\poetryheadings}
-% Every time a new \code{poem} or \code{annotation} environment is created we
-% automatically call \code{\textbackslash poetryheadings}. By redefining this
-% you can change how your headings look, use packages like
+% Every time a new \code{poem} environment is created we automatically call
+% \code{\textbackslash poetryheadings}. By redefining this you can change how
+% your headings look, use packages like
 % \pkg{\href{http://ctan.org/pkg/fancyhdr}{fancyhdr}}, or remove headers from
 % poem pages altogether.
 %    \begin{macrocode}
@@ -1365,7 +1365,7 @@
 \newenvironment{annotation}[2][\ptannotationenv]{%
   \newcommand*{\@ptwrapenvironment}{#1}
   \cleardoublepage
-  \poetryheadings
+  \annotationheadings
   \begin{\@ptwrapenvironment}
   \subsection{#2}
   \nopagebreak
@@ -1376,6 +1376,24 @@
 }
 %    \end{macrocode}
 % \end{environment}
+%
+%
+% \section{Formatting annotations}
+%
+% \subsection{Headings}
+%
+% \begin{macro}{\annotationheadings}
+% \changes{2.1.0}{2013/08/29}{Allow separate headings on annotation pages}
+% The \code{\textbackslash annotationheadings} macro is automatically called
+% every time a new \code{annotation} environment is created. By default, it
+% simply calls \code{\textbackslash poetryheadings}, but it can be redefined to
+% give your annotation pages a different heading style than your poem pages.
+%    \begin{macrocode}
+\newcommand*{\annotationheadings}[0]{\poetryheadings}
+%    \end{macrocode}
+% \end{macro}
+%
+%
 %
 % Now that everything is defined we can process any
 % \hyperlink{POETRYTEX:OPTIONS}{options} that were passed in by the user:
