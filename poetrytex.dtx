@@ -658,11 +658,12 @@
 % \changes{2.0.0}{2013/03/08}{Add hook before dedication}
 % \begin{macro}{\afterdedication}
 % \changes{2.0.0}{2013/03/08}{Add hook after dedication}
-% Redefine \code{\textbackslash dedicationformat} to change how the dedicaton
+% Redefine \code{\textbackslash dedicationformat} to change how the dedication
 % text is formatted. You can change the length of the vspace around the
-% dedication using \code{\textbackslash pre} and \code{\textbackslash
-% postdedicationvspace} or use the \code{before} and \code{afterdedication}
-% hooks to insert text around the dedication text.
+% dedication by redefining \code{\textbackslash prededicationvspace} and
+% \code{\textbackslash postdedicationvspace} or redefine the
+% \code{beforededication} and \code{afterdedication} hooks to insert content
+% around the dedication text.
 %    \begin{macrocode}
 \newcommand*{\dedicationformat}{\normalfont\itshape}
 \newlength{\prededicationvspace}
