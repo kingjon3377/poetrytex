@@ -810,8 +810,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% An untitled poem with a (slightly modified) default title and an incipit in
-% the ToP might look something like this:
+% This poem has a (slightly modified) default title and an incipit in the ToP:
 %
 % \begin{Example}
 % \begin{Verbatim}
@@ -1179,6 +1178,47 @@
 %    \begin{macrocode}
 \newcommand*{\poemtitleformat}{\normalfont\bfseries\large}
 %    \end{macrocode}
+%
+% This can be used for everything from changing the font size to adding
+% interesting effects:
+%
+% \begin{Example}
+% \begin{Verbatim}
+% \renewcommand*{\poemtitleformat}
+% {\normalfont\bfseries%
+% {\rule{5em}{0.2em}}\\*}
+% \begin{poem}{Excelsior}
+% {Henry Wadsworth Longfellow\\*
+%  1841}
+% The shades of night were falling%
+% fast,\\*
+% As through an Alpine village%
+% passed\\*
+% A youth, who bore, `mid snow and
+% ice,\\*
+% A banner with the strange%
+% device,\\*
+% Excelsior!
+% \end{poem}
+% \end{Verbatim}
+% \columnbreak
+% \renewcommand*{\poemtitleformat}
+% {\normalfont\bfseries%
+% {\rule{5em}{0.2em}}\\*}
+% \begin{poem}{Excelsior}
+% {Henry Wadsworth Longfellow\\*
+%  1841}
+% The shades of night were falling%
+% fast,\\*
+% As through an Alpine village%
+% passed\\*
+% A youth, who bore, `mid snow and
+% ice,\\*
+% A banner with the strange%
+% device,\\*
+% Excelsior!
+% \end{poem}
+% \end{Example}
 % \end{macro}
 %
 % \begin{macro}{\incipittopformat}
