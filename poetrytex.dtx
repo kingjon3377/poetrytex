@@ -61,8 +61,7 @@
 %
 %<*driver>
 \documentclass[a4paper]{ltxdoc}
-\usepackage{poetrytex-style}
-\usepackage{poetrytex}
+\usepackage{poetrytex-style,textcomp,poetrytex}
 \EnableCrossrefs
 \CodelineIndex
 \RecordChanges
@@ -811,13 +810,17 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% An untitled poem with a default title and an incipit in the ToP might look
-% something like this:
+% An untitled poem with a (slightly modified) default title and an incipit in
+% the ToP might look something like this:
 %
 % \begin{Example}
 % \begin{Verbatim}
 % \ptusedefaulttitles
 % \ptuseincipits
+% \renewcommand*{\ptdefaulttitle}{%
+% Untitled \textnumero\
+% \arabic{absoluteuntitledpoemnum}%
+% }
 % \begin{poem}{}{Traditional}
 % \incipit{Media vita in morte%
 %   sumus};\\*
@@ -834,6 +837,10 @@
 % \columnbreak
 % \ptusedefaulttitles
 % \ptuseincipits
+% \renewcommand*{\ptdefaulttitle}{%
+% Untitled \textnumero\
+% \arabic{absoluteuntitledpoemnum}%
+% }
 % \begin{poem}{}{Traditional}
 % \incipit{Media vita in morte%
 %   sumus};\\*
