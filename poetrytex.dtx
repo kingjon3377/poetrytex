@@ -304,6 +304,10 @@
 % \changes{1.4}{2013/02/12}{Create a new counter to track untitled poems}
 % \begin{macro}{absoluteuntitledpoemnum}
 % \changes{1.4}{2013/02/12}{Create a new counter to track of untitled poems}
+% \begin{macro}{titledpoemnum}
+% \changes{2.1.0}{2013/09/01}{Create a new counter to track titled poems}
+% \begin{macro}{absolutetitledpoemnum}
+% \changes{2.1.0}{2013/09/01}{Create a new counter to track titled poems}
 % \begin{macro}{poemgroupnum}
 % \changes{2.0.0}{2013/02/23}{Create a new counter to track poem groups}
 % The \code{poemnum} and \code{absolutepoemnum} counters will be incremented
@@ -318,8 +322,12 @@
 \newcounter{absolutepoemnum}
 \newcounter{untitledpoemnum}
 \newcounter{absoluteuntitledpoemnum}
+\newcounter{titledpoemnum}
+\newcounter{absolutetitledpoemnum}
 \newcounter{poemgroupnum}
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -862,6 +870,9 @@
   \ifx&#2&%
     \addtocounter{untitledpoemnum}{1}
     \addtocounter{absoluteuntitledpoemnum}{1}
+  \else
+    \addtocounter{titledpoemnum}{1}
+    \addtocounter{absolutetitledpoemnum}{1}
   \fi
   \vspace*{\poemvspace}
   \begin{\pttitleenv}
@@ -1373,6 +1384,7 @@
   \else
     \setcounter{poemnum}{0}
     \setcounter{untitledpoemnum}{0}
+    \setcounter{titledpoemnum}{0}
   \fi
   \beforepoemgroup
   \vspace*{\pregroupvspace}
