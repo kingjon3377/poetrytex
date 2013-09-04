@@ -432,6 +432,22 @@
 % \end{macro}
 % \end{macro}
 %
+% \subsection{Annotation config}
+%
+% \begin{macro}{annotationnum}
+% \changes{2.1.0}{2013/09/04}{Create a new counter to track annotations}
+% \begin{macro}{absoluteannotationnum}
+% \changes{2.1.0}{2013/09/04}{Create a new counter to track annotations}
+% Like their poem counterparts, these counters are incremented each time an
+% annotation is created and the non-absolute version may be reset when the poem
+% group changes.
+%    \begin{macrocode}
+\newcounter{annotationnum}
+\newcounter{absoluteannotationnum}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
 % \begin{macro}{\ptannotationenv}
 % \changes{1.3}{2012/10/30}{Added an option to change the default annotation
 % environment}
@@ -975,11 +991,12 @@
 %
 % \begin{macro}{\resetnumongroup}
 % \begin{macro}{\numberpoems}
-% These commands determine if the \code{poemnum} counter should be reset when
-% the poem group changes and if the poems should display their number above the
-% title. Generally these should be called from the preamble but they can be
-% defined at any point in your document to change how numbering works, or to
-% turn on numbering from that point forward.
+% These commands determine if the non-absolute \code{poemnum} and
+% \code{annotationnum} counters should be reset when the poem group changes and
+% if the poems should display their number above the title. Generally these
+% should be called from the preamble but they can be defined at any point in
+% your document to change how numbering works, or to turn on numbering from that
+% point forward.
 %    \begin{macrocode}
 \newcommand*{\resetnumongroup}{%
   \newcommand*{\@ptresetnumongroup}{}%
@@ -1385,6 +1402,7 @@
     \setcounter{poemnum}{0}
     \setcounter{untitledpoemnum}{0}
     \setcounter{titledpoemnum}{0}
+    \setcounter{annotationnum}{0}
   \fi
   \beforepoemgroup
   \vspace*{\pregroupvspace}
@@ -1429,6 +1447,8 @@
 \newenvironment{annotation}[2][\ptannotationenv]{%
   \newcommand*{\@ptwrapenvironment}{#1}
   \cleardoublepage
+  \addtocounter{annotationnum}{1}
+  \addtocounter{absoluteannotationnum}{1}
   \annotationheadings
   \begin{\@ptwrapenvironment}
   \subsection{#2}
