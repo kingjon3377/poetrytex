@@ -35,7 +35,6 @@
 \askforoverwritefalse
 
 \generate{\file{poetrytex.sty}{\from{poetrytex.dtx}{poetrytex}}}
-\generate{\file{poetrytex-style.sty}{\from{poetrytex.dtx}{doc-style}}}
 
 \obeyspaces
 \Msg{****************************************************}
@@ -61,7 +60,41 @@
 %
 %<*driver>
 \documentclass[a4paper]{ltxdoc}
-\usepackage{poetrytex-style,textcomp,poetrytex}
+\usepackage[pdfborder=0, bookmarks, colorlinks=false, hidelinks]{hyperref}
+\usepackage{fancyvrb,hologo,framed,multicol,tipa,url,textcomp,poetrytex}
+\usepackage[parfill]{parskip}
+
+\fvset{gobble=2}
+
+\newenvironment{Example}{%
+  \begingroup\setlength{\columnseprule}{.4pt}
+  \begin{minipage}{\textwidth}
+  \begin{multicols}{2}
+}{
+  \end{multicols}
+  \end{minipage}
+  \endgroup
+}
+
+\newcommand*{\gitdescribe}{%
+  \immediate\write18{%
+    rm -f gitdescribe.tex 2> /dev/null; (git describe --tags --dirty ||%
+      echo "v0.0.0") 2> /dev/null > gitdescribe.tex
+  }%
+  \InputIfFileExists{gitdescribe.tex}{}{}\unskip%
+  \immediate\write18{%
+    rm -f gitdescribe.tex 2> /dev/null
+  }%
+}
+
+\newcommand\XeLaTeX{\hologo{XeLaTeX}}
+
+\newcommand*\name[1]{\textsc{#1}}
+\newcommand*\fname[1]{\textsf{#1}}
+\newcommand*\pkg[1]{\textsf{#1}}
+\newcommand*\code[1]{\texttt{#1}}
+
+\renewcommand\partname{Part}
 \EnableCrossrefs
 \CodelineIndex
 \RecordChanges
@@ -130,6 +163,8 @@
 %
 % \StopEventually{}
 % \changes{1.0}{2012/07/18}{Converted package to dtx}
+% \changes{2.1.0}{2013/09/04}{Removed \fname{poetrytex-style.sty} (documentation
+% style)}
 %
 % \section{Package building and loading}
 %
@@ -1509,49 +1544,5 @@
 % \Finale
 %
 % \iffalse
-%<*doc-style>
-%    \begin{macrocode}
-\ProvidesPackage{poetrytex-style}
-
-\usepackage{fancyvrb,hologo,framed,multicol,tipa,url}
-\usepackage[pdfborder=0, bookmarks, colorlinks=false, hidelinks]{hyperref}
-\usepackage[parfill]{parskip}
-
-\fvset{gobble=2}
-
-\newenvironment{Example}{%
-  \begingroup\setlength{\columnseprule}{.4pt}
-  \begin{minipage}{\textwidth}
-  \begin{multicols}{2}
-}{
-  \end{multicols}
-  \end{minipage}
-  \endgroup
-}
-
-\newcommand*{\gitdescribe}{%
-  \immediate\write18{%
-    rm -f gitdescribe.tex 2> /dev/null; (git describe --tags --dirty ||%
-      echo "v0.0.0") 2> /dev/null > gitdescribe.tex
-  }%
-  \InputIfFileExists{gitdescribe.tex}{}{}\unskip%
-  \immediate\write18{%
-    rm -f gitdescribe.tex 2> /dev/null
-  }%
-}
-
-\newcommand\XeTeX{\hologo{XeTeX}}
-\newcommand\XeLaTeX{\hologo{XeLaTeX}}
-\newcommand\LuaTeX{\hologo{LuaTeX}}
-\newcommand\LuaLaTeX{\hologo{LuaLaTeX}}
-
-\newcommand*\name[1]{\textsc{#1}}
-\newcommand*\fname[1]{\textsf{#1}}
-\newcommand*\pkg[1]{\textsf{#1}}
-\newcommand*\code[1]{\texttt{#1}}
-
-\renewcommand\partname{Part}
-%    \end{macrocode}
-%</doc-style>
 %\fi
 \endinput

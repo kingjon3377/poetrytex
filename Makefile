@@ -157,7 +157,7 @@ manifest:
 	@for f in $(GENERATED); do echo $$f; done
 
 clean:
-	@$(RM) -- *.log *.aux *.toc *.idx *.ind *.ilg *.glo *.gls *.example *.out *.synctex* *.tmp poetrytex-style.sty *.ins poetrytex*.pdf poetrytex*.dvi README *.lot
+	@$(RM) -- *.log *.aux *.toc *.idx *.ind *.ilg *.glo *.gls *.example *.out *.synctex* *.tmp *.ins poetrytex*.pdf poetrytex*.dvi README *.lot
 	@$(RM) -- $(GENERATED) $(ZIPS)
 	@$(RM) -- $(builddir)/*
 
