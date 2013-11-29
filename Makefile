@@ -1,13 +1,11 @@
 # Makefile for poetrytex.
-# Copied almost exactly from the fontspec makefile.
-
-#### MAKEFILE CONFIG ####
 
 SHELL = /bin/sh
 .SUFFIXES:
 .SILENT:
 
-#### BEGIN ####
+builddir=build
+
 
 help:
 	@echo 'POETRYTEX makefile targets:'
@@ -149,7 +147,7 @@ sty-install: $(RUNFILES)
 	@echo "Installing in '$(TEXMFROOT)'."
 	$(run-install)
 
-manifest: 
+manifest:
 	@echo "Source files:"
 	@for f in $(SOURCE); do echo $$f; done
 	@echo ""
@@ -160,21 +158,3 @@ clean:
 	@$(RM) -- *.log *.aux *.toc *.idx *.ind *.ilg *.glo *.gls *.example *.out *.synctex* *.tmp *.ins poetrytex*.pdf poetrytex*.dvi README *.lot
 	@$(RM) -- $(GENERATED) $(ZIPS)
 	@$(RM) -- $(builddir)/*
-
-
-#############
-# TESTSUITE #
-#############
-
-#### Needed to compile and make stuff ####
-
-builddir=build
-lprefix=L
-xprefix=X
-both=F
-
-COPY = cp -a
-MOVE = mv -f
-COMPARE_OPTS = -density 300x300 -metric ae -fuzz 35%
-
-LTXSOURCE = $(NAME).sty
