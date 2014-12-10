@@ -55,7 +55,7 @@
 %
 %<*poetrytex>
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesPackage{poetrytex}[2013/08/17]
+\ProvidesPackage{poetrytex}[2013/12/10]
 %</poetrytex>%
 %
 %<*driver>
@@ -1322,15 +1322,16 @@
 %
 % \begin{macro}{\ptspacergap}
 % \begin{macro}{\ptspacerchar}
-% \begin{macro}{\ptspacernum}
+% \begin{macro}{ptspacernum}
+% \changes{3.0.0}{2014/12/10}{Change ptspacernum into a counter}
 % The \code{ptspacergap} length is the indentation of the spacer, and\code{%
 % \textbackslash ptspacerchar} is the actual character that will be printed
-% \code{\textbackslash ptspacernum} times.
+% \code{ptspacernum} times.
 %    \begin{macrocode}
 \newlength{\ptspacergap}
 \setlength{\ptspacergap}{4em}
 \newcommand*{\ptspacerchar}{\S}
-\newcommand*{\ptspacernum}{3}
+\newcounter{ptspacernum}
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -1351,11 +1352,11 @@
 }
 \newcommand*{\@ptspacerStar}{%
   \hspace*{\ptspacergap}%
-  \@ptrepeat{\ptspacernum}{\ptspacerchar}%
+	\@ptrepeat{\value{ptspacernum}}{\ptspacerchar}%
 }
 \newcommand*{\@ptspacerNoStar}{%
   \hspace{\ptspacergap}%
-  \@ptrepeat{\ptspacernum}{\ptspacerchar}%
+	\@ptrepeat{\value{ptspacernum}}{\ptspacerchar}%
 }
 \ExplSyntaxOn
 \cs_new_eq:NN \@ptrepeat \prg_replicate:nn
@@ -1369,7 +1370,7 @@
 % \begin{Example}
 % \begin{Verbatim}
 % \renewcommand{\ptspacerchar}{\o}
-% \renewcommand{\ptspacernum}{2}
+% \setcounter{ptspacernum}{2}
 % \begin{poem}{The Love Song%
 % of J. Alfred Prufrock}
 % {T.S. Eliot}
@@ -1391,7 +1392,7 @@
 % \end{Verbatim}
 % \columnbreak
 % \renewcommand{\ptspacerchar}{\o}
-% \renewcommand{\ptspacernum}{2}
+% \setcounter{ptspacernum}{2}
 % \begin{poem}{The Love Song%
 % of J. Alfred Prufrock}
 % {T.S. Eliot}
