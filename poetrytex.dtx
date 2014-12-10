@@ -224,7 +224,6 @@
 % \begin{macro}{numbertop}
 % \begin{macro}{numbertoc}
 % \changes{2.0.0}{2012/08/17}{Add option to number poems in the ToC}
-% \begin{macro}{resetnumongroup}
 % \begin{macro}{numberpoems}
 % \begin{macro}{usedefaulttitles}
 % \changes{1.4}{2012/02/13}{Add package option to use default titles}
@@ -237,7 +236,6 @@
 \DeclareOption{poemsintoc}{\listpoemsintoc}
 \DeclareOption{numbertop}{\numbertop}
 \DeclareOption{numbertoc}{\numbertoc}
-\DeclareOption{resetnumongroup}{\resetnumongroup}
 \DeclareOption{numberpoems}{\numberpoems}
 \DeclareOption{usedefaulttitles}{\ptusedefaulttitles}
 \DeclareOption{useincipits}{\ptuseincipits}
@@ -247,7 +245,6 @@
   \PassOptionsToPackage{\CurrentOption}{hyperref}%
 }
 %    \end{macrocode}
-% \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -349,8 +346,8 @@
 % The \code{poemnum} and \code{absolutepoemnum} counters will be incremented
 % every time we include a poem in our document and can be used later to number
 % the poems. The \code{absolutepoemnum} counter will never be reset by \pkg{%
-% poetrytex} while \code{poemnum} may sometimes be reset to 0 (at the beginning
-% of a new \code{poemgroup} for instance). The \code{untitledpoemnum} and
+% poetrytex} while \code{poemnum} will be be reset to 0 at the beginning of a
+% new \code{poemgroup}. The \code{untitledpoemnum} and
 % \code{absoluteuntitledpoemnum} are similar except that they are only
 % incremented when the poem does not have a title.
 %    \begin{macrocode}
@@ -552,9 +549,7 @@
 % The \code{\textbackslash listofpoems} command is nothing more than a
 % convenient alias for \code{\textbackslash listofpoem} as defined by the
 % \pkg{tocloft} package. We can reset poem numbering at a given point by
-% redefining the \code{\textbackslash resetnumon} macro. This should probably
-% not be changed by users directly. Instead, use the built in macro
-% \code{\textbackslash resetnumongroup}.
+% redefining the \code{\textbackslash resetnumon} macro.
 %    \begin{macrocode}
 \newcommand*{\resetnumon}{}
 \newlistof[\resetnumon]{poem}{top}{\topname}
@@ -1044,22 +1039,14 @@
 %
 % \subsection{Numbering}
 %
-% \begin{macro}{\resetnumongroup}
 % \begin{macro}{\numberpoems}
-% These commands determine if the non-absolute \code{poemnum} and
-% \code{annotationnum} counters should be reset when the poem group changes and
-% if the poems should display their number above the title. Generally these
-% should be called from the preamble but they can be defined at any point in
-% your document to change how numbering works, or to turn on numbering from that
-% point forward.
+% This command determines if the poems should display their number above the
+% title. Generally these should be called from the preamble but they can be
+% defined at any point in your document to change how numbering works, or to
+% turn on numbering from that point forward.
 %    \begin{macrocode}
-\newcommand*{\resetnumongroup}{%
-  \newcommand*{\@ptresetnumongroup}{}%
-  \renewcommand*{\resetnumon}{poemgroupnum}%
-}
 \newcommand*{\numberpoems}{\newcommand*{\@ptnumberpoems}{}}
 %    \end{macrocode}
-% \end{macro}
 % \end{macro}
 % Using \code{\textbackslash numberpoems} results in:
 %
@@ -1096,16 +1083,18 @@
 %
 % \begin{macro}{\titlepoemnum}
 % \changes{1.4}{2012/02/18}{Add hook for poem number formatting}
+% \changes{3.0.0}{2014/12/10}{Use absolute poem nums by default}
 % \begin{macro}{\toppoemnum}
 % \changes{1.4}{2012/02/18}{Add hook for Table of Poems poem number formatting}
+% \changes{3.0.0}{2014/12/10}{Use absolute poem nums by default}
 % \begin{macro}{\tocpoemnum}
 % \changes{2.0.0}{2013/08/17}{Add hook for Table of Contents poem number formatting}
 % These commands are used to insert the poem number into the poem title, the
 % table of poems, and the table of contents respectively. By redefining them you
 % can customize how the numbering looks.
 %    \begin{macrocode}
-\newcommand*{\titlepoemnum}{\arabic{poemnum}\\*}
-\newcommand*{\toppoemnum}{\arabic{poemnum}.\ }
+\newcommand*{\titlepoemnum}{\arabic{absolutepoemnum}\\*}
+\newcommand*{\toppoemnum}{\arabic{absolutepoemnum}.\ }
 \newcommand*{\tocpoemnum}{\toppoemnum}
 %    \end{macrocode}
 % \end{macro}
@@ -1439,6 +1428,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \changes{3.0.0}{2014/12/10}{Always reset poemnum on group change}
 % \begin{macro}{\ptgroup}
 % \begin{macro}{\poemgroup}
 % \begin{macro}{\poemgroup*}
@@ -1452,14 +1442,10 @@
 \newcommand*{\ptgroup}{}
 \newcommand*{\poemgroup}[1]{%
   \addtocounter{poemgroupnum}{1}
-  \ifx\@ptresetnumongroup\@ptundefined
-    \relax
-  \else
-    \setcounter{poemnum}{0}
-    \setcounter{untitledpoemnum}{0}
-    \setcounter{titledpoemnum}{0}
-    \setcounter{annotationnum}{0}
-  \fi
+	\setcounter{poemnum}{0}
+	\setcounter{untitledpoemnum}{0}
+	\setcounter{titledpoemnum}{0}
+	\setcounter{annotationnum}{0}
   \beforepoemgroup
   \vspace*{\pregroupvspace}
   \renewcommand*{\ptgroup}{#1}
