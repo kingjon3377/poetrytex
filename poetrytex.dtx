@@ -218,7 +218,6 @@
 %
 % \hypertarget{POETRYTEX:OPTIONS}{}
 % \changes{1.2}{2012/10/03}{Added various package options}
-% \begin{macro}{verse}
 % \begin{macro}{poemsintoc}
 % \changes{2.0.0}{2012/08/17}{Add option to insert poems in the ToC}
 % \begin{macro}{numbertop}
@@ -232,7 +231,6 @@
 % \begin{macro}{clearpageafterpoem}
 % The package can also be loaded with any of the following options:
 %    \begin{macrocode}
-\DeclareOption{verse}{\usepackage{verse}}
 \DeclareOption{poemsintoc}{\listpoemsintoc}
 \DeclareOption{numbertop}{\numbertop}
 \DeclareOption{numbertoc}{\numbertoc}
@@ -245,7 +243,6 @@
   \PassOptionsToPackage{\CurrentOption}{hyperref}%
 }
 %    \end{macrocode}
-% \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
