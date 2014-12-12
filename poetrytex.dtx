@@ -1043,13 +1043,17 @@
 % \subsection{Numbering}
 %
 % \begin{macro}{\numberpoems}
+% \begin{macro}{\nonumberpoems}
+% \changes{3.0.0}{2014/12/11}{Add command to stop numbering poems}
 % This command determines if the poems should display their number above the
 % title. Generally these should be called from the preamble but they can be
 % defined at any point in your document to change how numbering works, or to
 % turn on numbering from that point forward.
 %    \begin{macrocode}
 \newcommand*{\numberpoems}{\newcommand*{\@ptnumberpoems}{}}
+\newcommand*{\nonumberpoems}{\let\@ptnumberpoems\@ptundefined}
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 % Using \code{\textbackslash numberpoems} results in:
 %
