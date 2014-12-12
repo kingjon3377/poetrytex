@@ -1469,12 +1469,18 @@
 % \begin{macro}{\ptgroup}
 % \begin{macro}{\poemgroup}
 % \begin{macro}{\poemgroup*}
+% \begin{macro}{\setpoemgroup}
+% \changes{3.0.0}{2014/12/12}{Add macro to change group without creating a titlepage}
+% \begin{macro}{\setpoemgroup*}
+% \changes{3.0.0}{2014/12/12}{Add macro to change group without creating a titlepage or adding group to the ToC/ToP}
 % Dividing poems up into groups can be accomplished with the \code{%
 % \textbackslash poemgroup} command. The command creates a title-page for the
 % group at the current location and adds entries to the ToP and ToC unless the
 % starred version of the command is used. The \code{\textbackslash ptgroup}
 % command will always contain a reference to the current group in case you need
-% to refer to it later.
+% to refer to it later. If you want to change the group, but don't want to
+% create a title page, use the \code{\textbackslash setpoemgroup} command. The
+% starred version also doesn't add an entry in the ToP and ToC.
 %    \begin{macrocode}
 \newcommand*{\ptgroup}{}
 \newcommand*{\poemgroup}[1]{%
@@ -1504,7 +1510,26 @@
   \section{#1}
   \addcontentsline{top}{section}{#1}
 }
+\newcommand*{\setpoemgroup}[1]{%
+  \addtocounter{poemgroupnum}{1}
+  \setcounter{poemnum}{0}
+  \setcounter{untitledpoemnum}{0}
+  \setcounter{titledpoemnum}{0}
+  \setcounter{annotationnum}{0}
+  \renewcommand*{\ptgroup}{#1}
+  \@ifstar{%
+    \relax%
+  }{%
+    \@ptsetpoemgroupNoStar{#1}
+  }
+}
+\newcommand*{\@ptsetpoemgroupNoStar}[1]{%
+  \addcontentsline{top}{section}{#1}
+  \addcontentsline{toc}{section}{#1}
+}
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
