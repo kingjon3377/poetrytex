@@ -183,10 +183,10 @@
 % \changes{1.3}{2012/10/03}{Load \pkg{hyperref} at end of package}
 % \changes{2.0.0}{2013/02/23}{Require \pkg{tcloft} package}
 % \changes{2.0.0}{2013/08/17}{Begin using semantic versioning (semver.org)}
+% \changes{3.0.0}{2014/12/12}{Don't load hyperref by default}
 %    \begin{macrocode}
 \RequirePackage{expl3}
 \RequirePackage{tocloft}
-\AtEndOfPackage{\RequirePackage{hyperref}}
 %    \end{macrocode}
 % Once you have all the required packages, building \pkg{poetrytex} from source
 % can be accomplished in multiple ways. If the Makefile is present running
@@ -219,6 +219,7 @@
 % \hypertarget{POETRYTEX:OPTIONS}{}
 % \changes{1.2}{2012/10/03}{Added various package options}
 % \changes{3.0.0}{2014/12/11}{Remove the redundant `clearpageafterpoems' option}
+% \changes{3.0.0}{2014/12/12}{Don't pass unrecognized options to hyperref}
 % \begin{macro}{poemsintoc}
 % \changes{2.0.0}{2012/08/17}{Add option to insert poems in the ToC}
 % \begin{macro}{numbertop}
@@ -244,9 +245,6 @@
 \DeclareOption{useincipits}{\ptuseincipits}
 \DeclareOption{clearpageafterpoem}{\clearpageafterpoem}
 \DeclareOption{clearpageafterannotation}{\clearpageafterannotation}
-\DeclareOption*{%
-  \PassOptionsToPackage{\CurrentOption}{hyperref}%
-}
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -992,7 +990,11 @@
         \fi%
       }%
     \fi%
-    \hypertarget{\@ptpoemlabeltext\arabic{absolutepoemnum}}{}
+    \ifx\hypertarget\@ptundefined%
+      \relax%
+    \else%
+      \hypertarget{\@ptpoemlabeltext\arabic{absolutepoemnum}}{}%
+    \fi%
     {\poemtitleformat%
       \ifx\@ptnumberpoems\@ptundefined
         \relax
@@ -1441,16 +1443,23 @@
 % \begin{macro}{\linktopoem}
 % \changes{1.1}{2012/07/24}{Fix spacing and multiple use issues}
 % \changes{1.2}{2012/09/20}{Use \code{hyperlink} when linking to a poem}
+% \changes{3.0.0}{2014/12/12}{Don't create links unless \pkg{hyperref} is loaded}
 % We can \emph{\linktopoem[1]{link}} \emph{\linktopoem[2]{to}}%
 % \emph{\linktopoem[3]{poems}} easily enough by providing \code{linktopoem} with
 % the text for the link and, optionally, the number of the poem to link to. If
 % only one argument is given it is used as both the link destination and text.
+% This macro only works if the \pkg{hyperref} package is loaded; otherwise, text
+% is just passed through.
 %    \begin{macrocode}
 \newcommand*{\linktopoem}[2][ptnull]{%
-  \ifx{#1}{ptnull}
-    \hyperlink{\@ptpoemlabeltext#2}{#2}\relax
+  \ifx\hyperlink\@ptundefined
+    #2\relax%
   \else
-    \hyperlink{\@ptpoemlabeltext#1}{#2}\relax
+    \ifx{#1}{ptnull}
+      \hyperlink{\@ptpoemlabeltext#2}{#2}\relax
+    \else
+      \hyperlink{\@ptpoemlabeltext#1}{#2}\relax
+    \fi
   \fi
 }
 %    \end{macrocode}
