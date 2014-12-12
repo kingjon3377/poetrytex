@@ -1338,11 +1338,11 @@
 }
 \newcommand*{\@ptspacerStar}{%
   \hspace*{\ptspacergap}%
-	\@ptrepeat{\value{ptspacernum}}{\ptspacerchar}%
+  \@ptrepeat{\value{ptspacernum}}{\ptspacerchar}%
 }
 \newcommand*{\@ptspacerNoStar}{%
   \hspace{\ptspacergap}%
-	\@ptrepeat{\value{ptspacernum}}{\ptspacerchar}%
+  \@ptrepeat{\value{ptspacernum}}{\ptspacerchar}%
 }
 \ExplSyntaxOn
 \cs_new_eq:NN \@ptrepeat \prg_replicate:nn
@@ -1439,10 +1439,10 @@
 \newcommand*{\ptgroup}{}
 \newcommand*{\poemgroup}[1]{%
   \addtocounter{poemgroupnum}{1}
-	\setcounter{poemnum}{0}
-	\setcounter{untitledpoemnum}{0}
-	\setcounter{titledpoemnum}{0}
-	\setcounter{annotationnum}{0}
+  \setcounter{poemnum}{0}
+  \setcounter{untitledpoemnum}{0}
+  \setcounter{titledpoemnum}{0}
+  \setcounter{annotationnum}{0}
   \beforepoemgroup
   \vspace*{\pregroupvspace}
   \renewcommand*{\ptgroup}{#1}
