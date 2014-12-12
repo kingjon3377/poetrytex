@@ -579,6 +579,8 @@
 %
 % \begin{macro}{\listpoemsintoc}
 % \changes{2.0.0}{2013/08/17}{List poems in the table of contents}
+% \begin{macro}{\nolistpoemsintoc}
+% \changes{3.0.0}{2014/12/12}{Add macro to stop poems being listed in the ToC}
 % \begin{macro}{\tocentrytype}
 % \changes{2.0.0}{2013/08/17}{Sets the entry type for poems in the ToC}
 % Using these commands you can cause poems to be listed in the ToC and set the
@@ -586,8 +588,10 @@
 % \code{\textbackslash topentrytype}.
 %    \begin{macrocode}
 \newcommand*{\listpoemsintoc}{\newcommand*{\@ptlistpoemsintoc}{}}
+\newcommand*{\nolistpoemsintoc}{\let\@ptlistpoemsintoc\@ptundefined}
 \newcommand*{\tocentrytype}{\topentrytype}
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 %
