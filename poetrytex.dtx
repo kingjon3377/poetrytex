@@ -1008,12 +1008,12 @@
     \begingroup\setlength{\parskip}{\stanzaparskip}%
 }{%
     \endgroup
-  \end{\@ptwrapenvironment}
-  \ifx\@ptclearpageafterpoem\@ptundefined
-    \relax
-  \else
-    \clearpage
-  \fi
+  \end{\@ptwrapenvironment}%
+  \ifx\@ptclearpageafterpoem\@ptundefined%
+    \relax%
+  \else%
+    \clearpage%
+  \fi%
 }
 %    \end{macrocode}
 % \end{environment}
@@ -1171,15 +1171,22 @@
 % \end{macro}
 %
 % \begin{macro}{\clearpageafterpoem}
+% \begin{macro}{\noclearpageafterpoem}
 % \begin{macro}{\clearpageafterannotation}
 % \changes{3.0.0}{2014/12/11}{Make clearing the page after an annotation optional behavior}
+% \begin{macro}{\noclearpageafterannotation}
+% \changes{3.0.0}{2014/12/11}{Add command to stop page clearing after annotations}
 % \code{clearpageafterpoem} and \code{clearpageafterannotation} cause the page
 % to be cleared after every poem environment or annotation environment
 % respectively.
 %    \begin{macrocode}
 \newcommand*{\clearpageafterpoem}{\newcommand*{\@ptclearpageafterpoem}{}}
 \newcommand*{\clearpageafterannotation}{\newcommand*{\@ptclearpageafterannotation}{}}
+\newcommand*{\noclearpageafterpoem}{\let\@ptclearpageafterpoem\@ptundefined}
+\newcommand*{\noclearpageafterannotation}{\let\@ptclearpageafterannotation\@ptundefined}
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 %
