@@ -648,12 +648,20 @@
 % \begin{macro}{\numbertop}
 % \begin{macro}{\numbertoc}
 % \changes{2.0.0}{2012/08/17}{Number poems in the table of contents}
+% \begin{macro}{\nonumbertop}
+% \changes{3.0.0}{2014/12/11}{Add command to stop numbering the ToP}
+% \begin{macro}{\nonumbertoc}
+% \changes{3.0.0}{2014/12/11}{Add command to stop numbering the ToC}
 % Placing one of these commands in your document preamble will cause the table
 % of poems or table of contents to be numbered.
 %    \begin{macrocode}
 \newcommand*{\numbertop}{\newcommand*{\@ptnumbertop}{}}
 \newcommand*{\numbertoc}{\newcommand*{\@ptnumbertoc}{}}
+\newcommand*{\nonumbertop}{\let\@ptnumbertop\@ptundefined}
+\newcommand*{\nonumbertoc}{\let\@ptnumbertoc\@ptundefined}
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 %
