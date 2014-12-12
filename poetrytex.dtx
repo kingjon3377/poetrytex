@@ -218,6 +218,7 @@
 %
 % \hypertarget{POETRYTEX:OPTIONS}{}
 % \changes{1.2}{2012/10/03}{Added various package options}
+% \changes{3.0.0}{2014/12/11}{Remove the redundant `clearpageafterpoems' option}
 % \begin{macro}{poemsintoc}
 % \changes{2.0.0}{2012/08/17}{Add option to insert poems in the ToC}
 % \begin{macro}{numbertop}
@@ -229,6 +230,8 @@
 % \begin{macro}{useincipits}
 % \changes{2.0.0}{2012/03/06}{Add package option to use incipits}
 % \begin{macro}{clearpageafterpoem}
+% \begin{macro}{clearpageafterannotation}
+% \changes{3.0.0}{2014/12/11}{Add an option to clear the page after annotations}
 % The package can also be loaded with any of the following options. If you're
 % unsure what an option does, check the documentation for the macro that is
 % associated with it in the code below:
@@ -240,11 +243,12 @@
 \DeclareOption{usedefaulttitles}{\ptusedefaulttitles}
 \DeclareOption{useincipits}{\ptuseincipits}
 \DeclareOption{clearpageafterpoem}{\clearpageafterpoem}
-\DeclareOption{clearpageafterpoems}{\clearpageafterpoem}
+\DeclareOption{clearpageafterannotation}{\clearpageafterannotation}
 \DeclareOption*{%
   \PassOptionsToPackage{\CurrentOption}{hyperref}%
 }
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -1167,11 +1171,16 @@
 % \end{macro}
 %
 % \begin{macro}{\clearpageafterpoem}
-% \code{clearpageafterpoem} causes the page to be cleared after every poem
-% environment.
+% \begin{macro}{\clearpageafterannotation}
+% \changes{3.0.0}{2014/12/11}{Make clearing the page after an annotation optional behavior}
+% \code{clearpageafterpoem} and \code{clearpageafterannotation} cause the page
+% to be cleared after every poem environment or annotation environment
+% respectively.
 %    \begin{macrocode}
 \newcommand*{\clearpageafterpoem}{\newcommand*{\@ptclearpageafterpoem}{}}
+\newcommand*{\clearpageafterannotation}{\newcommand*{\@ptclearpageafterannotation}{}}
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 %
 % \begin{macro}{\ptgap}
@@ -1495,9 +1504,12 @@
   \subsection{#2}
   \nopagebreak
 }{%
-
-  \end{\@ptwrapenvironment}
-  \clearpage
+  \end{\@ptwrapenvironment}%
+  \ifx\@ptclearpageafterannotation\@ptundefined%
+    \relax%
+  \else%
+    \clearpage%
+  \fi%
 }
 %    \end{macrocode}
 % \end{environment}
