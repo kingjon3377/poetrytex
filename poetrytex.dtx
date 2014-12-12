@@ -241,7 +241,7 @@
 \DeclareOption{numbertop}{\numbertop}
 \DeclareOption{numbertoc}{\numbertoc}
 \DeclareOption{numberpoems}{\numberpoems}
-\DeclareOption{usedefaulttitles}{\ptusedefaulttitles}
+\DeclareOption{usedefaulttitles}{\usedefaulttitles}
 \DeclareOption{useincipits}{\useincipits}
 \DeclareOption{clearpageafterpoem}{\clearpageafterpoem}
 \DeclareOption{clearpageafterannotation}{\clearpageafterannotation}
@@ -408,29 +408,34 @@
 % \end{macro}
 % \end{macro}
 %
-% \begin{macro}{\ptusedefaulttitles}
+% \begin{macro}{\usedefaulttitles}
+% \changes{3.0.0}{2014/12/12}{Change name of \code{\textbackslash ptusedefaulttitles} to \code{\textbackslash usedefaulttitles}}
+% \begin{macro}{\nousedefaulttitles}
+% \changes{3.0.0}{2014/12/12}{Add macro to stop using default titles}
 % \begin{macro}{\ptdefaulttitle}
 % \changes{1.4}{2013/02/12}{Add a default poem title}
 % \begin{macro}{\useincipits}
 % \changes{2.0.0}{2013/03/06}{Add option for using incipits in the ToP}
-% \changes{3.0.0}{2014/03/06}{Change name of \code{\textbackslash ptuseincipits} to \code{\textbackslash useincipits}}
+% \changes{3.0.0}{2014/12/12}{Change name of \code{\textbackslash ptuseincipits} to \code{\textbackslash useincipits}}
 % \begin{macro}{\nouseincipits}
-% \changes{3.0.0}{2014/03/06}{Add macro to stop using incipits}
+% \changes{3.0.0}{2014/12/12}{Add macro to stop using incipits}
 % The default title for poems that don't include one. If
-% \code{\textbackslash ptusedefaulttitles} is called the default title will be
+% \code{\textbackslash usedefaulttitles} is called the default title will be
 % displayed above the poem itself as well as in the table of contents. Otherwise
 % the title is left blank. We can also use incipits in the ToP by calling
 % \code{\textbackslash ptuseincipits}. This will override the default title in
 % the ToP, but will not be displayed atop the poem itself.
 %
 %    \begin{macrocode}
-\newcommand*{\ptusedefaulttitles}{\newcommand*{\@ptusedefaulttitles}{}}
+\newcommand*{\usedefaulttitles}{\newcommand*{\@ptusedefaulttitles}{}}
+\newcommand*{\nousedefaulttitles}{\let\@ptusedefaulttitles\@ptundefined}
 \newcommand*{\ptdefaulttitle}{%
   Untitled No. \arabic{absoluteuntitledpoemnum}%
 }
 \newcommand*{\useincipits}{\newcommand*{\@ptuseincipits}{}}
 \newcommand*{\nouseincipits}{\let\@ptuseincipits\@ptundefined}
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -907,7 +912,7 @@
 %
 % \begin{Example}
 % \begin{Verbatim}
-% \ptusedefaulttitles
+% \usedefaulttitles
 % \useincipits
 % \renewcommand*{\ptdefaulttitle}{%
 % Untitled \textnumero\
@@ -927,7 +932,7 @@
 % \end{poem}
 % \end{Verbatim}
 % \columnbreak
-% \ptusedefaulttitles
+% \usedefaulttitles
 % \useincipits
 % \renewcommand*{\ptdefaulttitle}{%
 % Untitled \textnumero\
