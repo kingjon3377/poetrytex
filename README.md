@@ -1,4 +1,5 @@
 # PoetryTeX
+
 **PoetryTeX** is a TeX package designed to aid in the formatting of anthologies
 of poetry and other writings.
 
@@ -15,7 +16,7 @@ The current release version of PoetryTeX is available from
 
 ## License
 
-Copyright 2012 [Samuel Whited](https://samwhited.com)
+Copyright 2012 [Sam Whited](https://blog.samwhited.com)
 
 This project may be distributed and/or modified under the conditions of the
 LaTeX Project Public License, either version 1.3c of this license or (at your
