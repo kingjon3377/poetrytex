@@ -6,17 +6,17 @@ of poetry and other writings.
 ## Download
 
 Development of this package occurs primarily on
-[GitHub](https://github.com/SamWhited/poetrytex).
-[Issues](https://github.com/SamWhited/poetrytex/issues) and
-[pull requests](https://github.com/SamWhited/poetrytex/pulls) should be
-submitted there.
+[Bitbucket](https://bitbucket.org/SamWhited/poetrytex).
+[Issues](https://bitbucket.org/SamWhited/poetrytex/issues) and
+[pull requests](https://bitbucket.org/SamWhited/poetrytex/pull-requests) should
+be submitted there.
 
 The current release version of PoetryTeX is available from
 [CTAN](http://ctan.org/pkg/poetrytex).
 
 ## License
 
-Copyright 2012–2015 [Sam Whited](https://blog.samwhited.com)
+Copyright 2012–2016 [Sam Whited](https://blog.samwhited.com)
 
 This project may be distributed and/or modified under the conditions of the
 LaTeX Project Public License, either version 1.3c of this license or (at your
