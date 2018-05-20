@@ -6,9 +6,9 @@ of poetry and other writings.
 ## Download
 
 Development of this package occurs primarily on
-[Bitbucket](https://bitbucket.org/SamWhited/poetrytex).
-[Issues](https://bitbucket.org/SamWhited/poetrytex/issues) and
-[pull requests](https://bitbucket.org/SamWhited/poetrytex/pull-requests) should
+[GitHub](https://github.com/SamWhited/poetrytex).
+[Issues](https://github.com/SamWhited/poetrytex/issues) and
+[pull requests](https://github.com/SamWhited/poetrytex/pulls) should
 be submitted there.
 
 The current release version of PoetryTeX is available from
