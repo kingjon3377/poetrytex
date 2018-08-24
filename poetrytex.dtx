@@ -183,10 +183,11 @@
 \RequirePackage{tocloft}
 %    \end{macrocode}
 % Once you have all the required packages, building \pkg{poetrytex} from source
-% can be accomplished in multiple ways. If the Makefile is present running
-% \code{make help} will tell you everything you need to know. To manually
-% extract the files and generate the documentation simply run \code{pdflatex}
-% or \XeLaTeX\ against \fname{poetrytex.dtx}:
+% can be accomplished in multiple ways.
+% If the Makefile is present running \code{make help} will tell you everything
+% you need to know.
+% To manually extract the files and generate the documentation run
+% \code{pdflatex} or \XeLaTeX\ against \fname{poetrytex.dtx}:
 %
 % \begin{Verbatim}
 %   pdflatex poetrytex.dtx
@@ -493,8 +494,8 @@
 % \begin{macro}{\ptdedication}
 % \begin{macro}{\makededication}
 % \changes{1.1}{2012/07/21}{Added optional `environment' argument}
-% As with the \code{\textbackslash pttitle} and author commands you can simply
-% redefine \code{\textbackslash ptdedication} to change the dedication text.
+% As with the \code{\textbackslash pttitle} and author commands you can redefine
+% \code{\textbackslash ptdedication} to change the dedication text.
 %
 % To create a dedication page, the \code{\textbackslash makededication} command
 % can be called. By default, this command aligns everything to the right using
@@ -1478,7 +1479,7 @@
 % command will always contain a reference to the current group in case you need
 % to refer to it later. If you want to change the group, but don't want to
 % create a title page, use the \code{\textbackslash setpoemgroup} command. The
-% starred version also doesn't add an entry in the ToP and ToC.
+% starred versions don't add an entry in the ToP and ToC.
 %    \begin{macrocode}
 \newcommand*{\ptgroup}{}
 \newcommand*{\poemgroup}[1]{%
@@ -1574,9 +1575,10 @@
 % \begin{macro}{\annotationheadings}
 % \changes{2.1.0}{2013/08/29}{Allow separate headings on annotation pages}
 % The \code{\textbackslash annotationheadings} macro is automatically called
-% every time a new \code{annotation} environment is created. By default, it
-% simply calls \code{\textbackslash poetryheadings}, but it can be redefined to
-% give your annotation pages a different heading style than your poem pages.
+% every time a new \code{annotation} environment is created.
+% By default, it calls \code{\textbackslash poetryheadings}, but it can be
+% redefined to give your annotation pages a different heading style than your
+% poem pages.
 %    \begin{macrocode}
 \newcommand*{\annotationheadings}[0]{\poetryheadings}
 %    \end{macrocode}
