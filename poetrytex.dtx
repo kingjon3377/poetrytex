@@ -1136,6 +1136,57 @@
 % \end{poem}
 % \end{Example}
 %
+% \clearpage
+% Or we could move the number beside the title as Arthur Quiller--Couch does in
+% ``The Oxford Book of Ballads":
+
+% \setcounter{poemnum}{33}
+% \begin{Example}
+% \begin{Verbatim}
+% \numberpoems
+% \renewcommand*{\titlepoemnum}{%
+% \noindent\hspace{%
+% -1em}\thepoemnum.\hspace{1em}}
+%
+% \begin{poem}%
+% {The Unquiet Grave}{\relax}
+% `The wind doth blow to-day,
+%   my love,\\*
+% And a few small drops of rain;\\*
+% I never had but one true-love;\\*
+% In cold grave she was lain.
+%
+% `I'll do as much for my
+%  true-love\\*
+% As any young man may;\\*
+% I'll sit and mourn all at her
+%   grave\\*
+% For a twelvemonth and a day.'
+% \end{poem}
+% \end{Verbatim}
+% \columnbreak
+% \numberpoems
+% \renewcommand*{\titlepoemnum}{%
+% \noindent\hspace{%
+% -1em}\thepoemnum.\hspace{1em}}
+%
+% \begin{poem}%
+% {The Unquiet Grave}{\relax}
+% `The wind doth blow to-day,
+%   my love,\\*
+% And a few small drops of rain;\\*
+% I never had but one true-love;\\*
+% In cold grave she was lain.
+%
+% `I'll do as much for my
+%  true-love\\*
+% As any young man may;\\*
+% I'll sit and mourn all at her
+%   grave\\*
+% For a twelvemonth and a day.'
+% \end{poem}
+% \end{Example}
+%
 % \subsection{Spacing and indentation}
 %
 % \begin{macro}{\stanzaparskip}
