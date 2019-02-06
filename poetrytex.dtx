@@ -1,52 +1,4 @@
 % \iffalse
-%<*internal>
-\begingroup
-\input docstrip.tex
-\keepsilent
-\usedir{tex/latex/poetrytex}
-\preamble
-
-  Copyright 2012 Samuel Whited
-
-  This file may be distributed and/or modified under the
-  conditions of the LaTeX Project Public License, either
-  version 1.3c of this license or (at your option) any later
-  version. The latest version of this license is in:
-
-  http://www.latex-project.org/lppl.txt
-
-  and version 1.3c or later is part of all distributions of
-  LaTeX version 2008/05/04 or later.
-
-\endpreamble
-\postamble
-
-  ___________
-  Maintainer: Sam Whited
-  Website:    https://blog.samwhited.com
-  Contact:    sam@samwhited.com
-
-  This work consists of this file poetrytex.dtx
-            and the derived files poetrytex.sty
-                              and poetrytex.pdf
-
-\endpostamble
-\askforoverwritefalse
-
-\generate{\file{poetrytex.sty}{\from{poetrytex.dtx}{poetrytex}}}
-
-\obeyspaces
-\Msg{****************************************************}
-\Msg{*                                                  *}
-\Msg{* To finish the installation you have to move the  *}
-\Msg{* following file into a directory searched by TeX: *}
-\Msg{*                                                  *}
-\Msg{* poetrytex.sty                                    *}
-\Msg{*                                                  *}
-\Msg{****************************************************}
-
-\endgroup
-%</internal>
 %
 %<*driver>
 \ProvidesFile{poetrytex.dtx}
@@ -184,12 +136,13 @@
 %    \end{macrocode}
 % Once you have all the required packages, building \pkg{poetrytex} from source
 % can be accomplished in multiple ways.
-% If the Makefile is present running \code{make help} will tell you everything
-% you need to know.
+% If the Makefile is present running \code{make} is all you need to do.
 % To manually extract the files and generate the documentation run
-% \code{pdflatex} or \XeLaTeX\ against \fname{poetrytex.dtx}:
+% \code{pdflatex} or \XeLaTeX\ against \fname{poetrytex.ins} and
+% \fname{poetrytex.dtx}:
 %
 % \begin{Verbatim}
+%   pdflatex poetrytex.ins
 %   pdflatex poetrytex.dtx
 % \end{Verbatim}
 %
