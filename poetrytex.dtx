@@ -140,9 +140,9 @@
 %
 % \section{Package building and loading}
 %
-%    \begin{macrocode}
+% \iffalse
 %<*poetrytex>
-%    \end{macrocode}
+% \fi
 %
 % \paragraph{Building}
 %
@@ -1629,8 +1629,10 @@
 % \hyperlink{POETRYTEX:OPTIONS}{options} that were passed in by the user:
 %    \begin{macrocode}
 \ProcessOptions\relax
-%</poetrytex>
 %    \end{macrocode}
+% \iffalse
+%</poetrytex>
+% \fi
 %
 % \clearpage
 % \setcounter{IndexColumns}{2}
