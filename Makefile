@@ -6,16 +6,13 @@
 
 REDIRECT = > /dev/null
 DO_LATEX_WRITE18 = xelatex --shell-escape --interaction=nonstopmode poetrytex.dtx $(REDIRECT)
-DO_SPLITINDEX = splitindex poetrytex $(REDIRECT) 2>&1
-DO_MAKEINDEX = makeindex -s gind.ist -o poetrytex.ind poetrytex $(REDIRECT) 2>&1
-DO_MAKECHANGES = makeindex -s gglo.ist -o poetrytex.gls poetrytex.glo $< $(REDIRECT) 2>&1
 
 poetrytex.pdf: poetrytex.sty poetrytex.dtx
 	$(DO_LATEX_WRITE18)
 	$(DO_LATEX_WRITE18)
-	$(DO_SPLITINDEX)
-	$(DO_MAKEINDEX)
-	$(DO_MAKECHANGES)
+	splitindex poetrytex $(REDIRECT) 2>&1
+	makeindex -s gind.ist -o poetrytex.ind poetrytex $(REDIRECT) 2>&1
+	makeindex -s gglo.ist -o poetrytex.gls poetrytex.glo $< $(REDIRECT) 2>&1
 	while ($(DO_LATEX_WRITE18) ; \
 	grep -q "Rerun to get" poetrytex.log ) do true; \
 	done
