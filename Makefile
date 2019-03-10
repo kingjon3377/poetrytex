@@ -20,7 +20,7 @@ poetrytex.pdf: poetrytex.sty poetrytex.dtx
 poetrytex.sty: poetrytex.dtx poetrytex.ins
 	xelatex --interaction=nonstopmode poetrytex.ins $(REDIRECT)
 
-poetrytex.zip: poetrytex.dtx poetrytex.pdf Makefile LICENSE
+poetrytex.zip: poetrytex.dtx poetrytex.ins poetrytex.pdf Makefile LICENSE
 	rm -f $@
 	mkdir -p poetrytex/
 	cp README.md poetrytex/README
