@@ -31,6 +31,7 @@
 \usepackage[pdfborder=0, bookmarks, colorlinks=false, hidelinks]{hyperref}
 \usepackage{fancyvrb,hologo,framed,multicol,tipa,url,textcomp,poetrytex}
 \usepackage[parfill]{parskip}
+\usepackage[page,toc]{appendix}
 
 \fvset{gobble=2}
 
@@ -195,8 +196,6 @@
 % \begin{macro}{useincipits}
 % \changes{2.0.0}{2012/03/06}{Add package option to use incipits}
 % \begin{macro}{clearpageafterpoem}
-% \begin{macro}{clearpageafterannotation}
-% \changes{3.0.0}{2014/12/11}{Add an option to clear the page after annotations}
 % The package can also be loaded with any of the following options. If you're
 % unsure what an option does, check the documentation for the macro that is
 % associated with it in the code below:
@@ -208,9 +207,7 @@
 \DeclareOption{usedefaulttitles}{\usedefaulttitles}
 \DeclareOption{useincipits}{\useincipits}
 \DeclareOption{clearpageafterpoem}{\clearpageafterpoem}
-\DeclareOption{clearpageafterannotation}{\clearpageafterannotation}
 %    \end{macrocode}
-% \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -450,32 +447,6 @@
 % \end{macro}
 % \end{macro}
 % \end{macro}
-% \end{macro}
-%
-% \subsection{Annotation config}
-%
-% \begin{macro}{annotationnum}
-% \changes{2.1.0}{2013/09/04}{Create a new counter to track annotations}
-% \begin{macro}{absoluteannotationnum}
-% \changes{2.1.0}{2013/09/04}{Create a new counter to track annotations}
-% Like their poem counterparts, these counters are incremented each time an
-% annotation is created and the non-absolute version may be reset when the poem
-% group changes.
-%    \begin{macrocode}
-\newcounter{annotationnum}
-\newcounter{absoluteannotationnum}
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
-%
-% \begin{macro}{\ptannotationenv}
-% \changes{1.3}{2012/10/30}{Added an option to change the default annotation
-% environment}
-% This contains the name of the default environment in which we should wrap
-% annotations.
-%    \begin{macrocode}
-\newcommand*{\ptannotationenv}{flushleft}
-%    \end{macrocode}
 % \end{macro}
 %
 % \subsection{Dedication}
@@ -770,7 +741,7 @@
 % \end{macro}
 % \end{macro}
 %
-% \part{Poems and annotations}
+% \part{Poems}
 %
 % Now that we've got all the boilerplate, configuration, titles, tables, and
 % properties out of the way, it's time to move on to the core functionality of
@@ -1231,21 +1202,12 @@
 %
 % \begin{macro}{\clearpageafterpoem}
 % \begin{macro}{\noclearpageafterpoem}
-% \begin{macro}{\clearpageafterannotation}
-% \changes{3.0.0}{2014/12/11}{Make clearing the page after an annotation optional behavior}
-% \begin{macro}{\noclearpageafterannotation}
-% \changes{3.0.0}{2014/12/11}{Add command to stop page clearing after annotations}
-% \code{clearpageafterpoem} and \code{clearpageafterannotation} cause the page
-% to be cleared after every poem environment or annotation environment
-% respectively.
+% The \code{\textbackslash clearpageafterpoem} macro causes the page to be
+% cleared after every poem.
 %    \begin{macrocode}
 \newcommand*{\clearpageafterpoem}{\newcommand*{\@ptclearpageafterpoem}{}}
-\newcommand*{\clearpageafterannotation}{\newcommand*{\@ptclearpageafterannotation}{}}
 \newcommand*{\noclearpageafterpoem}{\let\@ptclearpageafterpoem\@ptundefined}
-\newcommand*{\noclearpageafterannotation}{\let\@ptclearpageafterannotation\@ptundefined}
 %    \end{macrocode}
-% \end{macro}
-% \end{macro}
 % \end{macro}
 % \end{macro}
 %
@@ -1532,7 +1494,6 @@
   \setcounter{poemnum}{0}
   \setcounter{untitledpoemnum}{0}
   \setcounter{titledpoemnum}{0}
-  \setcounter{annotationnum}{0}
   \beforepoemgroup
   \vspace*{\pregroupvspace}
   \renewcommand*{\ptgroup}{#1}
@@ -1559,7 +1520,6 @@
   \setcounter{poemnum}{0}
   \setcounter{untitledpoemnum}{0}
   \setcounter{titledpoemnum}{0}
-  \setcounter{annotationnum}{0}
   \renewcommand*{\ptgroup}{#1}
   \@ifstar{%
     \relax%
@@ -1578,59 +1538,6 @@
 % \end{macro}
 % \end{macro}
 %
-% \section{The \code{annotation} environment}
-%
-% \begin{environment}{annotation}
-% \changes{1.1}{2012/07/20}{Added optional `environment' argument}
-% Annotations allow you to insert prose that relates to a specific poem into
-% your document. It uses \code{\textbackslash annotationheadings} (see below),
-% clears the page twice, and adds itself to the ToC (but not the ToP). The page
-% is also cleared again after the annotation.
-%
-% Like the \code{poetry} environment, an optional first argument can be used to
-% specify the environment in which the annotation will be wrapped. The default
-% is \code{flushleft} and can be changed by redefining \code{\textbackslash
-% ptannotationenv}.
-%    \begin{macrocode}
-\newenvironment{annotation}[2][\ptannotationenv]{%
-  \newcommand*{\@ptwrapenvironment}{#1}
-  \cleardoublepage
-  \addtocounter{annotationnum}{1}
-  \addtocounter{absoluteannotationnum}{1}
-  \annotationheadings
-  \begin{\@ptwrapenvironment}
-  \subsection{#2}
-  \nopagebreak
-}{%
-  \end{\@ptwrapenvironment}%
-  \ifx\@ptclearpageafterannotation\@ptundefined%
-    \relax%
-  \else%
-    \clearpage%
-  \fi%
-}
-%    \end{macrocode}
-% \end{environment}
-%
-%
-% \section{Formatting annotations}
-%
-% \subsection{Headings}
-%
-% \begin{macro}{\annotationheadings}
-% \changes{2.1.0}{2013/08/29}{Allow separate headings on annotation pages}
-% The \code{\textbackslash annotationheadings} macro is automatically called
-% every time a new \code{annotation} environment is created.
-% By default, it calls \code{\textbackslash poetryheadings}, but it can be
-% redefined to give your annotation pages a different heading style than your
-% poem pages.
-%    \begin{macrocode}
-\newcommand*{\annotationheadings}[0]{\poetryheadings}
-%    \end{macrocode}
-% \end{macro}
-%
-%
-%
 % Any \hyperlink{POETRYTEX:OPTIONS}{options} that were passed in by the user are
 % processed after the package has been fully loaded.
 % The user doesn't need to worry about this:
@@ -1640,6 +1547,66 @@
 % \iffalse
 %</poetrytex>
 % \fi
+%
+% \cleardoublepage
+% \begin{appendices}
+% \section{Annotations}
+% \label{appendix:annotations}
+%
+% \begin{environment}{annotation}
+% \changes{1.1}{2012/07/20}{Added optional `environment' argument}
+% \changes{4.0.0}{2019/03/10}{Removed environment}
+% \begin{macro}{\annotationheadings}
+% \changes{2.1.0}{2013/08/29}{Allow separate headings on annotation pages}
+% \changes{4.0.0}{2019/03/10}{Removed macro}
+% \begin{macro}{clearpageafterannotation}
+% \changes{3.0.0}{2014/12/11}{Add an option to clear the page after annotations}
+% \changes{4.0.0}{2019/03/10}{Removed option}
+% \begin{macro}{annotationnum}
+% \changes{2.1.0}{2013/09/04}{Create a new counter to track annotations}
+% \changes{4.0.0}{2019/03/10}{Removed counter}
+% \begin{macro}{absoluteannotationnum}
+% \changes{2.1.0}{2013/09/04}{Create a new counter to track annotations}
+% \changes{4.0.0}{2019/03/10}{Removed counter}
+% \begin{macro}{\ptannotationenv}
+% \changes{1.3}{2012/10/30}{Added an option to change the default annotation}
+% \changes{4.0.0}{2019/03/10}{Removed macro}
+% \begin{macro}{\clearpageafterannotation}
+% \changes{3.0.0}{2014/12/11}{Make clearing the page after an annotation optional behavior}
+% \changes{4.0.0}{2019/03/10}{Removed macro}
+% \begin{macro}{\noclearpageafterannotation}
+% \changes{3.0.0}{2014/12/11}{Add command to stop page clearing after annotations}
+% \changes{4.0.0}{2019/03/10}{Removed macro}
+% Before version 4.0.0 of PoetryTeX, an environment existed for providing
+% prose annotations about a poem or poems in the anthology.
+% This environment was never widely used and didn't do much more than create a
+% section and setup some basic formatting.
+% This is better achieved in your anthology using standard \LaTeX\ environments
+% or by defining your own environment.
+% For example:
+%
+% \begin{Verbatim}
+% \newenvironment{annotation}[1]{%
+%   \cleardoublepage
+%   \poetryheadings
+%   \begin{flushleft}
+%   \subsection{#1}
+%   \nopagebreak
+% }{%
+%   \end{flushleft}%
+%   \clearpage%
+% }
+% \end{Verbatim}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{environment}
+%
+% \end{appendices}
 %
 % \clearpage
 % \setcounter{IndexColumns}{2}
@@ -1656,6 +1623,7 @@
 % \clearpage
 % \phantomsection
 % \addcontentsline{toc}{part}{Change History}
+% \hypertarget{POETRYTEX:CHANGES}{}
 % \PrintChanges
 % \Finale
 %
