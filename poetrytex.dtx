@@ -163,9 +163,9 @@
 % Once you have all the required packages, building \pkg{poetrytex} from source
 % can be accomplished in multiple ways.
 % If the Makefile is present running \code{make} is all you need to do.
-% To manually extract the files and generate the documentation run
-% \code{pdflatex} or \XeLaTeX\ against \fname{poetrytex.ins} and
-% \fname{poetrytex.dtx}:
+% To manually extract the files and generate the documentation run \LaTeX\ or
+% \XeLaTeX\ against \fname{poetrytex.ins} (to generate the \texttt{sty} file)
+% and \fname{poetrytex.dtx} (to generate the documentation):
 %
 % \begin{Verbatim}
 %   pdflatex poetrytex.ins
@@ -229,6 +229,11 @@
 %
 % The \pkg{poetrytex} package is fairly simple as far as \TeX\ packages go, so
 % it's worth taking a look at how it works internally.
+% Each macro and environment documented below will include its source code which
+% may be further annotated to explain how things work.
+% If you're not very familiar with \TeX\ and \LaTeX\ programming, you can
+% generally just ignore the source code and focus on the documentation and
+% examples.
 %
 % \section{Environment setup and defaults}
 %
@@ -881,7 +886,8 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% This poem has a (slightly modified) default title and an incipit in the ToP:
+% This poem has a (slightly modified) default title and an incipit in the
+% \hyperlink{POETRYTEX:TOP}{ToP} :
 %
 % \begin{Example}
 % \begin{Verbatim}
@@ -1625,8 +1631,9 @@
 %
 %
 %
-% Now that everything is defined we can process any
-% \hyperlink{POETRYTEX:OPTIONS}{options} that were passed in by the user:
+% Any \hyperlink{POETRYTEX:OPTIONS}{options} that were passed in by the user are
+% processed after the package has been fully loaded.
+% The user doesn't need to worry about this:
 %    \begin{macrocode}
 \ProcessOptions\relax
 %    \end{macrocode}
