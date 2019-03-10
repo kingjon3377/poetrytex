@@ -80,11 +80,19 @@
 % \date{\today\\*3.0.1}
 %
 % \maketitle
-% \maketoc
+% \cleardoublepage
+% \tableofcontents
+% \pagestyle{plain}
+% \clearpage
 % \changes{1.1}{2012/07/19}{Added an example table of poems}
 % \renewcommand*{\toptocentrytype}{part}
-% \renewcommand*{\beforetop}{\hypertarget{POETRYTEX:TOP}{}}
-% \maketop
+% \cleardoublepage
+% \phantomsection
+% \addcontentsline{toc}{\toptocentrytype}{\topname}
+% \hypertarget{POETRYTEX:TOP}{}
+% \listofpoems
+% \pagestyle{plain}
+% \clearpage
 %
 % \section{Introduction}
 %
@@ -562,48 +570,6 @@
 \renewcommand*{\listtablename}{\topname}
 %    \end{macrocode}
 %
-% \begin{macro}{\maketoc}
-% \begin{macro}{\maketop}
-% \begin{macro}{\maketop*}
-% Once you've configured the ToC and ToP you probably want to insert them into
-% your document somewhere. While you could just use the \LaTeX\ command
-% \code{\textbackslash tableofcontents} for the ToC, we provide an alternative
-% that adds a bit of formatting and clears the page. By default the ToP creates
-% a listing for itself in the ToC---using the star modifier prevents this. An
-% example table of poems can be found at the end of this document.
-%    \begin{macrocode}
-\newcommand*{\maketoc}{%
-  \beforetoc
-  \tableofcontents
-  \pagestyle{plain}
-  \aftertoc
-  \clearpage
-  \thispagestyle{empty}
-}
-\newcommand*{\maketop}{\@ifstar{\@ptmaketopStar}{\@ptmaketopNoStar}}
-\newcommand*{\@ptmaketopStar}{%
-  \cleardoublepage
-  \beforetop
-  \listofpoems
-  \pagestyle{plain}
-  \aftertop
-  \clearpage
-}
-\newcommand*{\@ptmaketopNoStar}{%
-  \cleardoublepage
-  \beforetop
-  \phantomsection
-  \addcontentsline{toc}{\toptocentrytype}{\topname}
-  \listofpoems
-  \pagestyle{plain}
-  \aftertop
-  \clearpage
-}
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-%
 % \begin{macro}{\numbertop}
 % \begin{macro}{\numbertoc}
 % \changes{2.0.0}{2012/08/17}{Number poems in the table of contents}
@@ -699,29 +665,6 @@
 \newcommand*{\afterdedication}{}
 %    \end{macrocode}
 % \end{macro}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-%
-% \subsection{Tables and links}
-%
-% \begin{macro}{\beforetoc}
-% \changes{1.4}{2012/02/18}{Add hook before table of contents}
-% \begin{macro}{\aftertoc}
-% \changes{1.4}{2012/02/18}{Add hook after table of contents}
-% \begin{macro}{\beforetop}
-% \changes{1.4}{2012/02/18}{Add hook before table of poems}
-% \begin{macro}{\aftertop}
-% \changes{1.4}{2012/02/18}{Add hook after table of poems}
-% Several hooks are provided which allow you to insert content before or after
-% the tables:
-%    \begin{macrocode}
-\newcommand{\beforetoc}{}
-\newcommand{\aftertoc}{}
-\newcommand{\beforetop}{}
-\newcommand{\aftertop}{}
-%    \end{macrocode}
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -1605,6 +1548,57 @@
 % \setlength{\ptgap}{2em}
 % \newcommand*{\ptind}{\@ifstar{\hspace*{\ptgap}}{\hspace{\ptgap}}}
 % \end{Verbatim}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \clearpage
+%
+% \begin{macro}{\maketoc}
+% \changes{4.0.0}{2019/03/10}{Remove macro}
+% \begin{macro}{\maketop}
+% \changes{4.0.0}{2019/03/10}{Remove macro}
+% \begin{macro}{\maketop*}
+% \changes{4.0.0}{2019/03/10}{Remove macro}
+% \begin{macro}{\beforetoc}
+% \changes{1.4}{2012/02/18}{Add hook before table of contents}
+% \changes{4.0.0}{2019/03/10}{Remove macro}
+% \begin{macro}{\aftertoc}
+% \changes{1.4}{2012/02/18}{Add hook after table of contents}
+% \changes{4.0.0}{2019/03/10}{Remove macro}
+% \begin{macro}{\beforetop}
+% \changes{1.4}{2012/02/18}{Add hook before table of poems}
+% \changes{4.0.0}{2019/03/10}{Remove macro}
+% \begin{macro}{\aftertop}
+% \changes{1.4}{2012/02/18}{Add hook after table of poems}
+% \changes{4.0.0}{2019/03/10}{Remove macro}
+%
+% The various shortcuts for creating a Table of Poems or Table of Contents
+% weren't very useful and have been removed.
+% Instead, use the builtin \code{\textbackslash tableofcontents} and
+% \code{\textbackslash tableofpoems} macros.
+% This avoids the need for complicated hooks and being stuck with our default
+% formatting.
+%
+% To get the same styling, replace uses of these macros with the following:
+%
+% \begin{Verbatim}
+% \cleardoublepage
+% \phantomsection
+% \addcontentsline{toc}{\toptocentrytype}{\topname}
+% \listofpoems
+% \pagestyle{plain}
+% \clearpage
+%
+% \cleardoublepage
+% \tableofcontents
+% \pagestyle{plain}
+% \clearpage
+% \end{Verbatim}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
