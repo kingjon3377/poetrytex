@@ -5,7 +5,8 @@
 .ALLSRC ?= $^
 
 REDIRECT = > /dev/null
-DO_LATEX_WRITE18 = pdflatex --shell-escape --interaction=nonstopmode poetrytex.dtx $(REDIRECT)
+LATEX = xelatex
+DO_LATEX_WRITE18 = $(LATEX) --shell-escape --interaction=nonstopmode poetrytex.dtx $(REDIRECT)
 
 poetrytex.pdf: poetrytex.sty poetrytex.dtx
 	$(DO_LATEX_WRITE18)
