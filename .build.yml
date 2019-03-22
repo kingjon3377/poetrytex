@@ -6,6 +6,7 @@ packages:
   - texlive-base
   - texlive-texmf
   - tex-xetex
+  - zip
 sources:
   - https://git.sr.ht/~samwhited/poetrytex
 tasks:
