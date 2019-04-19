@@ -27,8 +27,8 @@
 %</poetrytex>%
 %
 %<*driver>
-\documentclass[a4paper]{ltxdoc}
-\usepackage[pdfborder=0, bookmarks, colorlinks=false, hidelinks]{hyperref}
+\documentclass[letterpaper]{ltxdoc}
+\usepackage[bookmarks, colorlinks=false, hidelinks]{hyperref}
 \usepackage{fancyvrb,hologo,framed,multicol,tipa,url,textcomp,poetrytex}
 \usepackage[parfill]{parskip}
 \usepackage[page,toc]{appendix}
@@ -530,8 +530,9 @@
 % \begin{macro}{\toptocentrytype}
 % \changes{2.0.0}{2013/03/07}{Add hook to change ToP entry type in ToC}
 % The value of \code{\textbackslash topname} will be rendered atop the Table of
-% Poems, and \code{\textbackslash topentrytype} will set the default entry type
-% for poems in the ToP. \code{\textbackslash toptocentrytype} sets the default
+% Poems, and the \code{\textbackslash topentrytype} macro will set the default
+% entry type for poems in the ToP.
+% \code{\textbackslash toptocentrytype} sets the default
 % entry type for the ToP in the ToC.
 %    \begin{macrocode}
 \newcommand*{\topname}{List of Poems}
@@ -956,9 +957,9 @@
 % \subsection{Headings}
 %
 % \begin{macro}{\poetryheadings}
-% Every time a new \code{poem} environment is created we automatically call
-% \code{\textbackslash poetryheadings}. By redefining this you can change how
-% your headings look, use packages like
+% Every time a new \code{poem} environment is created we automatically call the
+% \code{\textbackslash poetryheadings} macro.
+% By redefining this you can change how your headings look, use packages like
 % \pkg{\href{http://ctan.org/pkg/fancyhdr}{fancyhdr}}, or remove headers from
 % poem pages altogether.
 %    \begin{macrocode}
@@ -1160,8 +1161,10 @@
 % The \code{\textbackslash clearpageafterpoem} macro causes the page to be
 % cleared after every poem.
 %    \begin{macrocode}
-\newcommand*{\clearpageafterpoem}{\newcommand*{\@ptclearpageafterpoem}{}}
-\newcommand*{\noclearpageafterpoem}{\let\@ptclearpageafterpoem\@ptundefined}
+\newcommand*{\clearpageafterpoem}{%
+  \newcommand*{\@ptclearpageafterpoem}{}}
+\newcommand*{\noclearpageafterpoem}{%
+  \let\@ptclearpageafterpoem\@ptundefined}
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -1556,8 +1559,6 @@
 % \end{macro}
 % \end{macro}
 % \end{macro}
-%
-% \clearpage
 %
 % \begin{macro}{\maketoc}
 % \changes{4.0.0}{2019/03/10}{Remove macro}
