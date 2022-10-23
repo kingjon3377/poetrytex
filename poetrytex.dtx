@@ -359,6 +359,18 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{\posttitlevspace}
+% \changes{3.0.1}{2022/10/23}{Allow whitespace between poem title and poem}
+% Sometimes the default spacing between a poem's title and the start of the
+% first stanze isn't what you want. To add vertical spacing, or negative
+% spacing, after each poem's title, set \code{\textbackslash posttitlevspace}:
+%
+%    \begin{macrocode}
+\newlength{\posttitlevspace}
+\setlength{\posttitlevspace}{0em}
+%    \end{macrocode}
+% \end{macro}
+%
 % \begin{macro}{\pttitleleftspace}
 % \changes{1.4}{2013/02/14}{Add macro to define poem title left hspace}
 % \begin{macro}{\pttitlerightspace}
@@ -933,6 +945,7 @@
       \fi%
     }%
     \hspace*{\ptsubtitleleftspace}#3\hspace*{\ptsubtitlerightspace}
+    \vspace*{\posttitlevspace}
   \end{\pttitleenv}
   \nopagebreak
   \begin{\@ptwrapenvironment}
